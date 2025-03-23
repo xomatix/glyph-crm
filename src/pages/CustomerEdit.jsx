@@ -1,25 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import React from "react";
+import { useNavigate, useParams } from "react-router";
 import GlRecord from "../../components/GlRecord/GlRecord";
-import service from "../../glService/glService";
 import GlEdit from "../../components/GlEdit/GlEdit";
 import GlButton from "../../components/GlButton/GlButton";
 
 function CustomerEdit() {
   const { id } = useParams();
-  // const [record, setRecord] = useState(null);
-
-  // useEffect(() => {
-  //   const download = async () => {
-  //     let resp = await service.select("crm", "glCustomersAll", {
-  //       where: { id: id },
-  //     });
-  //     if (resp.length > 0) {
-  //       setRecord(resp[0]);
-  //     }
-  //   };
-  //   download();
-  // }, []);
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -31,23 +18,30 @@ function CustomerEdit() {
       >
         {(RecordContext) => (
           <div>
-            <h2>Book</h2>
-
-            <label>
-              Ident: <GlEdit field="ident" Context={RecordContext} />
-            </label>
+            <h2>Customer</h2>
+            <GlEdit field="ident" Context={RecordContext} />
             <br />
-            <label>
-              Name: <GlEdit field="name" Context={RecordContext} />
-            </label>
+            <GlEdit field="name" Context={RecordContext} />
             <br />
             <GlButton
-              action={(record) => {
-                console.log("Record data:", record);
-              }}
+              dataSetIdent="glCustomersSave"
+              nameSpace="crm"
               Context={RecordContext}
+              afterAction={() => {
+                navigate(`/customers/${id}`);
+              }}
             >
               Save
+            </GlButton>
+            <GlButton
+              dataSetIdent="glCustomersDelete"
+              nameSpace="crm"
+              Context={RecordContext}
+              afterAction={() => {
+                navigate(`/customers`);
+              }}
+            >
+              Delete
             </GlButton>
           </div>
         )}

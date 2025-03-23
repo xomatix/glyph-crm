@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-export const GlEdit = ({ field, Context }) => {
+export const GlEdit = ({ field, label = field, Context }) => {
   const { record, setRecord } = useContext(Context);
 
   const handleChange = (e) => {
@@ -8,7 +8,10 @@ export const GlEdit = ({ field, Context }) => {
   };
 
   return (
-    <input type="text" value={record[field] || ""} onChange={handleChange} />
+    <label>
+      {label}
+      <input type="text" value={record[field] || ""} onChange={handleChange} />
+    </label>
   );
 };
 
