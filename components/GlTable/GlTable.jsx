@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import service from "../../glService/glService";
 import "./GlTable.css";
 
-function GlTable({ nameSpace, dataSetIdent }) {
+function GlTable({ nameSpace, dataSetIdent, onRowClick = () => {} }) {
   const [rows, setRows] = useState([]);
   const [headers, setHeaders] = useState([]);
   const [page, setPage] = useState(1);
@@ -38,7 +38,7 @@ function GlTable({ nameSpace, dataSetIdent }) {
           <div class="table-title">Title</div>
           <div class="table-actions">
             <button onClick={() => test()} className="table-action-btn">
-              <i>🔍</i> Filtruj
+              <i>🔍</i>
             </button>
             <button class="table-action-btn primary">
               <i>➕</i> Dodaj nowe
@@ -58,7 +58,7 @@ function GlTable({ nameSpace, dataSetIdent }) {
             {rows != undefined &&
               rows.length > 0 &&
               rows.map((row, index) => (
-                <tr key={index}>
+                <tr key={index} onClick={() => onRowClick(row)}>
                   {headers.map((header, idx) => (
                     <td key={`${index}_${idx}`}>{row[header]}</td>
                   ))}
