@@ -19,8 +19,10 @@ export const GlButton = ({
       const data = await service.select(nameSpace, dataSetIdent, {
         rows: [record],
       });
+      console.log("After save action", data);
       if (data && data.length > 0) {
-        action(data[0]);
+        afterAction(data[0]);
+        return;
       }
     }
     afterAction(record);

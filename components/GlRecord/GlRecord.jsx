@@ -16,8 +16,10 @@ export const GlRecord = ({
       let resp = await service.select(nameSpace, dataSetIdent, {
         where: where,
       });
-      if (resp.length > 0) {
+      if (resp !== null && resp.length > 0) {
         setRecord(resp[0]);
+      } else {
+        setRecord({});
       }
     };
     if (initialRecord === null) download();

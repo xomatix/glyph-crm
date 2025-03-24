@@ -31,30 +31,6 @@ function App() {
           <Route path="/customers/:id" element={<CustomerEdit />} />
         </Routes>
       </BrowserRouter>
-
-      {/* <GlRecord initialRecord={selectedRecord}>
-        {(RecordContext) => (
-          <div>
-            <h2>Book</h2>
-            <label>
-              ID: <GlEdit field="books_id" Context={RecordContext} />
-            </label>
-            <br />
-            <label>
-              Title: <GlEdit field="title" Context={RecordContext} />
-            </label>
-            <br />
-            <GlButton
-              action={(record) => {
-                console.log("Record data:", record);
-              }}
-              Context={RecordContext}
-            >
-              Save
-            </GlButton>
-          </div>
-        )}
-      </GlRecord> */}
     </>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import GlRecord from "../../components/GlRecord/GlRecord";
 import GlEdit from "../../components/GlEdit/GlEdit";
 import GlButton from "../../components/GlButton/GlButton";
@@ -7,6 +7,7 @@ import GlButton from "../../components/GlButton/GlButton";
 function CustomerEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <div>
@@ -27,8 +28,15 @@ function CustomerEdit() {
               dataSetIdent="glCustomersSave"
               nameSpace="crm"
               Context={RecordContext}
-              afterAction={() => {
-                navigate(`/customers/${id}`);
+              afterAction={async (record) => {
+                if (
+                  record["gl_customers_id"] !== null &&
+                  record["gl_customers_id"] !== Number(id)
+                ) {
+                  navigate(`/customers/${record["gl_customers_id"]}`);
+                } else {
+                  navigate(0);
+                }
               }}
             >
               Save
