@@ -122,6 +122,9 @@ td {
   padding: 12px 15px;
   border-bottom: 1px solid var(--border-color);
   font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 tbody tr:hover {

@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import GlRecord from "../../components/GlRecord/GlRecord";
 import GlEdit from "../../components/GlEdit/GlEdit";
 import GlButton from "../../components/GlButton/GlButton";
@@ -7,7 +7,6 @@ import GlButton from "../../components/GlButton/GlButton";
 function CustomerEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
 
   return (
     <div>
@@ -20,7 +19,11 @@ function CustomerEdit() {
         {(RecordContext) => (
           <div>
             <h2>Customer</h2>
-            <GlEdit field="ident" Context={RecordContext} />
+            <GlEdit
+              field="ident"
+              label="Customer CODE"
+              Context={RecordContext}
+            />
             <br />
             <GlEdit field="name" Context={RecordContext} />
             <br />

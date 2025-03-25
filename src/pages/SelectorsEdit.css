@@ -1,0 +1,11 @@
+.text-area {
+  width: 100%;
+  label {
+    font-size: large;
+
+    textarea {
+      width: 800px;
+      height: 800px;
+    }
+  }
+}

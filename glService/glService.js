@@ -25,6 +25,30 @@ class GlService {
       throw error;
     }
   }
+
+  async saveSelector(nameSpace, selectorIdent, selectorFn, pageSize = 10) {
+    try {
+      const response = await fetch(`${this.baseUrl}/api`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "saveSelector",
+          data: {
+            nameSpace: nameSpace,
+            selectorIdent: selectorIdent,
+            pageSize: Number(pageSize),
+            selectorFn: selectorFn.replaceAll("'", "''"),
+          },
+        }),
+      });
+      return await response.json();
+    } catch (error) {
+      console.error("Fetch POST error:", error);
+      throw error;
+    }
+  }
 }
 
 const service = new GlService("http://localhost:8080");
