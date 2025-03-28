@@ -10,15 +10,15 @@ function CustomerEdit() {
 
   return (
     <div>
-      Customer Edit {id}
+      Customer Edit ID:{id}
       <GlRecord
         dataSetIdent="glCustomersAll"
         nameSpace="crm"
         where={{ id: id }}
       >
-        {(RecordContext) => (
+        {(RecordContext, record) => (
           <div>
-            <h2>Customer</h2>
+            <h2>{record.ident}</h2>
             <GlEdit
               field="ident"
               label="Customer CODE"

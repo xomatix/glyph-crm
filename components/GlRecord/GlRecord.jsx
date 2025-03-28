@@ -29,7 +29,7 @@ export const GlRecord = ({
     <>
       {record !== null && (
         <RecordContext.Provider value={{ record, setRecord }}>
-          {children(RecordContext)}
+          {children(RecordContext, record)}
         </RecordContext.Provider>
       )}
     </>
