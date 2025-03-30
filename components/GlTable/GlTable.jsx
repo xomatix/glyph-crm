@@ -47,6 +47,11 @@ function GlTable({ nameSpace, dataSetIdent, onRowClick = () => {} }) {
         </div>
 
         <table>
+          <colgroup>
+            {headers.map((_, index) => (
+              <col key={index}></col>
+            ))}
+          </colgroup>
           <thead>
             <tr>
               {headers.map((header, idx) => (

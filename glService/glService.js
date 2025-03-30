@@ -8,6 +8,27 @@ class GlService {
   }
 
   async select(nameSpace, selectorIdent, data) {
+    const processData = (obj) => {
+      if (!obj) return obj;
+      if (typeof obj === "string") {
+        return obj.replaceAll("'", "''");
+      }
+      if (Array.isArray(obj)) {
+        return obj.map((item) => processData(item));
+      }
+      if (typeof obj === "object") {
+        const newObj = {};
+        for (let key in obj) {
+          newObj[key] = processData(obj[key]);
+        }
+        return newObj;
+      }
+      return obj;
+    };
+
+    if (data) {
+      data = processData(data);
+    }
     try {
       const response = await fetch(`${this.baseUrl}/api`, {
         method: "POST",
@@ -41,6 +62,26 @@ class GlService {
             pageSize: Number(pageSize),
             selectorFn: selectorFn.replaceAll("'", "''"),
           },
+        }),
+      });
+      return await response.json();
+    } catch (error) {
+      console.error("Fetch POST error:", error);
+      throw error;
+    }
+  }
+
+  async askAi(context_name, prompt, data, ai_model = "gemini") {
+    try {
+      const response = await fetch(`${this.baseUrl}/ai`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: ai_model,
+          sessionId: "",
+          data: { ...data, context_name: context_name, prompt: prompt },
         }),
       });
       return await response.json();

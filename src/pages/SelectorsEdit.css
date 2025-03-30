@@ -1,11 +1,58 @@
-.text-area {
-  width: 100%;
-  label {
-    font-size: large;
+.edit-container {
+  textarea {
+    min-height: 60vh;
+  }
+}
 
+.row {
+  display: flex;
+  gap: 16px;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ai-container {
+  display: flex;
+  flex-direction: column;
+  .edit-container {
     textarea {
-      width: 800px;
-      height: 800px;
+      min-height: 40vh;
+    }
+  }
+
+  button {
+    margin: 8px 0 0 auto;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: 2px solid black;
+    background-color: black;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+
+  .btn-ask-ai {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 20px;
+    font-weight: 500;
+
+    &:active {
+      transform: translateY(1px);
+    }
+
+    img {
+      width: 20px;
+      height: 20px;
     }
   }
 }

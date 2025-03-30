@@ -23,20 +23,6 @@
   --hover-color: #f5f9ff;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-  background-color: #f9f9f9;
-  color: var(--text-color);
-  line-height: 1.6;
-  padding: 20px;
-}
-
 .table-container {
   max-width: 1000px;
   margin: 0 auto;
@@ -125,6 +111,7 @@ td {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  max-width: 150px;
 }
 
 tbody tr:hover {
