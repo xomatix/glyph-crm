@@ -37,7 +37,12 @@ class GlService {
         },
         body: JSON.stringify({
           action: "select",
-          data: { ...data, nameSpace: nameSpace, selectorIdent: selectorIdent },
+          data: {
+            ...data,
+            nameSpace: nameSpace,
+            selectorIdent: selectorIdent,
+            s_id: localStorage.getItem("s_id"),
+          },
         }),
       });
       return await response.json();
@@ -57,6 +62,7 @@ class GlService {
         body: JSON.stringify({
           action: "saveSelector",
           data: {
+            s_id: localStorage.getItem("s_id"),
             nameSpace: nameSpace,
             selectorIdent: selectorIdent,
             pageSize: Number(pageSize),
@@ -80,8 +86,12 @@ class GlService {
         },
         body: JSON.stringify({
           action: ai_model,
-          sessionId: "",
-          data: { ...data, context_name: context_name, prompt: prompt },
+          data: {
+            ...data,
+            context_name: context_name,
+            prompt: prompt,
+            s_id: localStorage.getItem("s_id"),
+          },
         }),
       });
       return await response.json();

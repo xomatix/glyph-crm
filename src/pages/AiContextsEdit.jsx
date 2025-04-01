@@ -4,7 +4,7 @@ import GlRecord from "../../components/GlRecord/GlRecord";
 import GlEdit from "../../components/GlEdit/GlEdit";
 import GlButton from "../../components/GlButton/GlButton";
 
-import GlContainer from "../../components/Container/GlContainer";
+import GlContainer from "../../components/GlContainer/GlContainer";
 import "./SelectorsEdit.css";
 
 function AiContextsEdit() {

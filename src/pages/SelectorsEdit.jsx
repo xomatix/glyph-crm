@@ -4,7 +4,7 @@ import GlRecord from "../../components/GlRecord/GlRecord";
 import GlEdit from "../../components/GlEdit/GlEdit";
 import GlButton from "../../components/GlButton/GlButton";
 import service from "../../glService/glService";
-import GlContainer from "../../components/Container/GlContainer";
+import GlContainer from "../../components/GlContainer/GlContainer";
 import "./SelectorsEdit.css";
 import aiIcon from "../assets/ai.svg";
 import ReactMarkdown from "react-markdown";

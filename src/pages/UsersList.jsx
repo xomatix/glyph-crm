@@ -1,8 +1,9 @@
 import React from "react";
 import GlTable from "../../components/glTable/glTable";
 import GlList from "../../components/GlList/GlList";
-import GlContainer from "../../components/Container/GlContainer";
+import GlContainer from "../../components/GlContainer/GlContainer";
 import GlRecord from "../../components/GlRecord/GlRecord";
+import GlLookup from "../../components/GlLookup/GlLookup";
 
 function UsersList() {
   return (
@@ -20,7 +21,20 @@ function UsersList() {
         dataSetIdent={"booksFnAll"}
         where={{ id: 1000 }}
       >
-        {(RecordContext, record) => <p>{JSON.stringify(record)}</p>}
+        {(RecordContext, record) => (
+          <div>
+            <GlLookup
+              Context={RecordContext}
+              field={"code"}
+              nameSpace={"bookstore"}
+              dataSetIdent={"booksFnAll"}
+              where={{ title: record["title"] }}
+            >
+              {(row) => <div>{row["code"]}</div>}
+            </GlLookup>
+            <p>{JSON.stringify(record)}</p>
+          </div>
+        )}
       </GlRecord>
       Books List
       <GlContainer>
