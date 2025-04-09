@@ -9,13 +9,6 @@ function UsersList() {
   return (
     <div className="users-list">
       Users Table
-      <GlTable
-        nameSpace={"bookstore"}
-        dataSetIdent={"booksFnAll"}
-        onRowClick={(row) => {
-          console.log("Row clicked:", row);
-        }}
-      />
       <GlRecord
         nameSpace={"bookstore"}
         dataSetIdent={"booksFnAll"}
@@ -25,14 +18,29 @@ function UsersList() {
           <div>
             <GlLookup
               Context={RecordContext}
-              field={"code"}
+              field={"title"}
               nameSpace={"bookstore"}
               dataSetIdent={"booksFnAll"}
               where={{ title: record["title"] }}
             >
-              {(row) => <div>{row["code"]}</div>}
+              {(row) => (
+                <div>
+                  {row["code"]}({row["title"]})
+                </div>
+              )}
             </GlLookup>
-            <p>{JSON.stringify(record)}</p>
+            <p>
+              {JSON.stringify(record)}
+              {record["books_id"]}
+            </p>
+            <GlTable
+              nameSpace={"bookstore"}
+              dataSetIdent={"booksFnAll"}
+              where={{ title: record["title"] }}
+              onRowClick={(row) => {
+                console.log("Row clicked:", row);
+              }}
+            />
           </div>
         )}
       </GlRecord>

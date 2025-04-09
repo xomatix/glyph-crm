@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import service from "../../glService/glService";
 import "./GlTable.css";
 
-function GlTable({ nameSpace, dataSetIdent, onRowClick = () => {} }) {
+function GlTable({
+  nameSpace,
+  dataSetIdent,
+  onRowClick = () => {},
+  where = {},
+}) {
   const [rows, setRows] = useState([]);
   const [headers, setHeaders] = useState([]);
   const [page, setPage] = useState(1);
@@ -10,6 +15,7 @@ function GlTable({ nameSpace, dataSetIdent, onRowClick = () => {} }) {
   async function test() {
     let response = await service.select(nameSpace, dataSetIdent, {
       page: page,
+      where: where,
     });
     setRows(response);
     if (response.length > 0) {

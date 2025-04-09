@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import "./GlLookup.css";
 import GlList from "../GlList/GlList";
 import GlEdit from "../GlEdit/GlEdit";
@@ -15,9 +15,25 @@ export const GlLookup = ({
   children,
   where = {},
 }) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const contextValue = Context && useContext(Context);
-  const { record = {}, setRecord = () => {} } = contextValue || {};
+  const contextValue = useContext(Context);
+  const { _ = {}, setRecord = () => {} } = contextValue || {};
+  const [showList, setShowList] = useState(false);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        console.log("Clicked outside of component!");
+        setShowList(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleChange = (newValue) => {
     console.log(newValue[fieldInLookup]);
@@ -25,24 +41,33 @@ export const GlLookup = ({
   };
 
   return (
-    <div className="edit-container">
+    <div
+      ref={wrapperRef}
+      className="edit-container"
+      onFocus={() => {
+        setShowList(true);
+      }}
+    >
       <GlEdit
         field={field}
         type={type}
         label={label}
         showLabel={showLabel}
         Context={Context}
-      ></GlEdit>
-      <GlList
-        dataSetIdent={dataSetIdent}
-        nameSpace={nameSpace}
-        onClick={(row) => {
-          handleChange(row);
-        }}
-        where={where}
-      >
-        {(row) => children(row)}
-      </GlList>
+      />
+      {showList && (
+        <GlList
+          dataSetIdent={dataSetIdent}
+          nameSpace={nameSpace}
+          onClick={(row) => {
+            handleChange(row);
+            setShowList(false);
+          }}
+          where={where}
+        >
+          {(row) => children(row)}
+        </GlList>
+      )}
     </div>
   );
 };

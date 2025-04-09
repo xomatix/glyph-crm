@@ -6,6 +6,8 @@ export const GlEdit = ({
   type = "text",
   label = field,
   showLabel = true,
+  onFocus = () => {},
+  onBlur = () => {},
   Context,
 }) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -17,7 +19,15 @@ export const GlEdit = ({
   };
 
   return (
-    <div className="edit-container">
+    <div
+      className="edit-container"
+      onFocus={() => {
+        onFocus(record);
+      }}
+      onBlur={() => {
+        onBlur(record);
+      }}
+    >
       {showLabel && <label>{label}</label>}
       {type == "textarea" && (
         <textarea
