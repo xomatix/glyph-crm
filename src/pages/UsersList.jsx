@@ -16,23 +16,27 @@ function UsersList() {
       >
         {(RecordContext, record) => (
           <div>
-            <GlLookup
-              Context={RecordContext}
-              field={"title"}
-              nameSpace={"bookstore"}
-              dataSetIdent={"booksFnAll"}
-              where={{ title: record["title"] }}
-            >
-              {(row) => (
-                <div>
-                  {row["code"]}({row["title"]})
-                </div>
-              )}
-            </GlLookup>
-            <p>
-              {JSON.stringify(record)}
-              {record["books_id"]}
-            </p>
+            <div className="filters">
+              <GlLookup
+                style={{ width: "300px" }}
+                className="className"
+                Context={RecordContext}
+                field={"title"}
+                nameSpace={"bookstore"}
+                dataSetIdent={"booksFnAll"}
+                where={{ title: record["title"] }}
+              >
+                {(row) => (
+                  <div>
+                    {row["code"]}({row["title"]})
+                  </div>
+                )}
+              </GlLookup>
+              <p>
+                {JSON.stringify(record)}
+                {record["books_id"]}
+              </p>
+            </div>
             <GlTable
               nameSpace={"bookstore"}
               dataSetIdent={"booksFnAll"}

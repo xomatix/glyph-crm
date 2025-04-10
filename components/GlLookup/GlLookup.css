@@ -1,0 +1,128 @@
+/* GlLookup.css - Modern styling */
+
+/* Main container */
+.lookup-container {
+  position: relative;
+  width: 100%;
+  /* margin-bottom: 16px; */
+}
+
+/* List container styling */
+.list-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  margin-top: 4px;
+  padding: 8px 0;
+  border: 1px solid #e0e0e0;
+}
+
+/* List item styling */
+.list-item {
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 14px;
+  color: #333;
+  border-left: 3px solid transparent;
+}
+
+.list-item:hover {
+  background-color: #f0f7ff;
+  border-left: 3px solid #2563eb;
+}
+
+/* Empty state */
+.no-records {
+  padding: 16px;
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}
+
+/* Table footer with pagination */
+.list-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px 4px 16px;
+  border-top: 1px solid #eaeaea;
+  margin-top: 8px;
+}
+
+/* List info text */
+.list-info {
+  color: #666;
+  font-size: 13px;
+}
+
+/* Pagination container */
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Page buttons styling */
+.page-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  cursor: pointer;
+  font-size: 14px;
+  color: #444;
+  transition: all 0.2s ease;
+}
+
+.page-btn:hover {
+  background-color: #f5f5f5;
+  border-color: #d0d0d0;
+}
+
+.page-btn.active {
+  background-color: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.page-btn:first-child,
+.page-btn:last-child {
+  font-size: 12px;
+  color: #555;
+}
+
+.page-btn:first-child:hover,
+.page-btn:last-child:hover {
+  background-color: #edf2ff;
+}
+
+.list-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.list-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.list-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+.list-container::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}

@@ -46,7 +46,7 @@ function GlList({
         (rows.length == 0 && (
           <div className="no-records">No records found</div>
         ))}
-      <div class="table-footer">
+      <div class="list-footer">
         <div class="list-info">{/* Wyświetlanie 1-5 z 25 zadań */}</div>
         <div class="pagination">
           <button onClick={() => PrevPage()} class="page-btn">

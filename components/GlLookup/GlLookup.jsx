@@ -9,6 +9,8 @@ export const GlLookup = ({
   label = field,
   fieldInLookup = field,
   showLabel = true,
+  style = {},
+  className = "",
   dataSetIdent,
   nameSpace,
   Context,
@@ -43,7 +45,8 @@ export const GlLookup = ({
   return (
     <div
       ref={wrapperRef}
-      className="edit-container"
+      className={`lookup-container ${className}`}
+      style={style}
       onFocus={() => {
         setShowList(true);
       }}
