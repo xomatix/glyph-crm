@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import GlTable from "../../components/glTable/glTable";
 import GlList from "../../components/GlList/GlList";
 import GlContainer from "../../components/GlContainer/GlContainer";
@@ -6,13 +6,21 @@ import GlRecord from "../../components/GlRecord/GlRecord";
 import GlLookup from "../../components/GlLookup/GlLookup";
 
 function UsersList() {
+  const booksTableRef = useRef();
+
   return (
     <div className="users-list">
       Users Table
       <GlRecord
         nameSpace={"bookstore"}
         dataSetIdent={"booksFnAll"}
-        where={{ id: 1000 }}
+        afterChange={() => {
+          console.log("after record refreshed");
+
+          if (booksTableRef != null && booksTableRef.current != null) {
+            booksTableRef.current.refresh();
+          }
+        }}
       >
         {(RecordContext, record) => (
           <div>
@@ -21,10 +29,13 @@ function UsersList() {
                 style={{ width: "300px" }}
                 className="className"
                 Context={RecordContext}
-                field={"title"}
+                field={"books_id"}
                 nameSpace={"bookstore"}
                 dataSetIdent={"booksFnAll"}
-                where={{ title: record["title"] }}
+                // where={{ title: record["title"] }}
+                onClick={() => {
+                  console.log("after click");
+                }}
               >
                 {(row) => (
                   <div>
@@ -38,9 +49,10 @@ function UsersList() {
               </p>
             </div>
             <GlTable
+              ref={booksTableRef}
               nameSpace={"bookstore"}
               dataSetIdent={"booksFnAll"}
-              where={{ title: record["title"] }}
+              where={{ id: record["books_id"] }}
               onRowClick={(row) => {
                 console.log("Row clicked:", row);
               }}

@@ -6,6 +6,7 @@ export const GlRecord = ({
   dataSetIdent = "",
   nameSpace = "",
   where = {},
+  afterChange = () => {},
   children,
 }) => {
   const RecordContext = useMemo(() => createContext(null), []);
@@ -24,6 +25,10 @@ export const GlRecord = ({
     };
     if (initialRecord === null) download();
   }, []);
+
+  useEffect(() => {
+    afterChange();
+  }, [record]);
 
   return (
     <>

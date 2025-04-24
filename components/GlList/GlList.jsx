@@ -1,17 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useImperativeHandle, useState } from "react";
 import service from "../../glService/glService";
 
-function GlList({
-  nameSpace,
-  dataSetIdent,
-  children,
-  onClick = () => {},
-  where = {},
-}) {
+function GlList(
+  { nameSpace, dataSetIdent, children, onClick = () => {}, where = {} },
+  ref
+) {
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(1);
 
-  const loadListData = async () => {
+  const refresh = async () => {
     let response = await service.select(nameSpace, dataSetIdent, {
       page: page,
       ...where,
@@ -30,8 +27,15 @@ function GlList({
   }
 
   useEffect(() => {
-    loadListData();
+    refresh();
   }, [page]);
+
+  useImperativeHandle(ref, () => ({
+    refresh: async () => {
+      await refresh();
+      console.log("refresh table called with args: ", where);
+    },
+  }));
 
   return (
     <div className="list-container">

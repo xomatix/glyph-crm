@@ -16,16 +16,17 @@ export const GlLookup = ({
   Context,
   children,
   where = {},
+  onClick = () => {},
 }) => {
   const contextValue = useContext(Context);
   const { _ = {}, setRecord = () => {} } = contextValue || {};
   const [showList, setShowList] = useState(false);
   const wrapperRef = useRef(null);
+  const listRef = useRef();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-        console.log("Clicked outside of component!");
         setShowList(false);
       }
     };
@@ -38,7 +39,7 @@ export const GlLookup = ({
   }, []);
 
   const handleChange = (newValue) => {
-    console.log(newValue[fieldInLookup]);
+    // console.log(newValue[fieldInLookup]);
     setRecord((prev) => ({ ...prev, [field]: newValue[fieldInLookup] }));
   };
 
@@ -65,8 +66,10 @@ export const GlLookup = ({
           onClick={(row) => {
             handleChange(row);
             setShowList(false);
+            onClick(row);
           }}
           where={where}
+          ref={listRef}
         >
           {(row) => children(row)}
         </GlList>

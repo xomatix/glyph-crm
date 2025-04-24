@@ -102,8 +102,8 @@ class GlService {
   }
 }
 
-const service = new GlService("https://v5hs29rh-8080.euw.devtunnels.ms");
-// const service = new GlService("http://localhost:8080");
+// const service = new GlService("https://v5hs29rh-8080.euw.devtunnels.ms");
+const service = new GlService("http://localhost:8080");
 Object.freeze(service);
 
 export default service;
