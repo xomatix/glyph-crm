@@ -1,5 +1,5 @@
 import React from "react";
-import GlTable from "../../components/glTable/glTable";
+import GlTable from "../../../components/glTable/glTable";
 import { useNavigate } from "react-router";
 
 function CustomersList() {
