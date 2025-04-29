@@ -3,9 +3,8 @@
   flex-direction: column;
 
   input {
-    width: 100%;
-    padding: 4px 8px;
-    border-radius: 6px;
+    padding: 8px 8px;
+    border-radius: 8px;
     border: 1px solid #d0d0d0;
     font-size: 14px;
     transition: border-color 0.2s ease;

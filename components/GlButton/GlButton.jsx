@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import service from "../../glService/glService";
+import "./GlButton.css";
 
 export const GlButton = ({
   action = () => {},
@@ -7,6 +8,7 @@ export const GlButton = ({
   dataSetIdent = "",
   nameSpace = "",
   Context = null,
+  className = "",
   children,
 }) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -30,7 +32,11 @@ export const GlButton = ({
     afterAction(record);
   };
 
-  return <button onClick={handleButtonPress}>{children}</button>;
+  return (
+    <button className={className + " gl-button"} onClick={handleButtonPress}>
+      {children}
+    </button>
+  );
 };
 
 export default GlButton;
