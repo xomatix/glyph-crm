@@ -5,6 +5,8 @@ import AiContextsEdit from "./pages/AiContextsEdit";
 import GlButton from "../components/GlButton/GlButton";
 const AiContextsList = lazy(() => import("./pages/AiContextsList"));
 const UsersList = lazy(() => import("./pages/UsersList"));
+const EventsList = lazy(() => import("./pages/Events/EventsList"));
+const EventsEdit = lazy(() => import("./pages/Events/EventEdit"));
 const CustomersList = lazy(() => import("./pages/Customer/CustomersList"));
 const CustomerEdit = lazy(() => import("./pages/Customer/CustomerEdit"));
 const SelectorEdit = lazy(() => import("./pages/SelectorsEdit"));
@@ -53,6 +55,24 @@ function App() {
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
               Users
+            </Link>
+            <Link className="nav-item" to="/events">
+              <svg
+                className="nav-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              Events
             </Link>
             <Link className="nav-item" to="/customers">
               <svg
@@ -168,6 +188,8 @@ function App() {
           <Routes>
             <Route path="/" element={<h2>Home Page</h2>} />
             <Route path="/users" element={<UsersList />} />
+            <Route path="/events" element={<EventsList />} />
+            <Route path="/event/:gl_events_id" element={<EventsEdit />} />
             <Route path="/customers" element={<CustomersList />} />
             <Route path="/customers/:id" element={<CustomerEdit />} />
             <Route path="/selectors" element={<SelectorsList />} />
