@@ -4,6 +4,7 @@ import "./GlButton.css";
 
 export const GlButton = ({
   action = () => {},
+  style = {},
   afterAction = () => {},
   dataSetIdent = "",
   nameSpace = "",
@@ -33,7 +34,11 @@ export const GlButton = ({
   };
 
   return (
-    <button className={className + " gl-button"} onClick={handleButtonPress}>
+    <button
+      style={style}
+      className={className + " gl-button"}
+      onClick={handleButtonPress}
+    >
       {children}
     </button>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useImperativeHandle, useState } from "react";
 import service from "../../glService/glService";
+import "./GlList.css";
 
 function GlList(
   { nameSpace, dataSetIdent, children, onClick = () => {}, where = {} },
@@ -11,7 +12,7 @@ function GlList(
   const refresh = async () => {
     let response = await service.select(nameSpace, dataSetIdent, {
       page: page,
-      ...where,
+      where: where,
     });
     setRows(response);
   };
@@ -28,7 +29,7 @@ function GlList(
 
   useEffect(() => {
     refresh();
-  }, [page]);
+  }, [page, where]);
 
   useImperativeHandle(ref, () => ({
     refresh: async () => {

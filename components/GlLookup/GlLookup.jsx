@@ -19,7 +19,7 @@ export const GlLookup = ({
   onClick = () => {},
 }) => {
   const contextValue = useContext(Context);
-  const { _ = {}, setRecord = () => {} } = contextValue || {};
+  const { record = {}, setRecord = () => {} } = contextValue || {};
   const [showList, setShowList] = useState(false);
   const wrapperRef = useRef(null);
   const listRef = useRef();
@@ -40,7 +40,11 @@ export const GlLookup = ({
 
   const handleChange = (newValue) => {
     // console.log(newValue[fieldInLookup]);
-    setRecord((prev) => ({ ...prev, [field]: newValue[fieldInLookup] }));
+    setRecord((prev) => ({
+      ...prev,
+      [field]: newValue[field],
+      [fieldInLookup]: newValue[fieldInLookup],
+    }));
   };
 
   return (
@@ -52,8 +56,9 @@ export const GlLookup = ({
         setShowList(true);
       }}
     >
+      {JSON.stringify(record)}
       <GlEdit
-        field={field}
+        field={fieldInLookup}
         type={type}
         label={label}
         showLabel={showLabel}
@@ -68,7 +73,11 @@ export const GlLookup = ({
             setShowList(false);
             onClick(row);
           }}
-          where={where}
+          where={{
+            ...where,
+            field: record[field],
+            [fieldInLookup]: record[fieldInLookup],
+          }}
           ref={listRef}
         >
           {(row) => children(row)}

@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import "./GlEdit.css";
+import GlRow from "../GlRow/GlRow";
 
 export const GlEdit = ({
   field,
@@ -38,11 +39,30 @@ export const GlEdit = ({
       )}
       {type == "text" && (
         <input
+          id={field}
           className="edit-input textarea"
           type={type}
           value={record[field] || ""}
           onChange={handleChange}
         />
+      )}
+      {type == "color" && (
+        <GlRow>
+          <input
+            id={field}
+            className="edit-input gl-input"
+            type="text"
+            value={record[field] || ""}
+            onChange={handleChange}
+          />
+          <input
+            id={field + "_picker"}
+            className="gl-input color-picker"
+            type={type}
+            value={record[field] || ""}
+            onChange={handleChange}
+          />
+        </GlRow>
       )}
     </div>
   );
