@@ -1,0 +1,105 @@
+.list-container {
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: white;
+  border-radius: 8px;
+  z-index: 100;
+  margin-top: 4px;
+  padding: 8px 0;
+  border: 1px solid #e0e0e0;
+
+  .list-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 12px;
+    color: #333;
+  }
+
+  .list-item:hover {
+    background-color: #f0f7ff;
+  }
+
+  .no-records {
+    padding: 16px;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+  }
+
+  .list-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px 4px 16px;
+    border-top: 1px solid #eaeaea;
+    margin-top: 8px;
+  }
+
+  .list-info {
+    color: #666;
+    font-size: 12px;
+  }
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .page-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    font-size: 14px;
+    color: #444;
+    transition: all 0.2s ease;
+  }
+
+  .page-btn:hover {
+    background-color: #f5f5f5;
+    border-color: #d0d0d0;
+  }
+
+  .page-btn.active {
+    background-color: #2563eb;
+    color: white;
+    border-color: #2563eb;
+  }
+
+  .page-btn:first-child,
+  .page-btn:last-child {
+    font-size: 12px;
+    color: #555;
+  }
+
+  .page-btn:first-child:hover,
+  .page-btn:last-child:hover {
+    background-color: #edf2ff;
+  }
+
+  .list-container::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .list-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  .list-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+
+  .list-container::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0;
+  }
+}

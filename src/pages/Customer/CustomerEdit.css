@@ -10,3 +10,10 @@
   margin: auto;
   justify-content: center;
 }
+
+.badge-item {
+  padding: 4px 8px;
+  border-radius: 4px;
+  width: min-content;
+  color: aliceblue;
+}

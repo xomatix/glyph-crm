@@ -3,6 +3,8 @@ import { lazy, Suspense } from "react";
 import { Link, Route, Routes, BrowserRouter } from "react-router-dom";
 import AiContextsEdit from "./pages/AiContextsEdit";
 import GlButton from "../components/GlButton/GlButton";
+const BadgesList = lazy(() => import("./pages/Badge/BadgesList"));
+const BadgeEdit = lazy(() => import("./pages/Badge/BadgeEdit"));
 const AiContextsList = lazy(() => import("./pages/AiContextsList"));
 const UsersList = lazy(() => import("./pages/UsersList"));
 const EventsList = lazy(() => import("./pages/Events/EventsList"));
@@ -93,6 +95,32 @@ function App() {
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
               </svg>
               Customers
+            </Link>
+            <Link className="nav-item" to="/badges">
+              <svg
+                className="nav-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M1 5C1 2.79086 2.79086 1 5 1H9.75736C10.8182 1 11.8356 1.42143 12.5858 2.17157L21.5858 11.1716C23.1479 12.7337 23.1479 15.2663 21.5858 16.8284L16.8284 21.5858C15.2663 23.1479 12.7337 23.1479 11.1716 21.5858L2.17157 12.5858C1.42143 11.8356 1 10.8182 1 9.75736V5ZM5 3C3.89543 3 3 3.89543 3 5V9.75736C3 10.2878 3.21071 10.7965 3.58579 11.1716L12.5858 20.1716C13.3668 20.9526 14.6332 20.9526 15.4142 20.1716L20.1716 15.4142C20.9526 14.6332 20.9526 13.3668 20.1716 12.5858L11.1716 3.58579C10.7965 3.21071 10.2878 3 9.75736 3H5Z"
+                  fill="#0F0F0F"
+                />
+                <path
+                  d="M9 7.5C9 8.32843 8.32843 9 7.5 9C6.67157 9 6 8.32843 6 7.5C6 6.67157 6.67157 6 7.5 6C8.32843 6 9 6.67157 9 7.5Z"
+                  fill="#0F0F0F"
+                />
+              </svg>
+              Badges
             </Link>
             <Link className="nav-item" to="/selectors">
               <svg
@@ -193,6 +221,8 @@ function App() {
             <Route path="/customers" element={<CustomersList />} />
             <Route path="/customers/:id" element={<CustomerEdit />} />
             <Route path="/selectors" element={<SelectorsList />} />
+            <Route path="/badges" element={<BadgesList />} />
+            <Route path="/badges/:id" element={<BadgeEdit />} />
             <Route path="/selectors/:id" element={<SelectorEdit />} />
             <Route path="/ai-context" element={<AiContextsList />} />
             <Route path="/ai-context/:id" element={<AiContextsEdit />} />

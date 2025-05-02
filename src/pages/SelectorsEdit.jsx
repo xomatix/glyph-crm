@@ -55,13 +55,12 @@ function SelectorEdit() {
               <GlContainer>
                 <h2>Selector</h2>
 
-                <br />
                 <GlEdit field="selector_name" Context={RecordContext} />
-                <br />
+
                 <GlEdit field="selector_namespace" Context={RecordContext} />
-                <br />
+
                 <GlEdit field="page_size" Context={RecordContext} />
-                <br />
+
                 <GlButton
                   action={async (record) => {
                     console.log(record);
