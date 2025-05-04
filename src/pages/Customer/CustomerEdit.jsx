@@ -17,7 +17,6 @@ function CustomerEdit() {
 
   return (
     <div className="container">
-      Customer Edit ID:{id}
       <GlRecord
         dataSetIdent="glCustomersAll"
         nameSpace="crm"
