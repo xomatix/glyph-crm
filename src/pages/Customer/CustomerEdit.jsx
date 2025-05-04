@@ -8,6 +8,7 @@ import GlContainer from "../../../components/GlContainer/GlContainer";
 import GlRow from "../../../components/GlRow/GlRow";
 import GlList from "../../../components/GlList/GlList";
 import GlLookup from "../../../components/GlLookup/GlLookup";
+import Timeline from "../../../components/Timeline/Timeline";
 
 function CustomerEdit() {
   const { id } = useParams();
@@ -24,130 +25,135 @@ function CustomerEdit() {
       >
         {(RecordContext, record) => (
           <GlContainer>
-            <h2>{record.ident}</h2>
-            <GlRow>
-              <GlButton
-                className="primary"
-                dataSetIdent="glCustomersSave"
-                nameSpace="crm"
-                record={record}
-                afterAction={async (record) => {
-                  if (
-                    record["gl_customers_id"] !== null &&
-                    record["gl_customers_id"] !== Number(id)
-                  ) {
-                    navigate(`/customers/${record["gl_customers_id"]}`);
-                  } else {
-                    navigate(0);
-                  }
-                }}
-              >
-                Save
-              </GlButton>
-              <GlButton
-                className="danger"
-                dataSetIdent="glCustomersDelete"
-                nameSpace="crm"
-                record={record}
-                afterAction={() => {
-                  navigate(`/customers`);
-                }}
-              >
-                Delete
-              </GlButton>
-            </GlRow>
-            <GlEdit
-              field="ident"
-              label="Customer CODE"
-              Context={RecordContext}
-            />
-            <GlEdit field="name" Context={RecordContext} />
-            <GlRow>
-              <GlEdit field="email" Context={RecordContext} />
-              <GlEdit field="phone" Context={RecordContext} />
-            </GlRow>
-            <GlRow>
-              <GlEdit field="city" Context={RecordContext} />
-              <GlEdit field="address" Context={RecordContext} />
-            </GlRow>
-            <GlRecord
-              dataSetIdent="glCustomersAll"
-              nameSpace="crm"
-              where={{ id: id, counter: counter }}
-            >
-              {(RecordBadgeContext, recordBadge) => (
-                <div>
-                  <h2>Badges</h2>
-                  {/* {JSON.stringify(recordBadge)} */}
-                  <GlRow>
-                    <GlLookup
-                      Context={RecordBadgeContext}
-                      nameSpace="crm"
-                      dataSetIdent="glBadgesAll"
-                      field="gl_customers_badge_id"
-                      fieldInLookup="customers_badge_name"
-                      label="New Badge"
-                      where={{ gl_customers_id: id, counter: counter }}
-                    >
-                      {(row) => (
-                        <div
-                          className="badge-item"
-                          style={{ backgroundColor: row.color }}
-                        >
-                          {row.name}
-                        </div>
-                      )}
-                    </GlLookup>
-                    <GlButton
-                      nameSpace="crm"
-                      dataSetIdent="glCustomersBadgesSave"
-                      style={{
-                        margin: "auto 0 0 0",
-                        height: "34px",
-                        textWrap: "nowrap",
-                      }}
-                      record={recordBadge}
-                      afterAction={() => {
-                        setCounter(counter + 1);
-                      }}
-                    >
-                      Add badge to customer
-                    </GlButton>
-                  </GlRow>
-
-                  <GlList
+            <GlRow className="client-edit-row">
+              <div>
+                <h2>{record.ident}</h2>
+                <GlRow>
+                  <GlButton
+                    className="primary"
+                    dataSetIdent="glCustomersSave"
                     nameSpace="crm"
-                    dataSetIdent="glCustomersBadges"
-                    where={{
-                      gl_customers_id: record.gl_customers_id,
-                      counter: counter,
+                    record={record}
+                    afterAction={async (record) => {
+                      if (
+                        record["gl_customers_id"] !== null &&
+                        record["gl_customers_id"] !== Number(id)
+                      ) {
+                        navigate(`/customers/${record["gl_customers_id"]}`);
+                      } else {
+                        navigate(0);
+                      }
                     }}
                   >
-                    {(row) => (
-                      <div className="badge-item">
-                        <div
-                          className="badge"
-                          style={{ backgroundColor: row.color }}
-                        >
-                          {row.name}
-                        </div>
-                        <GlButton
-                          className="danger"
+                    Save
+                  </GlButton>
+                  <GlButton
+                    className="danger"
+                    dataSetIdent="glCustomersDelete"
+                    nameSpace="crm"
+                    record={record}
+                    afterAction={() => {
+                      navigate(`/customers`);
+                    }}
+                  >
+                    Delete
+                  </GlButton>
+                </GlRow>
+                <GlEdit
+                  field="ident"
+                  label="Customer CODE"
+                  Context={RecordContext}
+                />
+                <GlEdit field="name" Context={RecordContext} />
+                <GlRow>
+                  <GlEdit field="email" Context={RecordContext} />
+                  <GlEdit field="phone" Context={RecordContext} />
+                </GlRow>
+                <GlRow>
+                  <GlEdit field="city" Context={RecordContext} />
+                  <GlEdit field="address" Context={RecordContext} />
+                </GlRow>
+                <GlRecord
+                  dataSetIdent="glCustomersAll"
+                  nameSpace="crm"
+                  where={{ id: id, counter: counter }}
+                >
+                  {(RecordBadgeContext, recordBadge) => (
+                    <div>
+                      <h2>Badges</h2>
+                      {/* {JSON.stringify(recordBadge)} */}
+                      <GlRow>
+                        <GlLookup
+                          Context={RecordBadgeContext}
                           nameSpace="crm"
-                          dataSetIdent="glCustomersBadgesDelete"
-                          record={row}
+                          dataSetIdent="glBadgesAll"
+                          field="gl_customers_badge_id"
+                          fieldInLookup="customers_badge_name"
+                          label="New Badge"
+                          where={{ gl_customers_id: id, counter: counter }}
+                        >
+                          {(row) => (
+                            <div
+                              className="badge-item"
+                              style={{ backgroundColor: row.color }}
+                            >
+                              {row.name}
+                            </div>
+                          )}
+                        </GlLookup>
+                        <GlButton
+                          nameSpace="crm"
+                          dataSetIdent="glCustomersBadgesSave"
+                          style={{
+                            margin: "auto 0 0 0",
+                            height: "34px",
+                            textWrap: "nowrap",
+                          }}
+                          record={recordBadge}
                           afterAction={() => {
                             setCounter(counter + 1);
                           }}
                         >
-                          X
+                          Add badge to customer
                         </GlButton>
-                      </div>
-                    )}
-                  </GlList>
-                </div>
-              )}
-            </GlRecord>
+                      </GlRow>
+
+                      <GlList
+                        nameSpace="crm"
+                        dataSetIdent="glCustomersBadges"
+                        where={{
+                          gl_customers_id: record.gl_customers_id,
+                          counter: counter,
+                        }}
+                      >
+                        {(row) => (
+                          <div className="badge-item">
+                            <div
+                              className="badge"
+                              style={{ backgroundColor: row.color }}
+                            >
+                              {row.name}
+                            </div>
+                            <GlButton
+                              className="danger"
+                              nameSpace="crm"
+                              dataSetIdent="glCustomersBadgesDelete"
+                              record={row}
+                              afterAction={() => {
+                                setCounter(counter + 1);
+                              }}
+                            >
+                              X
+                            </GlButton>
+                          </div>
+                        )}
+                      </GlList>
+                    </div>
+                  )}
+                </GlRecord>
+              </div>
+              <Timeline where={{ customer: id }}></Timeline>
+            </GlRow>
           </GlContainer>
         )}
       </GlRecord>

@@ -1,0 +1,59 @@
+.timeline {
+  position: relative;
+  display: flex;
+  .list-container {
+    flex-grow: 1;
+  }
+}
+
+.gl-list {
+  overflow: hidden;
+}
+
+.timeline .list-container {
+  .list-footer {
+    margin-top: auto;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 28px;
+    top: 4px;
+    bottom: 0;
+    width: 2px;
+    background: #e0e0e0;
+  }
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.timeline-icon {
+  width: 24px;
+  z-index: 1000;
+  height: 24px;
+  transform: translateY(50%);
+  border-radius: 50%;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid #e0e0e0;
+}
+
+.timeline-date {
+  color: #666;
+  font-size: 0.9em;
+  margin-bottom: 5px;
+}
+
+.timeline-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
