@@ -8,14 +8,10 @@ export const GlButton = ({
   afterAction = () => {},
   dataSetIdent = "",
   nameSpace = "",
-  Context = null,
+  record = null,
   className = "",
   children,
 }) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const contextValue = Context && useContext(Context);
-  const { record = null } = contextValue || {};
-
   const handleButtonPress = async () => {
     console.log("Button press", record, dataSetIdent, nameSpace);
     if (dataSetIdent === "" || nameSpace === "") {

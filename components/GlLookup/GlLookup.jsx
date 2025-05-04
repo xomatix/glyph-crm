@@ -56,7 +56,6 @@ export const GlLookup = ({
         setShowList(true);
       }}
     >
-      {JSON.stringify(record)}
       <GlEdit
         field={fieldInLookup}
         type={type}
