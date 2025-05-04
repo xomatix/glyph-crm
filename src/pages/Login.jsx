@@ -27,7 +27,7 @@ function Login() {
             <GlButton
               dataSetIdent="userLogin"
               nameSpace="standard"
-              Context={RecordContext}
+              record={record}
               afterAction={async (record) => {
                 if (record["s_id"] !== null && record["s_id"] !== "") {
                   localStorage.setItem("s_id", record["s_id"]);

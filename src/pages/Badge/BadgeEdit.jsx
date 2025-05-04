@@ -26,12 +26,33 @@ function SelectorEdit() {
                 className="primary"
                 dataSetIdent="glBadgesSave"
                 nameSpace="crm"
-                Context={RecordContext}
-                afterAction={() => {
-                  navigate(0);
+                record={record}
+                afterAction={async (insertedRecord) => {
+                  console.log("insertedRecord", insertedRecord);
+                  if (
+                    insertedRecord["gl_customers_badge_id"] !== null &&
+                    insertedRecord["gl_customers_badge_id"] !== Number(id)
+                  ) {
+                    navigate(
+                      `/badges/${insertedRecord["gl_customers_badge_id"]}`
+                    );
+                  } else {
+                    navigate(0);
+                  }
                 }}
               >
                 Save
+              </GlButton>
+              <GlButton
+                className="danger"
+                dataSetIdent="glBadgesDelete"
+                nameSpace="crm"
+                record={record}
+                afterAction={() => {
+                  navigate(`/badges`);
+                }}
+              >
+                Delete
               </GlButton>
               <GlButton
                 className=""

@@ -16,4 +16,9 @@
   border-radius: 4px;
   width: min-content;
   color: aliceblue;
+  display: flex;
+
+  > .gl-button {
+    height: 12px;
+  }
 }

@@ -30,7 +30,7 @@ function CustomerEdit() {
                 className="primary"
                 dataSetIdent="glCustomersSave"
                 nameSpace="crm"
-                Context={RecordContext}
+                record={record}
                 afterAction={async (record) => {
                   if (
                     record["gl_customers_id"] !== null &&
@@ -48,7 +48,7 @@ function CustomerEdit() {
                 className="danger"
                 dataSetIdent="glCustomersDelete"
                 nameSpace="crm"
-                Context={RecordContext}
+                record={record}
                 afterAction={() => {
                   navigate(`/customers`);
                 }}
@@ -78,7 +78,7 @@ function CustomerEdit() {
               {(RecordBadgeContext, recordBadge) => (
                 <div>
                   <h2>Badges</h2>
-                  {JSON.stringify(recordBadge)}
+                  {/* {JSON.stringify(recordBadge)} */}
                   <GlRow>
                     <GlLookup
                       Context={RecordBadgeContext}
@@ -87,7 +87,7 @@ function CustomerEdit() {
                       field="gl_customers_badge_id"
                       fieldInLookup="customers_badge_name"
                       label="New Badge"
-                      where={{ gl_customers_id: id }}
+                      where={{ gl_customers_id: id, counter: counter }}
                     >
                       {(row) => (
                         <div
@@ -99,12 +99,19 @@ function CustomerEdit() {
                       )}
                     </GlLookup>
                     <GlButton
-                      style={{ margin: "auto 0 2px 0", height: "34px" }}
-                      action={() => {
+                      nameSpace="crm"
+                      dataSetIdent="glCustomersBadgesSave"
+                      style={{
+                        margin: "auto 0 0 0",
+                        height: "34px",
+                        textWrap: "nowrap",
+                      }}
+                      record={recordBadge}
+                      afterAction={() => {
                         setCounter(counter + 1);
                       }}
                     >
-                      dodaj {counter}
+                      Add badge to customer
                     </GlButton>
                   </GlRow>
 
@@ -121,7 +128,18 @@ function CustomerEdit() {
                         className="badge-item"
                         style={{ backgroundColor: row.color }}
                       >
-                        {row.name}
+                        {row.name}{" "}
+                        <GlButton
+                          className="danger"
+                          nameSpace="crm"
+                          dataSetIdent="glCustomersBadgesDelete"
+                          record={row}
+                          afterAction={() => {
+                            setCounter(counter + 1);
+                          }}
+                        >
+                          X
+                        </GlButton>
                       </div>
                     )}
                   </GlList>

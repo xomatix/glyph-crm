@@ -62,9 +62,9 @@ function UsersList() {
       </GlRecord>
       Books List
       <GlContainer>
-        <GlList nameSpace={"bookstore"} dataSetIdent={"booksFnAll"}>
+        {/* <GlList nameSpace={"bookstore"} dataSetIdent={"booksFnAll"}>
           {(row) => <div>{JSON.stringify(row)}</div>}
-        </GlList>
+        </GlList> */}
       </GlContainer>
     </div>
   );
