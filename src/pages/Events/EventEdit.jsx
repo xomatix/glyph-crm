@@ -6,6 +6,7 @@ import GlEdit from "../../../components/GlEdit/GlEdit";
 import GlButton from "../../../components/GlButton/GlButton";
 import GlContainer from "../../../components/GlContainer/GlContainer";
 import GlRow from "../../../components/GlRow/GlRow";
+import GlLookup from "../../../components/GlLookup/GlLookup";
 
 function CustomerEdit() {
   const { gl_events_id } = useParams();
@@ -30,6 +31,7 @@ function CustomerEdit() {
       >
         {(RecordContext, record) => (
           <GlContainer>
+            {JSON.stringify(record)}
             <GlRow>
               <GlButton
                 className="primary"
@@ -67,6 +69,15 @@ function CustomerEdit() {
 
             <GlEdit field="date" Context={RecordContext} />
 
+            <GlLookup
+              dataSetIdent="glCustomersAll"
+              nameSpace="crm"
+              Context={RecordContext}
+              field={"customer"}
+              fieldInLookup={"ident"}
+            >
+              {(row) => <div>{JSON.stringify(row)}</div>}
+            </GlLookup>
             <GlEdit field="customer" Context={RecordContext} />
 
             <GlEdit field="type" Context={RecordContext} />

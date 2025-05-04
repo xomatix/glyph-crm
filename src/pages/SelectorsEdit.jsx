@@ -71,7 +71,7 @@ function SelectorEdit() {
                       record["page_size"]
                     );
                   }}
-                  Context={RecordContext}
+                  record={record}
                   afterAction={async (record) => {
                     console.log(record);
                     if (

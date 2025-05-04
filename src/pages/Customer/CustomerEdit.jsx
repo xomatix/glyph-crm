@@ -124,11 +124,13 @@ function CustomerEdit() {
                     }}
                   >
                     {(row) => (
-                      <div
-                        className="badge-item"
-                        style={{ backgroundColor: row.color }}
-                      >
-                        {row.name}{" "}
+                      <div className="badge-item">
+                        <div
+                          className="badge"
+                          style={{ backgroundColor: row.color }}
+                        >
+                          {row.name}
+                        </div>
                         <GlButton
                           className="danger"
                           nameSpace="crm"
