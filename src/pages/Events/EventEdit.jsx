@@ -66,7 +66,7 @@ function CustomerEdit() {
 
             <GlEdit field="desc" Context={RecordContext} />
 
-            <GlEdit field="date" Context={RecordContext} />
+            <GlEdit field="date" type="datetime" Context={RecordContext} />
 
             <GlRow>
               <GlLookup

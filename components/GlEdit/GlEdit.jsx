@@ -64,6 +64,15 @@ export const GlEdit = ({
           />
         </GlRow>
       )}
+      {type == "datetime" && (
+        <input
+          id={field}
+          className="gl-date gl-input"
+          type="datetime-local"
+          value={record[field]}
+          onChange={handleChange}
+        />
+      )}
     </div>
   );
 };

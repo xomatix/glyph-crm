@@ -27,7 +27,8 @@ function CustomerEdit() {
           <GlContainer>
             <GlRow className="client-edit-row">
               <div>
-                <h2>{record.ident}</h2>
+                <h2>Customer Edit ID:{id}</h2>
+                <h2>{record.ident} </h2>
                 <GlRow>
                   <GlButton
                     className="primary"
