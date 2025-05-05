@@ -14,6 +14,7 @@ const CustomerEdit = lazy(() => import("./pages/Customer/CustomerEdit"));
 const SelectorEdit = lazy(() => import("./pages/SelectorsEdit"));
 const SelectorsList = lazy(() => import("./pages/SelectorsList"));
 const Login = lazy(() => import("./pages/Login"));
+const Calendar = lazy(() => import("./pages/calendar"));
 
 function App() {
   return (
@@ -140,6 +141,24 @@ function App() {
               </svg>
               Selectors
             </Link>
+            <Link className="nav-item" to="/Calendar">
+              <svg
+                className="nav-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M3 4V2H5V4H3ZM3 4V6H5V4H3ZM3 4V6H5V4H3Z"></path>
+                <path d="M12 3C8.34 3 6 5.67 6 8C6 10.33 8.34 13 12 13C15.66 13 18 10.33 18 8C18 5.67 15.66 3 12 3ZM12 11C9.79 11 8 9.21 8 8C8 6.79 9.79 5 12 5C14.21 5 16 6.79 16 8C16 9.21 14.21 11 12 11Z"></path>
+              </svg>
+              Calendar
+            </Link>
             <Link className="nav-item" to="/ai-context">
               <svg
                 className="nav-icon"
@@ -227,6 +246,7 @@ function App() {
             <Route path="/ai-context" element={<AiContextsList />} />
             <Route path="/ai-context/:id" element={<AiContextsEdit />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/calendar" element={<Calendar />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
