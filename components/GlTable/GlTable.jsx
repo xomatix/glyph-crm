@@ -91,7 +91,11 @@ const GlTable = forwardRef(
                 rows.map((row, index) => (
                   <tr key={index} onClick={() => onRowClick(row)}>
                     {headers.map((header, idx) => (
-                      <td key={`${index}_${idx}`}>{row[header]}</td>
+                      <td key={`${index}_${idx}`}>
+                        {typeof row[header] == "object"
+                          ? JSON.stringify(row[header])
+                          : row[header]}
+                      </td>
                     ))}
                   </tr>
                 ))}

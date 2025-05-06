@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react";
 import { Link, Route, Routes, BrowserRouter } from "react-router-dom";
 import AiContextsEdit from "./pages/AiContextsEdit";
 import GlButton from "../components/GlButton/GlButton";
+import RecordLogs from "./pages/RecordLogs/RecordsLogs";
 const BadgesList = lazy(() => import("./pages/Badge/BadgesList"));
 const BadgeEdit = lazy(() => import("./pages/Badge/BadgeEdit"));
 const AiContextsList = lazy(() => import("./pages/AiContextsList"));
@@ -247,6 +248,7 @@ function App() {
             <Route path="/ai-context/:id" element={<AiContextsEdit />} />
             <Route path="/login" element={<Login />} />
             <Route path="/calendar" element={<Calendar />} />
+            <Route path="/logs/:table_name/:id" element={<RecordLogs />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

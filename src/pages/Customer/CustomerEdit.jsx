@@ -58,6 +58,15 @@ function CustomerEdit() {
                   >
                     Delete
                   </GlButton>
+                  <GlButton
+                    className="info"
+                    record={record}
+                    action={() => {
+                      navigate(`/logs/gl_customers/${id}`);
+                    }}
+                  >
+                    Logs
+                  </GlButton>
                 </GlRow>
                 <GlEdit
                   field="ident"
