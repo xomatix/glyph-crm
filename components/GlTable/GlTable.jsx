@@ -9,10 +9,36 @@ import "./GlTable.css";
 import GlButton from "../GlButton/GlButton";
 
 const GlTable = forwardRef(
-  ({ nameSpace, dataSetIdent, onRowClick = () => {}, where = {} }, ref) => {
+  (
+    {
+      nameSpace,
+      dataSetIdent,
+      onRowClick = () => {},
+      where = {},
+      headers = [], // [{label: "ID", field: "table_name_id"}]
+      children,
+    },
+    ref
+  ) => {
     const [rows, setRows] = useState([]);
-    const [headers, setHeaders] = useState([]);
+    const [tableHeadersLabels, setTableHeadersLabels] = useState([]);
+    const [tableHeaders, setTableHeaders] = useState([]);
     const [page, setPage] = useState(1);
+    const [slotMap, setSlotMap] = useState({});
+
+    function loadSlots() {
+      let formSlotMap = {};
+      React.Children.forEach(children, (child) => {
+        // console.log("children ", child);
+        // console.log(React.Children);
+
+        const slotName = child.props.slot;
+        if (slotName) {
+          formSlotMap[slotName] = child;
+        }
+      });
+      setSlotMap(formSlotMap);
+    }
 
     async function refresh() {
       let response = await service.select(nameSpace, dataSetIdent, {
@@ -21,7 +47,19 @@ const GlTable = forwardRef(
       });
       setRows(response);
       if (response.length > 0) {
-        setHeaders(Object.keys(response[0]));
+        setTableHeaders(
+          Object.keys(response[0]).map((h) => {
+            return { field: h, label: h };
+          })
+        );
+        setTableHeadersLabels(Object.keys(response[0]));
+      }
+
+      // Custom headers will override the headers from query
+      if (headers.length > 0) {
+        setTableHeadersLabels(headers.map((h) => h.label));
+        setTableHeaders(headers);
+        return;
       }
     }
 
@@ -36,6 +74,7 @@ const GlTable = forwardRef(
     }
 
     useEffect(() => {
+      loadSlots();
       refresh();
     }, [page]);
 
@@ -52,7 +91,11 @@ const GlTable = forwardRef(
           <div class="table-header">
             <div class="table-title">Title</div>
             <div class="table-actions">
-              <GlButton onClick={() => refresh()}>
+              <GlButton
+                action={() => {
+                  refresh();
+                }}
+              >
                 <svg
                   width="18"
                   height="18"
@@ -74,13 +117,13 @@ const GlTable = forwardRef(
 
           <table>
             <colgroup>
-              {headers.map((_, index) => (
+              {tableHeadersLabels.map((_, index) => (
                 <col key={index}></col>
               ))}
             </colgroup>
             <thead>
               <tr>
-                {headers.map((header, idx) => (
+                {tableHeadersLabels.map((header, idx) => (
                   <th key={`${idx}`}>{header}</th>
                 ))}
               </tr>
@@ -90,18 +133,17 @@ const GlTable = forwardRef(
                 rows.length > 0 &&
                 rows.map((row, index) => (
                   <tr key={index} onClick={() => onRowClick(row)}>
-                    {headers.map((header, idx) => (
+                    {tableHeaders.map((header, idx) => (
                       <td key={`${index}_${idx}`}>
-                        {typeof row[header] == "object"
-                          ? JSON.stringify(row[header])
-                          : row[header]}
+                        {slotMap[header.field]
+                          ? slotMap[header.field].props.children(row)
+                          : row[header.field]}
                       </td>
                     ))}
                   </tr>
                 ))}
             </tbody>
           </table>
-
           <div className="table-footer">
             <div className="table-info">
               {/* Wyświetlanie 1-5 z 25 zadań */}
