@@ -13,6 +13,12 @@ function SelectorsList() {
         onRowClick={(row) => {
           navigate(`/selectors/${row.gl_selectors_id}`);
         }}
+        headers={[
+          // { label: "ID", field: "gl_selectors_id" },
+          { label: "Namespace", field: "selector_namespace" },
+          { label: "Selector name", field: "selector_name" },
+          { label: "Page size", field: "page_size" },
+        ]}
       />
     </div>
   );
