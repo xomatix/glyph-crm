@@ -22,69 +22,89 @@ function CustomerEdit() {
         {(RecordContext, record) => (
           <GlContainer>
             {gl_events_id != 0 && (
-                        <GlRow>
-              <GlButton
-                className="primary"
-                dataSetIdent="glEventsSave"
-                nameSpace="crm"
-                record={record}
-                afterAction={async (record) => {
-                  if (
-                    record["gl_events_id"] !== null &&
-                    record["gl_events_id"] !== Number(gl_events_id)
-                  ) {
-                    navigate(`/event/${record["gl_events_id"]}`);
-                  } else {
-                    navigate(0);
-                  }
-                }}
-              >
-                Save
-              </GlButton>
-              <GlButton
-                className="danger"
-                dataSetIdent="glEventsDelete"
-                nameSpace="crm"
-                record={record}
-                afterAction={() => {
-                  navigate(`/events`);
-                }}
-              >
-                Delete
-              </GlButton>
-              <GlButton
-                className="info"
-                record={record}
-                action={() => {
-                  navigate(`/logs/gl_events/${gl_events_id}`);
-                }}
-              >
-                Logs
-              </GlButton>
-            </GlRow>
-
-              )}
-                {gl_events_id == 0 && (
-                <GlRow>
-              <GlButton
-                className="primary"
-                dataSetIdent="glEventsSave"
-                nameSpace="crm"
-                record={record}
-                afterAction={() => {
-                  navigate(`/events`);
-                }}
-              >
-                Save
-              </GlButton>
-            </GlRow>
-              )}
+              <GlRow>
+                <GlButton
+                  className="primary"
+                  dataSetIdent="glEventsSave"
+                  nameSpace="crm"
+                  record={record}
+                  afterAction={async (record) => {
+                    if (
+                      record["gl_events_id"] !== null &&
+                      record["gl_events_id"] !== Number(gl_events_id)
+                    ) {
+                      navigate(`/event/${record["gl_events_id"]}`);
+                    } else {
+                      navigate(0);
+                    }
+                  }}
+                >
+                  Save
+                </GlButton>
+                <GlButton
+                  className="danger"
+                  dataSetIdent="glEventsDelete"
+                  nameSpace="crm"
+                  record={record}
+                  afterAction={() => {
+                    navigate(`/events`);
+                  }}
+                >
+                  Delete
+                </GlButton>
+                <GlButton
+                  className=""
+                  action={() => {
+                    navigate(-1);
+                  }}
+                >
+                  Close
+                </GlButton>
+                <GlButton
+                  className="info"
+                  record={record}
+                  action={() => {
+                    navigate(`/logs/gl_events/${gl_events_id}`);
+                  }}
+                >
+                  Logs
+                </GlButton>
+              </GlRow>
+            )}
+            {gl_events_id == 0 && (
+              <GlRow>
+                <GlButton
+                  className="primary"
+                  dataSetIdent="glEventsSave"
+                  nameSpace="crm"
+                  record={record}
+                  afterAction={() => {
+                    navigate(`/events`);
+                  }}
+                >
+                  Save
+                </GlButton>
+                <GlButton
+                  className=""
+                  action={() => {
+                    navigate(-1);
+                  }}
+                >
+                  Close
+                </GlButton>
+              </GlRow>
+            )}
 
             <GlEdit field="title" label="Title" Context={RecordContext} />
 
             <GlEdit field="desc" label="Description" Context={RecordContext} />
 
-            <GlEdit field="date" label="Date" type="datetime" Context={RecordContext} />
+            <GlEdit
+              field="date"
+              label="Date"
+              type="datetime"
+              Context={RecordContext}
+            />
 
             <GlRow>
               <GlLookup
@@ -124,23 +144,28 @@ function CustomerEdit() {
               </GlButton>
             </GlRow>
 
-              {gl_events_id != 0 && (
-            <GlEdit field="typename" label="Type" Context={RecordContext} readOnly />
-              )}
+            {gl_events_id != 0 && (
+              <GlEdit
+                field="typename"
+                label="Type"
+                Context={RecordContext}
+                readOnly
+              />
+            )}
 
-              {gl_events_id == 0 && (
-            <GlLookup
-              dataSetIdent="glTypesAll"
-              nameSpace="crm"
-              Context={RecordContext}
-              field={"type"}
-              fieldInLookup={"typename"}
-              label="Type"
-              where={{ companies_id: 1 }}
+            {gl_events_id == 0 && (
+              <GlLookup
+                dataSetIdent="glTypesAll"
+                nameSpace="crm"
+                Context={RecordContext}
+                field={"type"}
+                fieldInLookup={"typename"}
+                label="Type"
+                where={{ companies_id: 1 }}
               >
-              {(row) => <div >{row.typename}</div>}
-            </GlLookup>
-              )}
+                {(row) => <div>{row.typename}</div>}
+              </GlLookup>
+            )}
 
             <GlLookup
               dataSetIdent="glEventsStatusAll"
@@ -150,8 +175,10 @@ function CustomerEdit() {
               fieldInLookup={"statusname"}
               label="Status"
               where={{ type: record.type }}
-              >
-              {(row) => <div style={{ backgroundColor: row.color }}>{row.name}</div>}
+            >
+              {(row) => (
+                <div style={{ backgroundColor: row.color }}>{row.name}</div>
+              )}
             </GlLookup>
           </GlContainer>
         )}

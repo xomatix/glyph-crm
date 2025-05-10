@@ -9,6 +9,14 @@ function SelectorsList() {
   return (
     <div className="selectors-list">
       Events
+      <GlButton
+        className="primary"
+        afterAction={() => {
+          navigate(`/event/0`);
+        }}
+      >
+        Add new event
+      </GlButton>
       <GlTable
         nameSpace={"crm"}
         dataSetIdent={"glEventsAll"}
@@ -34,6 +42,11 @@ function SelectorsList() {
             >
               {row.title}
             </div>
+          )}
+        </GlSlot>
+        <GlSlot slot="date">
+          {(row) => (
+            <div>{row.date.replace("T", " ").substring(0, 19)}</div>
           )}
         </GlSlot>
         <GlSlot slot="ident">
