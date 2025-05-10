@@ -23,18 +23,19 @@ function Calendar() {
     const data = await service.select("crm", "glEventsAll", {});
 
     const parsedEvents = data.map((item) => {
-      const eventColor = eventTypeColorMap[item.type] || "#999"; 
+      const eventColor = eventTypeColorMap[item.type] || "#999";
 
       return {
         id: item.gl_events_id,
-        title: item.tytuł,
-        start: item.data,
-        end: item.data,
+        title: item.title,
+        start: item.date,
+        end: item.date,
         extendedProps: {
-          description: item.opis,
+          description: item.desc,
           customerIdent: item.ident,
-          user: item.użytkownik,
-          statusName: item.status,
+          user: item.gl_username,
+          statusName: item.statusname,
+          typeName: item.typename,
           eventColor,
         },
         backgroundColor: eventColor,
@@ -93,6 +94,7 @@ function Calendar() {
               <p className="text-sm"><strong>Status:</strong> {selectedEvent.statusName}</p>
               <p className="text-sm"><strong>Customer:</strong> {selectedEvent.customerIdent}</p>
               <p className="text-sm"><strong>User:</strong> {selectedEvent.user}</p>
+              <p className="text-sm"><strong>Type:</strong> {selectedEvent.typeName}</p>
             </div>
             <div className="mt-4">
               <p className="text-sm font-semibold mb-2">Description:</p>
