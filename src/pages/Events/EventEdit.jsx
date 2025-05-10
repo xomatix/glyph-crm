@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router";
-//import "./CustomerEdit.css";
+import "./EventEdit.css";
 import GlRecord from "../../../components/GlRecord/GlRecord";
 import GlEdit from "../../../components/GlEdit/GlEdit";
 import GlButton from "../../../components/GlButton/GlButton";
@@ -14,16 +14,6 @@ function CustomerEdit() {
 
   return (
     <div className="container">
-      <div style={{ display: "flex" }}>
-        Event Name:
-        <GlRecord
-          dataSetIdent="glEventsAll"
-          nameSpace="crm"
-          where={{ gl_events_id: gl_events_id }}
-        >
-          {(RecordContext, record) => <div> {record.title} </div>}
-        </GlRecord>
-      </div>
       <GlRecord
         dataSetIdent="glEventsAll"
         nameSpace="crm"
@@ -31,7 +21,8 @@ function CustomerEdit() {
       >
         {(RecordContext, record) => (
           <GlContainer>
-            <GlRow>
+            {gl_events_id != 0 && (
+                        <GlRow>
               <GlButton
                 className="primary"
                 dataSetIdent="glEventsSave"
@@ -42,7 +33,7 @@ function CustomerEdit() {
                     record["gl_events_id"] !== null &&
                     record["gl_events_id"] !== Number(gl_events_id)
                   ) {
-                    navigate(`/customers/${record["gl_events_id"]}`);
+                    navigate(`/event/${record["gl_events_id"]}`);
                   } else {
                     navigate(0);
                   }
@@ -52,7 +43,7 @@ function CustomerEdit() {
               </GlButton>
               <GlButton
                 className="danger"
-                dataSetIdent="glCustomersDelete"
+                dataSetIdent="glEventsDelete"
                 nameSpace="crm"
                 record={record}
                 afterAction={() => {
@@ -62,11 +53,29 @@ function CustomerEdit() {
                 Delete
               </GlButton>
             </GlRow>
-            <GlEdit field="title" Context={RecordContext} />
 
-            <GlEdit field="desc" Context={RecordContext} />
+              )}
+                {gl_events_id == 0 && (
+                <GlRow>
+              <GlButton
+                className="primary"
+                dataSetIdent="glEventsSave"
+                nameSpace="crm"
+                record={record}
+                afterAction={() => {
+                  navigate(`/events`);
+                }}
+              >
+                Save
+              </GlButton>
+            </GlRow>
+              )}
 
-            <GlEdit field="date" type="datetime" Context={RecordContext} />
+            <GlEdit field="title" label="Title" Context={RecordContext} />
+
+            <GlEdit field="desc" label="Description" Context={RecordContext} />
+
+            <GlEdit field="date" label="Date" type="datetime" Context={RecordContext} />
 
             <GlRow>
               <GlLookup
@@ -75,8 +84,9 @@ function CustomerEdit() {
                 Context={RecordContext}
                 field={"customer"}
                 fieldInLookup={"ident"}
+                label="Customer"
               >
-                {(row) => <div>{JSON.stringify(row)}</div>}
+                {(row) => <div>{row.ident}</div>}
               </GlLookup>
               <GlButton
                 className="primary"
@@ -104,11 +114,36 @@ function CustomerEdit() {
                 </svg>
               </GlButton>
             </GlRow>
-            <GlEdit field="customer" Context={RecordContext} />
 
-            <GlEdit field="type" Context={RecordContext} />
+              {gl_events_id != 0 && (
+            <GlEdit field="typename" label="Type" Context={RecordContext} readOnly />
+              )}
 
-            <GlEdit field="status" Context={RecordContext} />
+              {gl_events_id == 0 && (
+            <GlLookup
+              dataSetIdent="glTypesAll"
+              nameSpace="crm"
+              Context={RecordContext}
+              field={"type"}
+              fieldInLookup={"typename"}
+              label="Type"
+              where={{ companies_id: 1 }}
+              >
+              {(row) => <div >{row.typename}</div>}
+            </GlLookup>
+              )}
+
+            <GlLookup
+              dataSetIdent="glEventsStatusAll"
+              nameSpace="crm"
+              Context={RecordContext}
+              field={"status"}
+              fieldInLookup={"statusname"}
+              label="Status"
+              where={{ type: record.type }}
+              >
+              {(row) => <div style={{ backgroundColor: row.color }}>{row.name}</div>}
+            </GlLookup>
           </GlContainer>
         )}
       </GlRecord>

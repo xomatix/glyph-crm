@@ -10,6 +10,7 @@ export const GlEdit = ({
   onFocus = () => {},
   onBlur = () => {},
   Context,
+  readOnly = false,
 }) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const contextValue = Context && useContext(Context);
@@ -32,7 +33,7 @@ export const GlEdit = ({
       {showLabel && <label>{label}</label>}
       {type == "textarea" && (
         <textarea
-          className="edit-input textarea"
+          className={`edit-input textarea${readOnly ? " readOnly" : ""}`}
           value={record[field] || ""}
           onChange={handleChange}
         />
@@ -40,7 +41,7 @@ export const GlEdit = ({
       {type == "text" && (
         <input
           id={field}
-          className="edit-input textarea"
+          className={`edit-input textarea${readOnly ? " readOnly" : ""}`}
           type={type}
           value={record[field] || ""}
           onChange={handleChange}
@@ -50,14 +51,14 @@ export const GlEdit = ({
         <GlRow>
           <input
             id={field}
-            className="edit-input gl-input"
+            className={`edit-input textarea${readOnly ? " readOnly" : ""}`}
             type="text"
             value={record[field] || ""}
             onChange={handleChange}
           />
           <input
             id={field + "_picker"}
-            className="gl-input color-picker"
+            className={`edit-input textarea${readOnly ? " readOnly" : ""}`}
             type={type}
             value={record[field] || ""}
             onChange={handleChange}
@@ -67,7 +68,7 @@ export const GlEdit = ({
       {type == "datetime" && (
         <input
           id={field}
-          className="gl-date gl-input"
+          className={`edit-input textarea${readOnly ? " readOnly" : ""}`}
           type="datetime-local"
           value={record[field]}
           onChange={handleChange}
