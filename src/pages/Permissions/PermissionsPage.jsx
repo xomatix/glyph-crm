@@ -7,10 +7,12 @@ import "./PermissionsPage.css";
 import GlModal from "../../../components/GlModal/GlModal";
 import GlButton from "../../../components/GlButton/GlButton";
 import GlRow from "../../../components/GlRow/GlRow";
+import service from "../../../glService/glService";
 
 function PermissionsPage() {
   const rolesListRef = useRef();
   const permissionsListRef = useRef();
+  const rolePermLinkListRef = useRef();
   const [permissionId, setPermissionId] = useState(null);
   const [roleId, setRoleId] = useState(null);
 
@@ -22,6 +24,12 @@ function PermissionsPage() {
   const refreshRoles = () => {
     if (rolesListRef != null && rolesListRef.current != null) {
       rolesListRef.current.refresh();
+    }
+  };
+  const refreshPermRoleLink = () => {
+    console.log(rolePermLinkListRef);
+    if (rolePermLinkListRef != null && rolePermLinkListRef.current != null) {
+      rolePermLinkListRef.current.refresh();
     }
   };
 
@@ -74,9 +82,63 @@ function PermissionsPage() {
           where={{ gl_users_roles_id: roleId }}
         >
           {(RecordContext, record) => (
-            <div className="modal-record">
+            <div className="modal-record role-list">
               <GlEdit Context={RecordContext} field="name" />
-
+              <GlEdit
+                Context={RecordContext}
+                field="permission_name"
+                label={"search permission"}
+                onBlur={() => refreshPermRoleLink()}
+              />
+              <GlList
+                ref={rolePermLinkListRef}
+                nameSpace="standard"
+                dataSetIdent="glPermissions"
+                where={{
+                  gl_users_roles_id: roleId,
+                  name: record.permission_name,
+                }}
+                onClick={async (row) => {
+                  if (row.gl_users_roles_id != null)
+                    await service.select(
+                      "standard",
+                      "glPermissionsRolesLinkDelete",
+                      {
+                        rows: [
+                          {
+                            gl_permissions_roles_link_id:
+                              row.gl_permissions_roles_link_id,
+                          },
+                        ],
+                      }
+                    );
+                  else
+                    await service.select(
+                      "standard",
+                      "glPermissionsRolesLinkSave",
+                      {
+                        rows: [
+                          {
+                            gl_permissions_id: row.gl_permissions_id,
+                            gl_users_roles_id: roleId,
+                          },
+                        ],
+                      }
+                    );
+                  refreshPermRoleLink();
+                }}
+              >
+                {(row) => (
+                  <div className="role-list-item">
+                    {row.name}
+                    <input
+                      className="role-set-checkbox"
+                      type="checkbox"
+                      checked={row.gl_users_roles_id != null}
+                    />
+                  </div>
+                )}
+              </GlList>
               <GlRow>
                 <GlButton
                   nameSpace="standard"
