@@ -1,0 +1,14 @@
+.card {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.modal-record {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .gl-row button {
+    width: 100%;
+  }
+}
