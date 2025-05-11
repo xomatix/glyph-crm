@@ -25,7 +25,7 @@ function CustomerEdit() {
       >
         {(RecordContext, record) => (
           <GlContainer>
-            <GlEdit field="type" label="Type ID" Context={RecordContext} />
+            <GlEdit field="type" label="Type ID" Context={RecordContext} readOnly/>
 
             <GlEdit
               field="typename"
@@ -37,6 +37,14 @@ function CustomerEdit() {
               field="gl_company_name"
               label="Company"
               Context={RecordContext}
+              readOnly
+            />
+
+            <GlEdit
+              field="color"
+              label="Color"
+              Context={RecordContext}
+              type="color"
             />
 
             <h2>Statuses connected to a type</h2>

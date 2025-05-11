@@ -58,7 +58,7 @@ export const GlEdit = ({
           />
           <input
             id={field + "_picker"}
-            className={`edit-input textarea${readOnly ? " readOnly" : ""}`}
+            className={`edit-input color-picker textarea${readOnly ? " readOnly" : ""}`}
             type={type}
             value={record[field] || ""}
             onChange={handleChange}
