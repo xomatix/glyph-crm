@@ -9,6 +9,9 @@ const BadgeEdit = lazy(() => import("./pages/Badge/BadgeEdit"));
 const AiContextsList = lazy(() => import("./pages/AiContextsList"));
 const UsersList = lazy(() => import("./pages/UsersList"));
 const EventsList = lazy(() => import("./pages/Events/EventsList"));
+const StatusesList = lazy(() => import("./pages/Statuses/StatusesList"));
+const TypesList = lazy(() => import("./pages/Types/TypesList"));
+const TypeEdit = lazy(() => import("./pages/Types/TypeEdit"));
 const EventsEdit = lazy(() => import("./pages/Events/EventEdit"));
 const CustomersList = lazy(() => import("./pages/Customer/CustomersList"));
 const CustomerEdit = lazy(() => import("./pages/Customer/CustomerEdit"));
@@ -77,6 +80,24 @@ function App() {
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
               Events
+            </Link>
+            <Link className="nav-item" to="/statuses">
+              <svg
+                className="nav-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              Statuses
             </Link>
             <Link className="nav-item" to="/customers">
               <svg
@@ -179,6 +200,25 @@ function App() {
               </svg>
               AI Context
             </Link>
+            <Link className="nav-item" to="/types">
+              <svg
+                className="nav-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="3" y1="9" x2="21" y2="9"></line>
+                <line x1="9" y1="21" x2="9" y2="9"></line>
+              </svg>
+              Types
+            </Link>
             {localStorage.getItem("s_id") === "" && (
               <Link className="login-btn nav-item" to="/login">
                 <svg
@@ -236,6 +276,9 @@ function App() {
           <Routes>
             <Route path="/" element={<h2>Home Page</h2>} />
             <Route path="/users" element={<UsersList />} />
+            <Route path="/statuses" element={<StatusesList />} />
+            <Route path="/types" element={<TypesList />} />
+            <Route path="/type/:gl_events_id" element={<TypeEdit />} />
             <Route path="/events" element={<EventsList />} />
             <Route path="/event/:gl_events_id" element={<EventsEdit />} />
             <Route path="/customers" element={<CustomersList />} />
