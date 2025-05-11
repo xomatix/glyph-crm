@@ -76,7 +76,7 @@ const GlTable = forwardRef(
     useEffect(() => {
       loadSlots();
       refresh();
-    }, [page]);
+    }, [page, where]);
 
     useImperativeHandle(ref, () => ({
       refresh: async () => {
