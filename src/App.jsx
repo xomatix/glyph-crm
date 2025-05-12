@@ -4,10 +4,12 @@ import { Link, Route, Routes, BrowserRouter } from "react-router-dom";
 import AiContextsEdit from "./pages/AiContextsEdit";
 import GlButton from "../components/GlButton/GlButton";
 import RecordLogs from "./pages/RecordLogs/RecordsLogs";
+import service from "../glService/glService";
 const BadgesList = lazy(() => import("./pages/Badge/BadgesList"));
 const BadgeEdit = lazy(() => import("./pages/Badge/BadgeEdit"));
 const AiContextsList = lazy(() => import("./pages/AiContextsList"));
-const UsersList = lazy(() => import("./pages/UsersList"));
+const UsersList = lazy(() => import("./pages/Users/UsersList"));
+const UserEdit = lazy(() => import("./pages/Users/UserEdit"));
 const EventsList = lazy(() => import("./pages/Events/EventsList"));
 const StatusesList = lazy(() => import("./pages/Statuses/StatusesList"));
 const TypesList = lazy(() => import("./pages/Types/TypesList"));
@@ -293,10 +295,12 @@ function App() {
             )}
           </div>
         </nav>
+        {/* <div onClick={() => getMenuPermissinos()}>permissions</div> */}
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<h2>Home Page</h2>} />
             <Route path="/users" element={<UsersList />} />
+            <Route path="/users/:id" element={<UserEdit />} />
             <Route path="/statuses" element={<StatusesList />} />
             <Route path="/types" element={<TypesList />} />
             <Route path="/type/:gl_events_id" element={<TypeEdit />} />
@@ -319,6 +323,11 @@ function App() {
       </BrowserRouter>
     </>
   );
+}
+
+async function getMenuPermissinos() {
+  const result = await service.select("crm", "glMenuPermissions", {});
+  console.log(result);
 }
 
 export default App;
