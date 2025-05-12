@@ -1,10 +1,11 @@
 import "./App.css";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Link, Route, Routes, BrowserRouter } from "react-router-dom";
 import AiContextsEdit from "./pages/AiContextsEdit";
 import GlButton from "../components/GlButton/GlButton";
 import RecordLogs from "./pages/RecordLogs/RecordsLogs";
 import service from "../glService/glService";
+import { useState } from "react";
 const BadgesList = lazy(() => import("./pages/Badge/BadgesList"));
 const BadgeEdit = lazy(() => import("./pages/Badge/BadgeEdit"));
 const AiContextsList = lazy(() => import("./pages/AiContextsList"));
@@ -26,6 +27,16 @@ const PermissionsPage = lazy(() =>
 );
 
 function App() {
+  const [userRoles, setUserRoles] = useState([]);
+
+  async function loadRoles() {
+    const result = await getMenuPermissions();
+    setUserRoles(result);
+  }
+  useEffect(() => {
+    loadRoles();
+  }, []);
+
   return (
     <>
       <BrowserRouter>
@@ -50,24 +61,26 @@ function App() {
               </svg>
               Home
             </Link>
-            <Link className="nav-item" to="/users">
-              <svg
-                className="nav-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-              Users
-            </Link>
+            {userRoles.includes("admin") && (
+              <Link className="nav-item" to="/users">
+                <svg
+                  className="nav-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                Users
+              </Link>
+            )}
             <Link className="nav-item" to="/events">
               <svg
                 className="nav-icon"
@@ -86,24 +99,27 @@ function App() {
               </svg>
               Events
             </Link>
-            <Link className="nav-item" to="/statuses">
-              <svg
-                className="nav-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-              Statuses
-            </Link>
+            {userRoles.includes("admin") && (
+              <Link className="nav-item" to="/statuses">
+                <svg
+                  className="nav-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                Statuses
+              </Link>
+            )}
+
             <Link className="nav-item" to="/customers">
               <svg
                 className="nav-icon"
@@ -124,50 +140,56 @@ function App() {
               </svg>
               Customers
             </Link>
-            <Link className="nav-item" to="/badges">
-              <svg
-                className="nav-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M1 5C1 2.79086 2.79086 1 5 1H9.75736C10.8182 1 11.8356 1.42143 12.5858 2.17157L21.5858 11.1716C23.1479 12.7337 23.1479 15.2663 21.5858 16.8284L16.8284 21.5858C15.2663 23.1479 12.7337 23.1479 11.1716 21.5858L2.17157 12.5858C1.42143 11.8356 1 10.8182 1 9.75736V5ZM5 3C3.89543 3 3 3.89543 3 5V9.75736C3 10.2878 3.21071 10.7965 3.58579 11.1716L12.5858 20.1716C13.3668 20.9526 14.6332 20.9526 15.4142 20.1716L20.1716 15.4142C20.9526 14.6332 20.9526 13.3668 20.1716 12.5858L11.1716 3.58579C10.7965 3.21071 10.2878 3 9.75736 3H5Z"
-                  fill="#0F0F0F"
-                />
-                <path
-                  d="M9 7.5C9 8.32843 8.32843 9 7.5 9C6.67157 9 6 8.32843 6 7.5C6 6.67157 6.67157 6 7.5 6C8.32843 6 9 6.67157 9 7.5Z"
-                  fill="#0F0F0F"
-                />
-              </svg>
-              Badges
-            </Link>
-            <Link className="nav-item" to="/selectors">
-              <svg
-                className="nav-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-              Selectors
-            </Link>
+
+            {userRoles.includes("admin") && (
+              <Link className="nav-item" to="/badges">
+                <svg
+                  className="nav-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M1 5C1 2.79086 2.79086 1 5 1H9.75736C10.8182 1 11.8356 1.42143 12.5858 2.17157L21.5858 11.1716C23.1479 12.7337 23.1479 15.2663 21.5858 16.8284L16.8284 21.5858C15.2663 23.1479 12.7337 23.1479 11.1716 21.5858L2.17157 12.5858C1.42143 11.8356 1 10.8182 1 9.75736V5ZM5 3C3.89543 3 3 3.89543 3 5V9.75736C3 10.2878 3.21071 10.7965 3.58579 11.1716L12.5858 20.1716C13.3668 20.9526 14.6332 20.9526 15.4142 20.1716L20.1716 15.4142C20.9526 14.6332 20.9526 13.3668 20.1716 12.5858L11.1716 3.58579C10.7965 3.21071 10.2878 3 9.75736 3H5Z"
+                    fill="#0F0F0F"
+                  />
+                  <path
+                    d="M9 7.5C9 8.32843 8.32843 9 7.5 9C6.67157 9 6 8.32843 6 7.5C6 6.67157 6.67157 6 7.5 6C8.32843 6 9 6.67157 9 7.5Z"
+                    fill="#0F0F0F"
+                  />
+                </svg>
+                Badges
+              </Link>
+            )}
+
+            {userRoles.includes("developer") && (
+              <Link className="nav-item" to="/selectors">
+                <svg
+                  className="nav-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                Selectors
+              </Link>
+            )}
             <Link className="nav-item" to="/Calendar">
               <svg
                 className="nav-icon"
@@ -186,62 +208,69 @@ function App() {
               </svg>
               Calendar
             </Link>
-            <Link className="nav-item" to="/ai-context">
-              <svg
-                className="nav-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="3" y1="9" x2="21" y2="9"></line>
-                <line x1="9" y1="21" x2="9" y2="9"></line>
-              </svg>
-              AI Context
-            </Link>
-            <Link className="nav-item" to="/types">
-              <svg
-                className="nav-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="3" y1="9" x2="21" y2="9"></line>
-                <line x1="9" y1="21" x2="9" y2="9"></line>
-              </svg>
-              Types
-            </Link>
-            <Link className="nav-item" to="/permissions">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 14.5V16.5M7 10.0288C7.47142 10 8.05259 10 8.8 10H15.2C15.9474 10 16.5286 10 17 10.0288M7 10.0288C6.41168 10.0647 5.99429 10.1455 5.63803 10.327C5.07354 10.6146 4.6146 11.0735 4.32698 11.638C4 12.2798 4 13.1198 4 14.8V16.2C4 17.8802 4 18.7202 4.32698 19.362C4.6146 19.9265 5.07354 20.3854 5.63803 20.673C6.27976 21 7.11984 21 8.8 21H15.2C16.8802 21 17.7202 21 18.362 20.673C18.9265 20.3854 19.3854 19.9265 19.673 19.362C20 18.7202 20 17.8802 20 16.2V14.8C20 13.1198 20 12.2798 19.673 11.638C19.3854 11.0735 18.9265 10.6146 18.362 10.327C18.0057 10.1455 17.5883 10.0647 17 10.0288M7 10.0288V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V10.0288"
+            {userRoles.includes("developer") && (
+              <Link className="nav-item" to="/ai-context">
+                <svg
+                  className="nav-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                />
-              </svg>
-              Permissions
-            </Link>
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="3" y1="9" x2="21" y2="9"></line>
+                  <line x1="9" y1="21" x2="9" y2="9"></line>
+                </svg>
+                AI Context
+              </Link>
+            )}
+            {userRoles.includes("admin") && (
+              <Link className="nav-item" to="/types">
+                <svg
+                  className="nav-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="3" y1="9" x2="21" y2="9"></line>
+                  <line x1="9" y1="21" x2="9" y2="9"></line>
+                </svg>
+                Types
+              </Link>
+            )}
+            {userRoles.includes("admin") && (
+              <Link className="nav-item" to="/permissions">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 14.5V16.5M7 10.0288C7.47142 10 8.05259 10 8.8 10H15.2C15.9474 10 16.5286 10 17 10.0288M7 10.0288C6.41168 10.0647 5.99429 10.1455 5.63803 10.327C5.07354 10.6146 4.6146 11.0735 4.32698 11.638C4 12.2798 4 13.1198 4 14.8V16.2C4 17.8802 4 18.7202 4.32698 19.362C4.6146 19.9265 5.07354 20.3854 5.63803 20.673C6.27976 21 7.11984 21 8.8 21H15.2C16.8802 21 17.7202 21 18.362 20.673C18.9265 20.3854 19.3854 19.9265 19.673 19.362C20 18.7202 20 17.8802 20 16.2V14.8C20 13.1198 20 12.2798 19.673 11.638C19.3854 11.0735 18.9265 10.6146 18.362 10.327C18.0057 10.1455 17.5883 10.0647 17 10.0288M7 10.0288V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V10.0288"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                Permissions
+              </Link>
+            )}
+
             {localStorage.getItem("s_id") === "" && (
               <Link className="login-btn nav-item" to="/login">
                 <svg
@@ -295,29 +324,58 @@ function App() {
             )}
           </div>
         </nav>
-        {/* <div onClick={() => getMenuPermissinos()}>permissions</div> */}
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<h2>Home Page</h2>} />
-            <Route path="/users" element={<UsersList />} />
-            <Route path="/users/:id" element={<UserEdit />} />
-            <Route path="/statuses" element={<StatusesList />} />
-            <Route path="/types" element={<TypesList />} />
-            <Route path="/type/:gl_events_id" element={<TypeEdit />} />
+            {/* DEVELOPER */}
+            {userRoles.includes("developer") && (
+              <Route path="/selectors" element={<SelectorsList />} />
+            )}
+            {userRoles.includes("developer") && (
+              <Route path="/selectors/:id" element={<SelectorEdit />} />
+            )}
+            {userRoles.includes("developer") && (
+              <Route path="/ai-context" element={<AiContextsList />} />
+            )}
+            {userRoles.includes("developer") && (
+              <Route path="/ai-context/:id" element={<AiContextsEdit />} />
+            )}
+            {/* ADMIN */}
+            {userRoles.includes("admin") && (
+              <Route path="/badges" element={<BadgesList />} />
+            )}
+            {userRoles.includes("admin") && (
+              <Route path="/badges/:id" element={<BadgeEdit />} />
+            )}
+            {userRoles.includes("admin") && (
+              <Route path="/permissions" element={<PermissionsPage />} />
+            )}
+            {userRoles.includes("admin") && (
+              <Route path="/logs/:table_name/:id" element={<RecordLogs />} />
+            )}
+            {userRoles.includes("admin") && (
+              <Route path="/types" element={<TypesList />} />
+            )}
+            {userRoles.includes("admin") && (
+              <Route path="/type/:gl_events_id" element={<TypeEdit />} />
+            )}
+            {userRoles.includes("admin") && (
+              <Route path="/statuses" element={<StatusesList />} />
+            )}
+            {userRoles.includes("admin") && (
+              <Route path="/users" element={<UsersList />} />
+            )}
+            {userRoles.includes("admin") && (
+              <Route path="/users/:id" element={<UserEdit />} />
+            )}
+
             <Route path="/events" element={<EventsList />} />
             <Route path="/event/:gl_events_id" element={<EventsEdit />} />
             <Route path="/customers" element={<CustomersList />} />
             <Route path="/customers/:id" element={<CustomerEdit />} />
-            <Route path="/selectors" element={<SelectorsList />} />
-            <Route path="/badges" element={<BadgesList />} />
-            <Route path="/badges/:id" element={<BadgeEdit />} />
-            <Route path="/selectors/:id" element={<SelectorEdit />} />
-            <Route path="/ai-context" element={<AiContextsList />} />
-            <Route path="/ai-context/:id" element={<AiContextsEdit />} />
+
             <Route path="/login" element={<Login />} />
             <Route path="/calendar" element={<Calendar />} />
-            <Route path="/logs/:table_name/:id" element={<RecordLogs />} />
-            <Route path="/permissions" element={<PermissionsPage />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
@@ -325,9 +383,13 @@ function App() {
   );
 }
 
-async function getMenuPermissinos() {
+/**
+ * Gets context user roles
+ */
+async function getMenuPermissions() {
   const result = await service.select("crm", "glMenuPermissions", {});
-  console.log(result);
+
+  return result.map((o) => o.name);
 }
 
 export default App;
