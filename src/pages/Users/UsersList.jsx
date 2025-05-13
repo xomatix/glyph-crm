@@ -10,9 +10,24 @@ function UsersList() {
   const booksTableRef = useRef();
   const navigate = useNavigate();
 
-  return (
-    <div className="users-list">
-      Users Table
+return (
+  <div className="users-list" style={{ padding: "16px" }}>
+    <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+      {/* Header aligned with table */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "16px",
+          marginBottom: "16px",
+        }}
+      >
+        <h2 style={{ fontSize: "20px", fontWeight: "600", margin: 0 }}>
+          Users Table
+        </h2>
+        {/* Optional: Add a button here later */}
+      </div>
+
       <GlRecord
         nameSpace={"bookstore"}
         dataSetIdent={"booksFnAll"}
@@ -26,25 +41,11 @@ function UsersList() {
               nameSpace={"standard"}
               dataSetIdent={"glUsersAll"}
               headers={[
-                {
-                  field: "gl_users_id",
-                  label: "ID",
-                },
-                {
-                  field: "gl_username",
-                  label: "Username",
-                },
-                {
-                  field: "gl_email",
-                  label: "EMail",
-                },
-                {
-                  field: "is_active",
-                  label: "Active",
-                },
+                { field: "gl_users_id", label: "ID" },
+                { field: "gl_username", label: "Username" },
+                { field: "gl_email", label: "EMail" },
+                { field: "is_active", label: "Active" },
               ]}
-              // gl_companies_id		gl_username	gl_users_id	is_active
-              // where={{ id: record["books_id"] }}
               onRowClick={(row) => {
                 navigate(`/users/${row.gl_users_id}`);
               }}
@@ -53,7 +54,10 @@ function UsersList() {
         )}
       </GlRecord>
     </div>
-  );
+  </div>
+);
+
+
 }
 
 export default UsersList;

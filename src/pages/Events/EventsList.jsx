@@ -7,7 +7,7 @@ import GlButton from "../../../components/GlButton/GlButton";
 function SelectorsList() {
   const navigate = useNavigate();
 return (
-  <div className="selectors-list p-4">
+  <div className="selectors-list" style={{ padding: "16px" }}>
     <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
       {/* Title and button row */}
       <div
@@ -18,7 +18,9 @@ return (
           marginBottom: "16px",
         }}
       >
-        <h2 className="text-xl font-semibold">Events</h2>
+        <h2 style={{ fontSize: "20px", fontWeight: "600", margin: 0 }}>
+          Events
+        </h2>
         <GlButton
           className="primary"
           afterAction={() => {
@@ -84,7 +86,6 @@ return (
     </div>
   </div>
 );
-
 }
 
 export default SelectorsList;

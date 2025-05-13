@@ -5,10 +5,10 @@ import GlSlot from "../../../components/GlSlot/GlSlot";
 
 function CustomersList() {
   const navigate = useNavigate();
-  return (
- <div className="users-list p-4">
+return (
+  <div style={{ padding: "16px" }}>
     <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-      {/* Header and table */}
+      {/* Header */}
       <div
         style={{
           display: "flex",
@@ -17,8 +17,10 @@ function CustomersList() {
           marginBottom: "16px",
         }}
       >
-        <h2 className="text-xl font-semibold">Users list</h2>
+        <h2 style={{ fontSize: "20px", fontWeight: "600", margin: 0 }}>Users list</h2>
       </div>
+
+      {/* Table */}
       <GlTable
         nameSpace={"crm"}
         dataSetIdent={"glCustomersAll"}
@@ -26,7 +28,6 @@ function CustomersList() {
           navigate(`/customers/${row.gl_customers_id}`);
         }}
         headers={[
-          // { label: "ID", field: "gl_customers_id" },
           { label: "Name", field: "name" },
           { label: "Ident", field: "ident" },
           { label: "Email", field: "email" },
@@ -42,7 +43,7 @@ function CustomersList() {
       </GlTable>
     </div>
   </div>
-  );
+);
 }
 
 export default CustomersList;

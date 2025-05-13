@@ -7,23 +7,34 @@ import GlButton from "../../../components/GlButton/GlButton";
 
 function SelectorsList() {
   const navigate = useNavigate();
-  return (
-    <div className="selectors-list">
-      Types
-      <GlButton
-        className="primary"
-        afterAction={() => {
-          navigate(`/event/0`);
+return (
+  <div className="selectors-list" style={{ padding: "16px" }}>
+    <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+      {/* Header and button */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "16px",
+          marginBottom: "16px",
         }}
       >
-        Add new type
-      </GlButton>
+        <h2 style={{ fontSize: "20px", fontWeight: "600", margin: 0 }}>
+          Types
+        </h2>
+        <GlButton
+          className="primary"
+          afterAction={() => {
+            navigate(`/event/0`);
+          }}
+        >
+          Add new type
+        </GlButton>
+      </div>
+
       <GlTable
         nameSpace={"crm"}
         dataSetIdent={"glTypesAll"}
-        // onRowClick={(row) => {
-        //   navigate(`/event/${row.gl_events_id}`);
-        // }}
         headers={[
           { label: "Type ID", field: "type" },
           { label: "Type", field: "typename" },
@@ -33,9 +44,19 @@ function SelectorsList() {
       >
         <GlSlot slot="typename">
           {(row) => (
-            <div style={{backgroundColor: row.color, width: 'fit-content', padding: '4px 8px', borderRadius: '8px'}}>{row.typename}</div>
+            <div
+              style={{
+                backgroundColor: row.color,
+                width: "fit-content",
+                padding: "4px 8px",
+                borderRadius: "8px",
+              }}
+            >
+              {row.typename}
+            </div>
           )}
         </GlSlot>
+
         <GlSlot slot="actions">
           {(row) => (
             <GlButton
@@ -49,23 +70,9 @@ function SelectorsList() {
           )}
         </GlSlot>
       </GlTable>
-      {/* <tr>
-        <th>customer</th>
-        <th>date</th>
-        <th>desc</th>
-        <th>gl_companies_id</th>
-        <th>gl_events_id</th>
-        <th>gl_username</th>
-        <th>ident</th>
-        <th>status</th>
-        <th>statusname</th>
-        <th>title</th>
-        <th>type</th>
-        <th>typename</th>
-        <th>user</th>
-      </tr> */}
     </div>
-  );
+  </div>
+);
 }
 
 export default SelectorsList;
