@@ -6,23 +6,33 @@ import GlButton from "../../../components/GlButton/GlButton";
 
 function SelectorsList() {
   const navigate = useNavigate();
-  return (
-    <div className="selectors-list">
-      Events
-      <GlButton
-        className="primary"
-        afterAction={() => {
-          navigate(`/event/0`);
+return (
+  <div className="selectors-list p-4">
+    <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+      {/* Title and button row */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "16px",
+          marginBottom: "16px",
         }}
       >
-        Add new event
-      </GlButton>
+        <h2 className="text-xl font-semibold">Events</h2>
+        <GlButton
+          className="primary"
+          afterAction={() => {
+            navigate(`/event/0`);
+          }}
+        >
+          Add new event
+        </GlButton>
+      </div>
+
+      {/* Table */}
       <GlTable
         nameSpace={"crm"}
         dataSetIdent={"glEventsAll"}
-        // onRowClick={(row) => {
-        //   navigate(`/event/${row.gl_events_id}`);
-        // }}
         headers={[
           { label: "Title", field: "title" },
           { label: "Date", field: "date" },
@@ -62,7 +72,6 @@ function SelectorsList() {
         <GlSlot slot="actions">
           {(row) => (
             <GlButton
-              className=""
               action={() => {
                 navigate(`/event/${row.gl_events_id}`);
               }}
@@ -72,23 +81,10 @@ function SelectorsList() {
           )}
         </GlSlot>
       </GlTable>
-      {/* <tr>
-        <th>customer</th>
-        <th>date</th>
-        <th>desc</th>
-        <th>gl_companies_id</th>
-        <th>gl_events_id</th>
-        <th>gl_username</th>
-        <th>ident</th>
-        <th>status</th>
-        <th>statusname</th>
-        <th>title</th>
-        <th>type</th>
-        <th>typename</th>
-        <th>user</th>
-      </tr> */}
     </div>
-  );
+  </div>
+);
+
 }
 
 export default SelectorsList;
