@@ -25,7 +25,44 @@ function CustomerEdit() {
       >
         {(RecordContext, record) => (
           <GlContainer>
-            <GlEdit field="type" label="Type ID" Context={RecordContext} readOnly/>
+            <div style={{ display: "flex", gap: "8px" }}>
+              <GlButton
+                className="primary"
+                dataSetIdent="glEventsSave"
+                nameSpace="crm"
+                record={record}
+                afterAction={() => {
+                  navigate(`/types`);
+                }}
+              >
+                Save
+              </GlButton>
+              <GlButton
+                className="danger"
+                dataSetIdent="glEventsDelete"
+                nameSpace="crm"
+                record={record}
+                afterAction={() => {
+                  navigate(`/types`);
+                }}
+              >
+                Delete
+              </GlButton>
+              <GlButton
+                className=""
+                action={() => {
+                  navigate(-1);
+                }}
+              >
+                Close
+              </GlButton>
+            </div>
+            <GlEdit
+              field="type"
+              label="Type ID"
+              Context={RecordContext}
+              readOnly
+            />
 
             <GlEdit
               field="typename"
@@ -47,12 +84,15 @@ function CustomerEdit() {
               type="color"
             />
 
+            {gl_events_id != 0 && (
             <h2>Statuses connected to a type</h2>
-
+            )}
+                        {gl_events_id != 0 && (
+            
             <GlRecord
               dataSetIdent="glTypesAll"
               nameSpace="crm"
-              where={{ type_id: 0, counter: counter }}
+              where={{ type_id: gl_events_id }}
             >
               {(RecordStatusContext, recordStatus) => (
                 <glRow>
@@ -140,6 +180,7 @@ function CustomerEdit() {
                 </glRow>
               )}
             </GlRecord>
+            )}
           </GlContainer>
         )}
       </GlRecord>

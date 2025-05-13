@@ -24,7 +24,7 @@ return (
         <GlButton
           className="primary"
           afterAction={() => {
-            navigate(`/event/0`);
+            navigate(`/status/0`);
           }}
         >
           Add new status
@@ -59,7 +59,7 @@ return (
             <GlButton
               className=""
               action={() => {
-                navigate(`/type/${row.type}`);
+                navigate(`/status/${row.status}`);
               }}
             >
               Open

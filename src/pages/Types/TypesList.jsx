@@ -25,7 +25,7 @@ return (
         <GlButton
           className="primary"
           afterAction={() => {
-            navigate(`/event/0`);
+            navigate(`/type/0`);
           }}
         >
           Add new type

@@ -13,6 +13,7 @@ const UsersList = lazy(() => import("./pages/Users/UsersList"));
 const UserEdit = lazy(() => import("./pages/Users/UserEdit"));
 const EventsList = lazy(() => import("./pages/Events/EventsList"));
 const StatusesList = lazy(() => import("./pages/Statuses/StatusesList"));
+const StatusEdit = lazy(() => import("./pages/Statuses/StatusEdit"));
 const TypesList = lazy(() => import("./pages/Types/TypesList"));
 const TypeEdit = lazy(() => import("./pages/Types/TypeEdit"));
 const EventsEdit = lazy(() => import("./pages/Events/EventEdit"));
@@ -361,6 +362,9 @@ function App() {
             )}
             {userRoles.includes("admin") && (
               <Route path="/statuses" element={<StatusesList />} />
+            )}
+              {userRoles.includes("admin") && (
+              <Route path="/status/:id" element={<StatusEdit />} />
             )}
             {userRoles.includes("admin") && (
               <Route path="/users" element={<UsersList />} />
