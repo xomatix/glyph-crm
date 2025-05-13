@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import "./CustomerEdit.css";
 import GlRecord from "../../../components/GlRecord/GlRecord";
@@ -9,11 +9,24 @@ import GlRow from "../../../components/GlRow/GlRow";
 import GlList from "../../../components/GlList/GlList";
 import GlLookup from "../../../components/GlLookup/GlLookup";
 import Timeline from "../../../components/Timeline/Timeline";
+import service from "../../../glService/glService";
 
 function CustomerEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [counter, setCounter] = useState(0);
+
+  const [userRoles, setUserRoles] = useState([]);
+
+  async function loadRoles() {
+    let result = await service.select("crm", "glMenuPermissions", {});
+
+    result = result.map((o) => o.name);
+    setUserRoles(result);
+  }
+  useEffect(() => {
+    loadRoles();
+  }, []);
 
   return (
     <div className="container">
@@ -28,6 +41,7 @@ function CustomerEdit() {
               <div>
                 <h2>Customer Edit ID:{id}</h2>
                 <h2>{record.ident} </h2>
+
                 <GlRow>
                   <GlButton
                     className="primary"
@@ -58,16 +72,19 @@ function CustomerEdit() {
                   >
                     Delete
                   </GlButton>
-                  <GlButton
-                    className="info"
-                    record={record}
-                    action={() => {
-                      navigate(`/logs/gl_customers/${id}`);
-                    }}
-                  >
-                    Logs
-                  </GlButton>
+                  {userRoles.includes("admin") && (
+                    <GlButton
+                      className="info"
+                      record={record}
+                      action={() => {
+                        navigate(`/logs/gl_customers/${id}`);
+                      }}
+                    >
+                      Logs
+                    </GlButton>
+                  )}
                 </GlRow>
+
                 <GlEdit
                   field="ident"
                   label="Customer CODE"

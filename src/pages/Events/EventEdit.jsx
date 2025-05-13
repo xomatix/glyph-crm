@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import "./EventEdit.css";
 import GlRecord from "../../../components/GlRecord/GlRecord";
@@ -7,10 +7,23 @@ import GlButton from "../../../components/GlButton/GlButton";
 import GlContainer from "../../../components/GlContainer/GlContainer";
 import GlRow from "../../../components/GlRow/GlRow";
 import GlLookup from "../../../components/GlLookup/GlLookup";
+import service from "../../../glService/glService";
 
 function CustomerEdit() {
   const { gl_events_id } = useParams();
   const navigate = useNavigate();
+
+  const [userRoles, setUserRoles] = useState([]);
+
+  async function loadRoles() {
+    let result = await service.select("crm", "glMenuPermissions", {});
+
+    result = result.map((o) => o.name);
+    setUserRoles(result);
+  }
+  useEffect(() => {
+    loadRoles();
+  }, []);
 
   return (
     <div className="container">
@@ -60,15 +73,17 @@ function CustomerEdit() {
                 >
                   Close
                 </GlButton>
-                <GlButton
-                  className="info"
-                  record={record}
-                  action={() => {
-                    navigate(`/logs/gl_events/${gl_events_id}`);
-                  }}
-                >
-                  Logs
-                </GlButton>
+                {userRoles.includes("admin") && (
+                  <GlButton
+                    className="info"
+                    record={record}
+                    action={() => {
+                      navigate(`/logs/gl_events/${gl_events_id}`);
+                    }}
+                  >
+                    Logs
+                  </GlButton>
+                )}
               </GlRow>
             )}
             {gl_events_id == 0 && (
