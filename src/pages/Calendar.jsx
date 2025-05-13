@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import FullCalendar from "@fullcalendar/react";
@@ -20,6 +19,7 @@ function Calendar() {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [reminders, setReminders] = useState([]);
+  const [noUpcomingEvents, setNoUpcomingEvents] = useState(false);
 
   async function getData() {
     const data = await service.select("crm", "glEventsAll", {});
@@ -35,7 +35,22 @@ function Calendar() {
       }
 
       setTimeout(() => {
-        setReminders((prev) => [...prev, `Reminder: "${item.title}" at ${item.date}`]);
+        const reminderText = `"${item.title}" at ${getFormattedDate(item.date)}`;
+        const reminderClass = getTimeBasedColor(item.date);
+
+        setReminders((prev) => {
+          if (!prev.some((reminder) => reminder.text === reminderText)) {
+            return [
+              ...prev,
+              {
+                text: reminderText,
+                date: item.date,
+                colorClass: reminderClass,
+              },
+            ];
+          }
+          return prev;
+        });
       }, reminderTime.getTime() - new Date().getTime());
 
       return {
@@ -57,6 +72,7 @@ function Calendar() {
     });
 
     setEvents(parsedEvents);
+    filterUpcomingReminders(parsedEvents);
   }
 
   function createFollowUpTask(event) {
@@ -77,6 +93,55 @@ function Calendar() {
     getData();
   }, []);
 
+  function getFormattedDate(date) {
+    const formattedDate = new Date(date).toLocaleString(undefined, {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    return formattedDate;
+  }
+
+  function getTimeBasedColor(eventDate) {
+    const now = new Date();
+    const eventTime = new Date(eventDate);
+    const timeDiff = eventTime - now;
+
+    const tenMinutes = 10 * 60 * 1000;
+    const oneHour = 60 * 60 * 1000;
+    const threeHours = 3 * 60 * 60 * 1000;
+
+    if (timeDiff <= tenMinutes) {
+      return "bg-red-500 text-white";
+    } else if (timeDiff <= oneHour) {
+      return "bg-yellow-400 text-black";
+    } else if (timeDiff <= threeHours) {
+      return "bg-green-500 text-white";
+    } else {
+      return "bg-gray-300 text-black";
+    }
+  }
+
+  function filterUpcomingReminders(events) {
+    const now = new Date();
+
+    // Filter upcoming reminders based on event date
+    const upcomingReminders = reminders.filter(
+      (reminder) => new Date(reminder.date) > now
+    );
+
+    if (upcomingReminders.length === 0) {
+      setNoUpcomingEvents(true);
+    } else {
+      setNoUpcomingEvents(false);
+    }
+
+    setReminders(upcomingReminders);
+  }
+
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
@@ -84,130 +149,125 @@ function Calendar() {
         <GlButton action={getData}>🔄 Refresh</GlButton>
       </div>
 
-      {/* Main content area with sidebar and calendar */}
-      <div className="flex flex-col">
-        <div className="flex gap-6">
-          {/* Sidebar with upcoming events */}
-          <div className="w-64 bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex-shrink-0">
-            <h3 className="text-sm font-semibold text-gray-800 mb-3">Upcoming Events</h3>
-            <ul className="space-y-3 text-sm text-gray-700 max-h-96 overflow-y-auto pr-1">
-              {events
-                .filter(event => new Date(event.start) >= new Date())
-                .sort((a, b) => new Date(a.start) - new Date(b.start))
-                .slice(0, 5)
-                .map(event => (
-                  <li key={event.id} className="flex items-start gap-2">
-                    <span className="w-3 h-3 mt-1 rounded-full inline-block" style={{ backgroundColor: event.backgroundColor }} />
-                    <div>
-                      <p className="font-medium">{event.title}</p>
-                      <p className="text-xs text-gray-500">{new Date(event.start).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })}</p>
-                    </div>
-                  </li>
-              ))}
-            </ul>
+      <div className="flex gap-6">
+        <div className="w-[26rem] flex gap-4 flex-shrink-0">
+          <div className="w-1/2 bg-white border border-gray-200 rounded-xl shadow-sm p-4">
+            <h3 className="text-sm font-semibold text-gray-800 mb-3">Activity Types Legend</h3>
+            <div className="grid grid-cols-1 gap-3 text-sm text-gray-700">
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-blue-600 inline-block" /> 🗓️ Close Dates
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-orange-400 inline-block" /> ⏱️ Follow-ups
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-green-500 inline-block" /> 👥 Meetings
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-purple-400 inline-block" /> 📞 Calls
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-indigo-400 inline-block" /> ✉️ Emails
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block" /> ✅ Completed
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-rose-500 inline-block" /> ⏳ Pending
+              </div>
+            </div>
           </div>
 
-          {/* Calendar area */}
-          <div className="flex-1">
-            <div style={{ height: "700px" }}>
-              <FullCalendar
-                plugins={[dayGridPlugin, interactionPlugin]}
-                initialView="dayGridMonth"
-                events={events}
-                headerToolbar={{
-                  left: "prev,next today",
-                  center: "title",
-                  right: "dayGridMonth,dayGridWeek,dayGridDay",
-                }}
-                eventClick={(info) => {
-                  setSelectedEvent({
-                    title: info.event.title,
-                    ...info.event.extendedProps,
-                    date: info.event.startStr,
-                  });
-                }}
-                height="100%"
-              />
-            </div>
-          </div>
-        </div>
-        
-        {/* Legend and reminders in a row below calendar */}
-        <div className="mt-6 flex">
-          {/* Event Types Legend */}
-          <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex-1">
-            <h3 className="text-sm font-semibold text-gray-800 mb-3">Activity Types Legend</h3>
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3 text-sm text-gray-700">
-              <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-blue-600 inline-block" /> 🗓️ Close Dates</div>
-              <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-orange-400 inline-block" /> ⏱️ Follow-ups</div>
-              <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-green-500 inline-block" /> 👥 Meetings</div>
-              <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-purple-400 inline-block" /> 📞 Calls</div>
-              <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-indigo-400 inline-block" /> ✉️ Emails</div>
-              <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-emerald-500 inline-block" /> ✅ Completed</div>
-              <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-rose-500 inline-block" /> ⏳ Pending</div>
-            </div>
-          </div>
-          
-          {/* Reminders panel */}
-          <div className="bg-white border border-blue-300 rounded-xl shadow-sm p-4 ml-6 w-80">
-            <h3 className="text-sm font-semibold mb-2">Reminders</h3>
-            {reminders.length > 0 ? (
-              <ul className="text-sm text-gray-700 list-disc list-inside space-y-1 max-h-24 overflow-y-auto">
+          <div className="w-1/2 bg-white border border-gray-200 rounded-xl shadow-sm p-4">
+            <h3 className="text-sm font-semibold text-gray-800 mb-3">Reminders</h3>
+            {noUpcomingEvents ? (
+              <p className="p-2 rounded-lg bg-gray-500 text-white">No upcoming reminders.</p>
+            ) : (
+              <ul className="text-sm text-gray-700 list-disc list-inside space-y-1 max-h-64 overflow-y-auto">
                 {reminders.map((reminder, idx) => (
-                  <li key={idx}>{reminder}</li>
+                  <li key={idx} className={`p-2 rounded-lg ${reminder.colorClass}`}>
+                    {reminder.text}
+                  </li>
                 ))}
               </ul>
-            ) : (
-              <p className="text-sm text-gray-500 italic">No current reminders</p>
             )}
+          </div>
+        </div>
+
+        <div className="flex-1">
+          <div style={{ height: "600px" }}>
+            <FullCalendar
+              plugins={[dayGridPlugin, interactionPlugin]}
+              initialView="dayGridMonth"
+              events={events}
+              headerToolbar={{
+                left: "prev,next today",
+                center: "title",
+                right: "dayGridMonth,dayGridWeek,dayGridDay",
+              }}
+              eventClick={(info) => {
+                setSelectedEvent({
+                  title: info.event.title,
+                  ...info.event.extendedProps,
+                  date: info.event.startStr,
+                });
+              }}
+              height="100%"
+            />
           </div>
         </div>
       </div>
 
-      {/* Event Details Modal */}
-      {selectedEvent && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-          <div className="bg-white rounded-xl shadow-2xl p-6 max-w-md w-full animate-fade-in-up">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-gray-900">{selectedEvent.title}</h2>
-              <button
-                className="text-gray-500 hover:text-gray-700 text-xl"
-                onClick={() => setSelectedEvent(null)}
-              >
-                ×
-              </button>
-            </div>
-            <div className="space-y-2 text-sm">
-              <p>📅 <strong>Date:</strong> {selectedEvent.date}</p>
-              <p><strong>Status:</strong> {selectedEvent.statusName}</p>
-              <p><strong>Customer:</strong> {selectedEvent.customerIdent}</p>
-              <p><strong>User:</strong> {selectedEvent.user}</p>
-              <p><strong>Type:</strong> {selectedEvent.typeName}</p>
-            </div>
-            <div className="mt-4">
-              <p className="font-semibold">Description:</p>
-              <p className="whitespace-pre-wrap text-sm text-gray-700">{selectedEvent.description}</p>
-            </div>
-            <div className="mt-5 text-right">
-              <GlButton action={() => setSelectedEvent(null)} className="bg-blue-600 text-white hover:bg-blue-700">
-                Close
-              </GlButton>
-            </div>
-          </div>
+{selectedEvent && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+    <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-lg mx-auto animate-fade-in-up">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-bold text-gray-900">{selectedEvent.title}</h2>
+        <button
+          className="text-gray-500 hover:text-gray-700 text-xl"
+          onClick={() => setSelectedEvent(null)}
+        >
+          ×
+        </button>
+      </div>
+      <div className="space-y-3 text-sm text-gray-700">
+        <div className="flex gap-2">
+          <span className="font-semibold">📅 Date:</span>
+          <span>{getFormattedDate(selectedEvent.date)}</span>
         </div>
-      )}
+        <div className="flex gap-2">
+          <span className="font-semibold">Status:</span>
+          <span>{selectedEvent.statusName}</span>
+        </div>
+        <div className="flex gap-2">
+          <span className="font-semibold">Customer:</span>
+          <span>{selectedEvent.customerIdent}</span>
+        </div>
+        <div className="flex gap-2">
+          <span className="font-semibold">User:</span>
+          <span>{selectedEvent.user}</span>
+        </div>
+        <div className="flex gap-2">
+          <span className="font-semibold">Type:</span>
+          <span>{selectedEvent.typeName}</span>
+        </div>
+      </div>
+      <div className="mt-5">
+        <p className="font-semibold mb-1">Description:</p>
+        <p className="whitespace-pre-wrap text-sm text-gray-800">{selectedEvent.description}</p>
+      </div>
+      <div className="mt-6 text-right">
+        <GlButton
+          action={() => setSelectedEvent(null)}
+          className="bg-blue-600 text-white hover:bg-blue-700"
+        >
+          Close
+        </GlButton>
+      </div>
+    </div>
+  </div>
+)}
 
-      {/* Reminders Popup - Removed since we have integrated reminders in the layout */}
-      {/* {reminders.length > 0 && (
-        <div className="fixed bottom-4 right-4 bg-white border border-blue-300 shadow-lg rounded-lg p-4 max-w-xs z-40">
-          <h3 className="text-sm font-semibold mb-2">Reminders</h3>
-          <ul className="text-sm text-gray-700 list-disc list-inside space-y-1 max-h-40 overflow-y-auto">
-            {reminders.map((reminder, idx) => (
-              <li key={idx}>{reminder}</li>
-            ))}
-          </ul>
-        </div>
-      )} */}
     </div>
   );
 }

@@ -8,27 +8,16 @@ import GlButton from "../../../components/GlButton/GlButton";
 function SelectorsList() {
   const navigate = useNavigate();
   return (
-     <div className="selectors-list p-4">
-    <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-      {/* Header and button */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "16px",
-          marginBottom: "16px",
+    <div className="selectors-list">
+      Types
+      <GlButton
+        className="primary"
+        afterAction={() => {
+          navigate(`/event/0`);
         }}
       >
-        <h2 className="text-xl font-semibold">Types</h2>
-        <GlButton
-          className="primary"
-          afterAction={() => {
-            navigate(`/event/0`);
-          }}
-        >
-          Add new type
-        </GlButton>
-      </div>
+        Add new type
+      </GlButton>
       <GlTable
         nameSpace={"crm"}
         dataSetIdent={"glTypesAll"}
@@ -76,7 +65,6 @@ function SelectorsList() {
         <th>user</th>
       </tr> */}
     </div>
-  </div>
   );
 }
 
