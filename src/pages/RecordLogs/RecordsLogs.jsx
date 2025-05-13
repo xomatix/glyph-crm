@@ -8,7 +8,7 @@ import GlModal from "../../../components/GlModal/GlModal";
 function RecordLogs() {
   const { table_name, id } = useParams();
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedRow, setSelectedRow] = useState({});
+  const [selectedRow, setSelectedRow] = useState({ record: {} });
   return (
     <GlContainer>
       {table_name}_logs ID: {id}
