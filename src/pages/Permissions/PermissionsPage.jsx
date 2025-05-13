@@ -49,7 +49,7 @@ function PermissionsPage() {
               record={record}
               nameSpace="standard"
               dataSetIdent="glUserRolesSave"
-              className="info"
+              color="primary"
               afterAction={() => {
                 refreshRoles();
               }}
@@ -143,7 +143,7 @@ function PermissionsPage() {
                 <GlButton
                   nameSpace="standard"
                   dataSetIdent="glUsersRolesDelete"
-                  className="danger"
+                  color="error"
                   record={record}
                   afterAction={() => {
                     setRoleId(null);
@@ -156,7 +156,7 @@ function PermissionsPage() {
                   record={record}
                   nameSpace="standard"
                   dataSetIdent="glUserRolesSave"
-                  className="success"
+                  color="primary"
                   afterAction={() => {
                     setRoleId(null);
                     refreshRoles();
@@ -183,7 +183,7 @@ function PermissionsPage() {
               record={record}
               nameSpace="standard"
               dataSetIdent="glPermissionsSave"
-              className="info"
+              color="primary"
               afterAction={() => {
                 refreshPermissions();
               }}
@@ -224,7 +224,7 @@ function PermissionsPage() {
                 <GlButton
                   nameSpace="standard"
                   dataSetIdent="glPermissionsDelete"
-                  className="danger"
+                  color="error"
                   record={record}
                   afterAction={() => {
                     setPermissionId(null);
@@ -237,7 +237,7 @@ function PermissionsPage() {
                   record={record}
                   nameSpace="standard"
                   dataSetIdent="glPermissionsSave"
-                  className="success"
+                  color="primary"
                   afterAction={() => {
                     setPermissionId(null);
                     refreshPermissions();

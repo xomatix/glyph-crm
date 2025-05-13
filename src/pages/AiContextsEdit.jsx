@@ -33,6 +33,7 @@ function AiContextsEdit() {
               <GlButton
                 dataSetIdent="glAiContextSave"
                 nameSpace="core"
+                color="primary"
                 Context={RecordContext}
                 afterAction={async (record) => {
                   console.log(record);

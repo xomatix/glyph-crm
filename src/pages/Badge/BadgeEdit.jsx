@@ -23,7 +23,7 @@ function SelectorEdit() {
             <h2>Badge {record.name}</h2>
             <GlRow>
               <GlButton
-                className="primary"
+                color="primary"
                 dataSetIdent="glBadgesSave"
                 nameSpace="crm"
                 record={record}
@@ -44,7 +44,7 @@ function SelectorEdit() {
                 Save
               </GlButton>
               <GlButton
-                className="danger"
+                color="error"
                 dataSetIdent="glBadgesDelete"
                 nameSpace="crm"
                 record={record}

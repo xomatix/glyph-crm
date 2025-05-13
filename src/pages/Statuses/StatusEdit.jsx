@@ -25,7 +25,7 @@ function CustomerEdit() {
           <GlContainer>
             <div style={{ display: "flex", gap: "8px" }}>
               <GlButton
-                className="primary"
+                color="primary"
                 dataSetIdent="glEventsSave"
                 nameSpace="crm"
                 record={record}
@@ -36,7 +36,7 @@ function CustomerEdit() {
                 Save
               </GlButton>
               <GlButton
-                className="danger"
+                color="error"
                 dataSetIdent="glEventsDelete"
                 nameSpace="crm"
                 record={record}

@@ -22,7 +22,7 @@ function CustomersList() {
             Customers list
           </h2>
           <GlButton
-            className="primary"
+            color="primary"
             afterAction={() => {
               navigate(`/customers/0`);
             }}

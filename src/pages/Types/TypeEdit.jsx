@@ -27,7 +27,7 @@ function CustomerEdit() {
           <GlContainer>
             <div style={{ display: "flex", gap: "8px" }}>
               <GlButton
-                className="primary"
+                color="primary"
                 dataSetIdent="glEventsSave"
                 nameSpace="crm"
                 record={record}
@@ -38,7 +38,7 @@ function CustomerEdit() {
                 Save
               </GlButton>
               <GlButton
-                className="danger"
+                color="error"
                 dataSetIdent="glEventsDelete"
                 nameSpace="crm"
                 record={record}
@@ -84,99 +84,92 @@ function CustomerEdit() {
               type="color"
             />
 
+            {gl_events_id != 0 && <h2>Statuses connected to a type</h2>}
             {gl_events_id != 0 && (
-            <h2>Statuses connected to a type</h2>
-            )}
-                        {gl_events_id != 0 && (
-            
-            <GlRecord
-              dataSetIdent="glTypesAll"
-              nameSpace="crm"
-              where={{ type_id: 0 }}
-            >
-              {(RecordStatusContext, recordStatus) => (
-                <glRow>
-                  <div style={{ display: "flex" }}>
-                    <GlLookup
-                      dataSetIdent="glEventsStatusAllDistinct"
-                      nameSpace="crm"
-                      Context={RecordStatusContext}
-                      field={"status"}
-                      fieldInLookup={"statusname"}
-                      label="Status"
-                    >
-                      {(row) => (
-                        <div style={{ backgroundColor: row.color }}>
-                          {row.name}
-                        </div>
-                      )}
-                    </GlLookup>
-                    <GlButton
-                      nameSpace="crm"
-                      dataSetIdent="glStatusesSave"
-                      style={{
-                        margin: "auto 0 0 0",
-                        height: "34px",
-                        textWrap: "nowrap",
-                      }}
-                      record={recordStatus}
-                      afterAction={() => {
-                        if (tableRef.current) {
-                          tableRef.current.refresh();
-                        }
-                      }}
-                    >
-                      Add status to a type: {record.name}
-                    </GlButton>
-                  </div>
-                  <div className="c-bottom-table">
-                    <GlTable
-                      nameSpace={"crm"}
-                      dataSetIdent={"glEventsStatusAll"}
-                      where={{ type: gl_events_id }}
-                      ref={tableRef}
-                      headers={[
-                        { label: "Status ID", field: "status" },
-                        { label: "Status", field: "statusname" },
-                        { label: "Actions", field: "actions" },
-                      ]}
-                    >
-                      <GlSlot slot="statusname">
+              <GlRecord
+                dataSetIdent="glTypesAll"
+                nameSpace="crm"
+                where={{ type_id: 0 }}
+              >
+                {(RecordStatusContext, recordStatus) => (
+                  <glRow>
+                    <div style={{ display: "flex" }}>
+                      <GlLookup
+                        dataSetIdent="glEventsStatusAllDistinct"
+                        nameSpace="crm"
+                        Context={RecordStatusContext}
+                        field={"status"}
+                        fieldInLookup={"statusname"}
+                        label="Status"
+                      >
                         {(row) => (
-                          <div
-                            style={{
-                              backgroundColor: row.color,
-                              width: "fit-content",
-                              padding: "4px 8px",
-                              borderRadius: "8px",
-                            }}
-                          >
-                            {row.statusname}
+                          <div style={{ backgroundColor: row.color }}>
+                            {row.name}
                           </div>
                         )}
-                      </GlSlot>
-                      <GlSlot slot="actions">
-                        {(row) => (
-                          <GlButton
-                            className=""
-                            dataSetIdent="gl_statusDelete"
-                            nameSpace="crm"
-                            record={row}
-                            afterAction={() => {
-                              if (tableRef.current) {
-                                tableRef.current.refresh();
-                              }
-                            }}
-                          >
-                            delete
-                          </GlButton>
-                        )}
-                      </GlSlot>
-                    </GlTable>
-                  </div>
-                </glRow>
-              )}
-            </GlRecord>
+                      </GlLookup>
+                      <GlButton
+                        nameSpace="crm"
+                        dataSetIdent="glStatusesSave"
+                        color="error"
+                        record={recordStatus}
+                        afterAction={() => {
+                          if (tableRef.current) {
+                            tableRef.current.refresh();
+                          }
+                        }}
+                      >
+                        Add status to a type: {record.name}
+                      </GlButton>
+                    </div>
+                    <div className="c-bottom-table">
+                      <GlTable
+                        nameSpace={"crm"}
+                        dataSetIdent={"glEventsStatusAll"}
+                        where={{ type: gl_events_id }}
+                        ref={tableRef}
+                        headers={[
+                          { label: "Status ID", field: "status" },
+                          { label: "Status", field: "statusname" },
+                          { label: "Actions", field: "actions" },
+                        ]}
+                      >
+                        <GlSlot slot="statusname">
+                          {(row) => (
+                            <div
+                              style={{
+                                backgroundColor: row.color,
+                                width: "fit-content",
+                                padding: "4px 8px",
+                                borderRadius: "8px",
+                              }}
+                            >
+                              {row.statusname}
+                            </div>
+                          )}
+                        </GlSlot>
+                        <GlSlot slot="actions">
+                          {(row) => (
+                            <GlButton
+                              color="error"
+                              dataSetIdent="gl_statusDelete"
+                              nameSpace="crm"
+                              record={row}
+                              afterAction={() => {
+                                if (tableRef.current) {
+                                  tableRef.current.refresh();
+                                }
+                              }}
+                            >
+                              delete
+                            </GlButton>
+                          )}
+                        </GlSlot>
+                      </GlTable>
+                    </div>
+                  </glRow>
+                )}
+              </GlRecord>
             )}
           </GlContainer>
         )}

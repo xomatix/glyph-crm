@@ -71,6 +71,7 @@ function SelectorEdit() {
                       record["page_size"]
                     );
                   }}
+                  color="primary"
                   record={record}
                   afterAction={async (record) => {
                     console.log(record);

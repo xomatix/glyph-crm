@@ -31,8 +31,4 @@
     width: min-content;
     color: aliceblue;
   }
-
-  > .gl-button {
-    height: 12px;
-  }
 }

@@ -37,7 +37,7 @@ function CustomerEdit() {
             {gl_events_id != 0 && (
               <GlRow>
                 <GlButton
-                  className="primary"
+                  color="primary"
                   dataSetIdent="glEventsSave"
                   nameSpace="crm"
                   record={record}
@@ -55,7 +55,7 @@ function CustomerEdit() {
                   Save
                 </GlButton>
                 <GlButton
-                  className="danger"
+                  color="error"
                   dataSetIdent="glEventsDelete"
                   nameSpace="crm"
                   record={record}
@@ -66,7 +66,6 @@ function CustomerEdit() {
                   Delete
                 </GlButton>
                 <GlButton
-                  className=""
                   action={() => {
                     navigate(-1);
                   }}
@@ -75,7 +74,7 @@ function CustomerEdit() {
                 </GlButton>
                 {userRoles.includes("admin") && (
                   <GlButton
-                    className="info"
+                    color="info"
                     record={record}
                     action={() => {
                       navigate(`/logs/gl_events/${gl_events_id}`);
@@ -89,7 +88,7 @@ function CustomerEdit() {
             {gl_events_id == 0 && (
               <GlRow>
                 <GlButton
-                  className="primary"
+                  color="primary"
                   dataSetIdent="glEventsSave"
                   nameSpace="crm"
                   record={record}

@@ -27,6 +27,7 @@ function Login() {
             <GlButton
               dataSetIdent="userLogin"
               nameSpace="standard"
+              color="primary"
               record={record}
               afterAction={async (record) => {
                 if (record["s_id"] !== null && record["s_id"] !== "") {

@@ -22,7 +22,7 @@ function SelectorsList() {
             Events
           </h2>
           <GlButton
-            className="primary"
+            color="primary"
             afterAction={() => {
               navigate(`/event/0`);
             }}
@@ -38,7 +38,7 @@ function SelectorsList() {
           headers={[
             { label: "Title", field: "title" },
             { label: "Date", field: "date" },
-            { label: "Owner", field: "gl_username" },
+            // { label: "Owner", field: "gl_username" },
             { label: "Customer", field: "ident" },
             { label: "Status", field: "statusname" },
             { label: "Type", field: "typename" },

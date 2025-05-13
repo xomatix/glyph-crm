@@ -45,7 +45,7 @@ function CustomerEdit() {
 
                 <GlRow>
                   <GlButton
-                    className="primary"
+                    color="primary"
                     dataSetIdent="glCustomersSave"
                     nameSpace="crm"
                     record={record}
@@ -64,7 +64,7 @@ function CustomerEdit() {
                   </GlButton>
                   {id > 0 && (
                     <GlButton
-                      className="danger"
+                      color="error"
                       dataSetIdent="glCustomersDelete"
                       nameSpace="crm"
                       record={record}
@@ -77,7 +77,7 @@ function CustomerEdit() {
                   )}
                   {userRoles.includes("admin") && (
                     <GlButton
-                      className="info"
+                      color="info"
                       record={record}
                       action={() => {
                         navigate(`/logs/gl_customers/${id}`);
@@ -133,12 +133,9 @@ function CustomerEdit() {
                           </GlLookup>
                           <GlButton
                             nameSpace="crm"
+                            size="small"
+                            color="primary"
                             dataSetIdent="glCustomersBadgesSave"
-                            style={{
-                              margin: "auto 0 0 0",
-                              height: "34px",
-                              textWrap: "nowrap",
-                            }}
                             record={recordBadge}
                             afterAction={() => {
                               if (
@@ -149,7 +146,7 @@ function CustomerEdit() {
                               }
                             }}
                           >
-                            Add badge to customer
+                            Add badge
                           </GlButton>
                         </GlRow>
 
@@ -171,7 +168,8 @@ function CustomerEdit() {
                                 {row.name}
                               </div>
                               <GlButton
-                                className="danger"
+                                color="error"
+                                size="small"
                                 nameSpace="crm"
                                 dataSetIdent="glCustomersBadgesDelete"
                                 record={row}

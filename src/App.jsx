@@ -298,7 +298,7 @@ function App() {
             )}
             {localStorage.getItem("s_id") !== "" && (
               <GlButton
-                className="logout-btn"
+                color="error"
                 action={() => {
                   localStorage.setItem("s_id", "");
                   window.location.href = `/`;
@@ -307,8 +307,7 @@ function App() {
                 <svg
                   className="logout-icon"
                   xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
+                  width="24"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -363,7 +362,7 @@ function App() {
             {userRoles.includes("admin") && (
               <Route path="/statuses" element={<StatusesList />} />
             )}
-              {userRoles.includes("admin") && (
+            {userRoles.includes("admin") && (
               <Route path="/status/:id" element={<StatusEdit />} />
             )}
             {userRoles.includes("admin") && (
