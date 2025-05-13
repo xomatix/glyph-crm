@@ -52,7 +52,7 @@ function CustomerEdit() {
             <GlRecord
               dataSetIdent="glTypesAll"
               nameSpace="crm"
-              where={{ type_id: gl_events_id, counter: counter }}
+              where={{ type_id: 0, counter: counter }}
             >
               {(RecordStatusContext, recordStatus) => (
                 <glRow>
