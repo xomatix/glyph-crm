@@ -92,7 +92,7 @@ function CustomerEdit() {
             <GlRecord
               dataSetIdent="glTypesAll"
               nameSpace="crm"
-              where={{ type_id: gl_events_id }}
+              where={{ type_id: 0 }}
             >
               {(RecordStatusContext, recordStatus) => (
                 <glRow>
@@ -133,9 +133,6 @@ function CustomerEdit() {
                     <GlTable
                       nameSpace={"crm"}
                       dataSetIdent={"glEventsStatusAll"}
-                      // onRowClick={(row) => {
-                      //   navigate(`/event/${row.gl_events_id}`);
-                      // }}
                       where={{ type: gl_events_id }}
                       ref={tableRef}
                       headers={[
