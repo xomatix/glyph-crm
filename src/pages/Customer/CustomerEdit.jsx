@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import "./CustomerEdit.css";
 import GlRecord from "../../../components/GlRecord/GlRecord";
@@ -15,6 +15,7 @@ function CustomerEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [counter, setCounter] = useState(0);
+  const badgesRef = useRef();
 
   const [userRoles, setUserRoles] = useState([]);
 
@@ -140,7 +141,12 @@ function CustomerEdit() {
                             }}
                             record={recordBadge}
                             afterAction={() => {
-                              setCounter(counter + 1);
+                              if (
+                                badgesRef != null &&
+                                badgesRef.current != null
+                              ) {
+                                badgesRef.current.refresh();
+                              }
                             }}
                           >
                             Add badge to customer
@@ -148,6 +154,7 @@ function CustomerEdit() {
                         </GlRow>
 
                         <GlList
+                          ref={badgesRef}
                           nameSpace="crm"
                           dataSetIdent="glCustomersBadges"
                           where={{
@@ -169,7 +176,12 @@ function CustomerEdit() {
                                 dataSetIdent="glCustomersBadgesDelete"
                                 record={row}
                                 afterAction={() => {
-                                  setCounter(counter + 1);
+                                  if (
+                                    badgesRef != null &&
+                                    badgesRef.current != null
+                                  ) {
+                                    badgesRef.current.refresh();
+                                  }
                                 }}
                               >
                                 X
