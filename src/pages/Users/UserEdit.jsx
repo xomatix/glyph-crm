@@ -29,9 +29,10 @@ function UserEdit() {
       >
         {(RecordContext, record) => (
           <GlContainer>
-            UserEdit {id}
-            <GlRow>
-              {/* <GlButton
+            <div className="field-group">
+              UserEdit {id}
+              <GlRow>
+                {/* <GlButton
                 nameSpace="standard"
                 dataSetIdent="glUsersRolesDelete"
                 className="success"
@@ -43,59 +44,68 @@ function UserEdit() {
               >
                 Save
               </GlButton> */}
-              <GlButton
-                className=""
-                afterAction={() => {
-                  navigate("/users");
-                }}
-              >
-                Close
-              </GlButton>
-            </GlRow>
-            <GlEdit
-              Context={RecordContext}
-              field="gl_users_id"
-              readOnly="true"
-              label={"ID"}
-            />
-            <GlEdit
-              Context={RecordContext}
-              field="gl_username"
-              readOnly="true"
-              label={"Username"}
-            />
-            <GlEdit Context={RecordContext} field="gl_email" label={"Email"} />
-            <div className="role-list">
-              <GlList
-                ref={rolesListRef}
-                nameSpace="standard"
-                dataSetIdent="glUsersRolesLink"
-                where={{ gl_users_id: id }}
-                onClick={async (row) => {
-                  if (row.gl_users_roles_link_id == null) {
-                    await service.select("standard", "glUsersRolesLinkSave", {
-                      rows: [row],
-                      where: { gl_users_id: id },
-                    });
-                  } else {
-                    await service.select("standard", "glUsersRolesLinkDelete", {
-                      rows: [row],
-                    });
-                  }
-                  refreshRolesList();
-                }}
-              >
-                {(row) => (
-                  <div className="role-list-item">
-                    {row.name}
-                    <input
-                      className="role-set-checkbox"
-                      type="checkbox"
-                      checked={row.gl_users_roles_link_id != null}
-                    />
-                  </div>
-                )}
-              </GlList>
+                <GlButton
+                  className=""
+                  afterAction={() => {
+                    navigate("/users");
+                  }}
+                >
+                  Close
+                </GlButton>
+              </GlRow>
+              <GlEdit
+                Context={RecordContext}
+                field="gl_users_id"
+                readOnly="true"
+                label={"ID"}
+              />
+              <GlEdit
+                Context={RecordContext}
+                field="gl_username"
+                readOnly="true"
+                label={"Username"}
+              />
+              <GlEdit
+                Context={RecordContext}
+                field="gl_email"
+                label={"Email"}
+              />
+              <div className="role-list">
+                <GlList
+                  ref={rolesListRef}
+                  nameSpace="standard"
+                  dataSetIdent="glUsersRolesLink"
+                  where={{ gl_users_id: id }}
+                  onClick={async (row) => {
+                    if (row.gl_users_roles_link_id == null) {
+                      await service.select("standard", "glUsersRolesLinkSave", {
+                        rows: [row],
+                        where: { gl_users_id: id },
+                      });
+                    } else {
+                      await service.select(
+                        "standard",
+                        "glUsersRolesLinkDelete",
+                        {
+                          rows: [row],
+                        }
+                      );
+                    }
+                    refreshRolesList();
+                  }}
+                >
+                  {(row) => (
+                    <div className="role-list-item">
+                      {row.name}
+                      <input
+                        className="role-set-checkbox"
+                        type="checkbox"
+                        checked={row.gl_users_roles_link_id != null}
+                      />
+                    </div>
+                  )}
+                </GlList>
+              </div>
             </div>
           </GlContainer>
         )}

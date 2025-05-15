@@ -21,7 +21,7 @@ function AiContextsEdit() {
       >
         {(RecordContext) => (
           <div className="selectors-edit">
-            <GlContainer>
+            <GlContainer width="1200px">
               <h2>Context</h2>
               <br />
               <GlEdit field="name" Context={RecordContext} />
@@ -49,8 +49,6 @@ function AiContextsEdit() {
               >
                 Save
               </GlButton>
-            </GlContainer>
-            <GlContainer>
               <GlEdit type="textarea" field="prompt" Context={RecordContext} />
             </GlContainer>
           </div>

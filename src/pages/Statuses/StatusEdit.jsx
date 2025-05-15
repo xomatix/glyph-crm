@@ -23,51 +23,57 @@ function CustomerEdit() {
       >
         {(RecordContext, record) => (
           <GlContainer>
-            <div style={{ display: "flex", gap: "8px" }}>
-              <GlButton
-                color="primary"
-                dataSetIdent="glEventsSave"
-                nameSpace="crm"
-                record={record}
-                afterAction={() => {
-                  navigate(`/types`);
-                }}
-              >
-                Save
-              </GlButton>
-              <GlButton
-                color="error"
-                dataSetIdent="glEventsDelete"
-                nameSpace="crm"
-                record={record}
-                afterAction={() => {
-                  navigate(`/types`);
-                }}
-              >
-                Delete
-              </GlButton>
-              <GlButton
-                className=""
-                action={() => {
-                  navigate(-1);
-                }}
-              >
-                Close
-              </GlButton>
+            <div className="field-group">
+              <div style={{ display: "flex", gap: "8px" }}>
+                <GlButton
+                  color="primary"
+                  dataSetIdent="glEventsSave"
+                  nameSpace="crm"
+                  record={record}
+                  afterAction={() => {
+                    navigate(`/types`);
+                  }}
+                >
+                  Save
+                </GlButton>
+                <GlButton
+                  color="error"
+                  dataSetIdent="glEventsDelete"
+                  nameSpace="crm"
+                  record={record}
+                  afterAction={() => {
+                    navigate(`/types`);
+                  }}
+                >
+                  Delete
+                </GlButton>
+                <GlButton
+                  className=""
+                  action={() => {
+                    navigate(-1);
+                  }}
+                >
+                  Close
+                </GlButton>
+              </div>
+              <GlEdit
+                field="status"
+                label="Type ID"
+                Context={RecordContext}
+                readOnly
+              />
+              <GlEdit
+                field="statusname"
+                label="Status"
+                Context={RecordContext}
+              />
+              <GlEdit
+                field="color"
+                label="Color"
+                Context={RecordContext}
+                type="color"
+              />
             </div>
-            <GlEdit
-              field="status"
-              label="Type ID"
-              Context={RecordContext}
-              readOnly
-            />
-            <GlEdit field="statusname" label="Status" Context={RecordContext} />
-            <GlEdit
-              field="color"
-              label="Color"
-              Context={RecordContext}
-              type="color"
-            />
           </GlContainer>
         )}
       </GlRecord>

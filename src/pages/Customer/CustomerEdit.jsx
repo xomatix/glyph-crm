@@ -39,7 +39,7 @@ function CustomerEdit() {
         {(RecordContext, record) => (
           <GlContainer>
             <GlRow className="client-edit-row">
-              <div>
+              <div className="field-group">
                 <h2>Customer Edit ID:{id}</h2>
                 <h2>{record.ident} </h2>
 

@@ -3,7 +3,7 @@
   flex-direction: column;
   flex-grow: 1;
 
-  input,
+  /* input,
   .color-picker {
     padding: 8px 8px;
     border-radius: 8px;
@@ -20,11 +20,11 @@
   }
 
   .readOnly {
-  background-color: #f0f0f0;
-  pointer-events: none;
-  opacity: 0.7;
+    background-color: #f0f0f0;
+    pointer-events: none;
+    opacity: 0.7;
   }
-  
+
   .textarea {
     resize: vertical;
   }
@@ -35,9 +35,19 @@
     font-weight: 500;
     color: var(--text-secondary);
     padding: 4px 8px 4px 8px;
-  }
-  .color-picker {
-    padding: 4px;
-    height: auto;
+  } */
+  .gl-edit {
+    &.gl-color-picker {
+      :nth-child(1) {
+        flex-grow: 1;
+      }
+      .color-picker {
+        width: 50px;
+        input {
+          padding: 0 6px;
+          height: 80%;
+        }
+      }
+    }
   }
 }

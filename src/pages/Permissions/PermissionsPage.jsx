@@ -43,19 +43,21 @@ function PermissionsPage() {
         where={{ gl_users_roles_id: 0 }}
       >
         {(RecordContext, record) => (
-          <div className="modal-record">
-            <GlEdit Context={RecordContext} field={"name"} />
-            <GlButton
-              record={record}
-              nameSpace="standard"
-              dataSetIdent="glUserRolesSave"
-              color="primary"
-              afterAction={() => {
-                refreshRoles();
-              }}
-            >
-              Add
-            </GlButton>
+          <div className="field-group">
+            <GlRow>
+              <GlEdit Context={RecordContext} field={"name"} />
+              <GlButton
+                record={record}
+                nameSpace="standard"
+                dataSetIdent="glUserRolesSave"
+                color="primary"
+                afterAction={() => {
+                  refreshRoles();
+                }}
+              >
+                Add
+              </GlButton>
+            </GlRow>
             <GlList
               ref={rolesListRef}
               nameSpace={"standard"}
@@ -82,7 +84,7 @@ function PermissionsPage() {
           where={{ gl_users_roles_id: roleId }}
         >
           {(RecordContext, record) => (
-            <div className="modal-record role-list">
+            <div className="field-group role-list">
               <GlEdit Context={RecordContext} field="name" />
               <GlEdit
                 Context={RecordContext}
@@ -178,18 +180,20 @@ function PermissionsPage() {
       >
         {(RecordContext, record) => (
           <div className="modal-record">
-            <GlEdit Context={RecordContext} field={"name"} />
-            <GlButton
-              record={record}
-              nameSpace="standard"
-              dataSetIdent="glPermissionsSave"
-              color="primary"
-              afterAction={() => {
-                refreshPermissions();
-              }}
-            >
-              Add
-            </GlButton>
+            <GlRow>
+              <GlEdit Context={RecordContext} field={"name"} />
+              <GlButton
+                record={record}
+                nameSpace="standard"
+                dataSetIdent="glPermissionsSave"
+                color="primary"
+                afterAction={() => {
+                  refreshPermissions();
+                }}
+              >
+                Add
+              </GlButton>
+            </GlRow>
             <GlList
               ref={permissionsListRef}
               nameSpace={"standard"}
@@ -217,7 +221,7 @@ function PermissionsPage() {
           where={{ gl_permissions_id: permissionId }}
         >
           {(RecordContext, record) => (
-            <div className="modal-record">
+            <div className="field-group">
               <GlEdit Context={RecordContext} field="name" />
 
               <GlRow>

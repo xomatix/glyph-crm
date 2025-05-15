@@ -3,20 +3,19 @@
   margin: auto;
 }
 
-.modal-record {
+.field-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
-
-  .gl-row button {
-    width: 100%;
-  }
 
   .list-container {
     width: unset;
   }
 }
 
+.modal-body {
+  padding-top: 8px;
+}
 .role-list {
   .role-list-item {
     display: flex;

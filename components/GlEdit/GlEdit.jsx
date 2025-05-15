@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import "./GlEdit.css";
 import GlRow from "../GlRow/GlRow";
+import { TextField } from "@mui/material";
 
 export const GlEdit = ({
   field,
@@ -30,7 +31,9 @@ export const GlEdit = ({
         onBlur(record);
       }}
     >
-      {showLabel && <label>{label}</label>}
+      {showLabel && !["text", "datetime", "color"].includes(type) && (
+        <label>{label}</label>
+      )}
       {type == "textarea" && (
         <textarea
           className={`edit-input textarea${readOnly ? " readOnly" : ""}`}
@@ -39,39 +42,52 @@ export const GlEdit = ({
         />
       )}
       {type == "text" && (
-        <input
+        <TextField
           id={field}
-          className={`edit-input textarea${readOnly ? " readOnly" : ""}`}
+          disabled={readOnly}
           type={type}
           value={record[field] || ""}
           onChange={handleChange}
+          label={label}
+          size="small"
+          variant="outlined"
         />
       )}
       {type == "color" && (
-        <GlRow>
-          <input
+        <GlRow className="gl-edit gl-color-picker">
+          <TextField
             id={field}
-            className={`edit-input textarea${readOnly ? " readOnly" : ""}`}
+            disabled={readOnly}
             type="text"
             value={record[field] || ""}
             onChange={handleChange}
+            label={label}
+            size="small"
+            variant="outlined"
           />
-          <input
+          <TextField
             id={field + "_picker"}
-            className={`edit-input color-picker textarea${readOnly ? " readOnly" : ""}`}
+            disabled={readOnly}
+            className="color-picker"
             type={type}
             value={record[field] || ""}
             onChange={handleChange}
+            // label={label}
+            size="small"
+            variant="outlined"
           />
         </GlRow>
       )}
       {type == "datetime" && (
-        <input
+        <TextField
           id={field}
-          className={`edit-input textarea${readOnly ? " readOnly" : ""}`}
+          disabled={readOnly}
           type="datetime-local"
-          value={record[field]}
+          value={record[field] || ""}
           onChange={handleChange}
+          label={label}
+          size="small"
+          variant="outlined"
         />
       )}
     </div>
