@@ -10,6 +10,7 @@ export const GlEdit = ({
   showLabel = true,
   onFocus = () => {},
   onBlur = () => {},
+  onEnter = () => {},
   Context,
   readOnly = false,
 }) => {
@@ -19,6 +20,12 @@ export const GlEdit = ({
 
   const handleChange = (e) => {
     setRecord((prev) => ({ ...prev, [field]: e.target.value }));
+  };
+
+  const handleEnter = (e) => {
+    if (e.key === "Enter") {
+      onEnter(record);
+    }
   };
 
   return (
@@ -48,6 +55,7 @@ export const GlEdit = ({
           type={type}
           value={record[field] || ""}
           onChange={handleChange}
+          onKeyUp={handleEnter}
           label={label}
           size="small"
           variant="outlined"

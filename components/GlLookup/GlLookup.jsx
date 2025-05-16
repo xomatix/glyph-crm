@@ -22,7 +22,7 @@ export const GlLookup = ({
   const { record = {}, setRecord = () => {} } = contextValue || {};
   const [showList, setShowList] = useState(false);
   const wrapperRef = useRef(null);
-  const listRef = useRef();
+  const lookupListRef = useRef();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -47,6 +47,12 @@ export const GlLookup = ({
     }));
   };
 
+  const handleSearchLookup = () => {
+    if (lookupListRef != null && lookupListRef.current != null) {
+      lookupListRef.current.refresh();
+    }
+  };
+
   return (
     <div
       ref={wrapperRef}
@@ -62,9 +68,11 @@ export const GlLookup = ({
         label={label}
         showLabel={showLabel}
         Context={Context}
+        onEnter={handleSearchLookup}
       />
       {showList && (
         <GlList
+          ref={lookupListRef}
           dataSetIdent={dataSetIdent}
           nameSpace={nameSpace}
           onClick={(row) => {
@@ -77,7 +85,6 @@ export const GlLookup = ({
             field: record[field],
             [fieldInLookup]: record[fieldInLookup],
           }}
-          ref={listRef}
         >
           {(row) => children(row)}
         </GlList>
