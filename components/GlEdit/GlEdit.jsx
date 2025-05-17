@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "./GlEdit.css";
 import GlRow from "../GlRow/GlRow";
-import { TextField } from "@mui/material";
+import { Checkbox, FormControlLabel, Switch, TextField } from "@mui/material";
 
 export const GlEdit = ({
   field,
@@ -19,7 +19,12 @@ export const GlEdit = ({
   const { record = {}, setRecord = () => {} } = contextValue || {};
 
   const handleChange = (e) => {
-    setRecord((prev) => ({ ...prev, [field]: e.target.value }));
+    let newVal = e.target.value;
+    console.log(newVal);
+    if (type == "switch") {
+      newVal = record[field] ? false : true;
+    }
+    setRecord((prev) => ({ ...prev, [field]: newVal }));
   };
 
   const handleEnter = (e) => {
@@ -38,7 +43,7 @@ export const GlEdit = ({
         onBlur(record);
       }}
     >
-      {showLabel && !["text", "datetime", "color"].includes(type) && (
+      {showLabel && !["text", "datetime", "color", "switch"].includes(type) && (
         <label>{label}</label>
       )}
       {type == "textarea" && (
@@ -96,6 +101,21 @@ export const GlEdit = ({
           label={label}
           size="small"
           variant="outlined"
+        />
+      )}
+      {["switch"].includes(type) && (
+        <FormControlLabel
+          id={field}
+          disabled={readOnly}
+          label={label}
+          control={
+            <Switch
+              size="medium"
+              onChange={handleChange}
+              checked={record[field]}
+              variant="outlined"
+            />
+          }
         />
       )}
     </div>

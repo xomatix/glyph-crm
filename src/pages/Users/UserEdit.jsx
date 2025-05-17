@@ -32,18 +32,17 @@ function UserEdit() {
             <div className="field-group">
               UserEdit {id}
               <GlRow>
-                {/* <GlButton
-                nameSpace="standard"
-                dataSetIdent="glUsersRolesDelete"
-                className="success"
-                record={record}
-                afterAction={() => {
-                  // setRoleId(null);
-                  // refreshRoles();
-                }}
-              >
-                Save
-              </GlButton> */}
+                <GlButton
+                  nameSpace="standard"
+                  dataSetIdent="glUsersSave"
+                  color="primary"
+                  record={record}
+                  afterAction={() => {
+                    navigate(0);
+                  }}
+                >
+                  Save
+                </GlButton>
                 <GlButton
                   className=""
                   afterAction={() => {
@@ -69,6 +68,12 @@ function UserEdit() {
                 Context={RecordContext}
                 field="gl_email"
                 label={"Email"}
+              />
+              <GlEdit
+                type="switch"
+                Context={RecordContext}
+                field="is_active"
+                label={"Active"}
               />
               <div className="role-list">
                 <GlList
