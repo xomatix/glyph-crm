@@ -100,7 +100,7 @@ function App() {
               </svg>
               Events
             </Link>
-            {userRoles.includes("admin") && (
+            {userRoles.includes("developer") && (
               <Link className="nav-item" to="/statuses">
                 <svg
                   className="nav-icon"
@@ -340,6 +340,12 @@ function App() {
             {userRoles.includes("developer") && (
               <Route path="/ai-context/:id" element={<AiContextsEdit />} />
             )}
+            {userRoles.includes("developer") && (
+              <Route path="/statuses" element={<StatusesList />} />
+            )}
+            {userRoles.includes("developer") && (
+              <Route path="/status/:id" element={<StatusEdit />} />
+            )}
             {/* ADMIN */}
             {userRoles.includes("admin") && (
               <Route path="/badges" element={<BadgesList />} />
@@ -358,12 +364,6 @@ function App() {
             )}
             {userRoles.includes("admin") && (
               <Route path="/type/:gl_events_id" element={<TypeEdit />} />
-            )}
-            {userRoles.includes("admin") && (
-              <Route path="/statuses" element={<StatusesList />} />
-            )}
-            {userRoles.includes("admin") && (
-              <Route path="/status/:id" element={<StatusEdit />} />
             )}
             {userRoles.includes("admin") && (
               <Route path="/users" element={<UsersList />} />

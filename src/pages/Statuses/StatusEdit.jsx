@@ -17,9 +17,9 @@ function CustomerEdit() {
   return (
     <div className="container">
       <GlRecord
-        dataSetIdent="glEventsStatusAllDistinct"
+        dataSetIdent="glEventsStatusAll"
         nameSpace="crm"
-        where={{ status: id }}
+        where={{ gl_event_status_id: id }}
       >
         {(RecordContext, record) => (
           <GlContainer>

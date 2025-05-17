@@ -34,9 +34,9 @@ function SelectorsList() {
         {/* Table */}
         <GlTable
           nameSpace={"crm"}
-          dataSetIdent={"glEventsStatusAllDistinct"}
+          dataSetIdent={"glEventsStatusAll"}
           headers={[
-            { label: "Type", field: "statusname" },
+            { label: "Status", field: "statusname" },
             { label: "Actions", field: "actions" },
           ]}
         >
