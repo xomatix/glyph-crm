@@ -1,7 +1,7 @@
-import { Popover } from "@mui/material";
+import { Button, Popover } from "@mui/material";
 import { useEffect, useState } from "react";
 import "./AccountPopup.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GlButton from "../../../components/GlButton/GlButton";
 import GlRecord from "../../../components/GlRecord/GlRecord";
 import GlRow from "../../../components/GlRow/GlRow";
@@ -27,28 +27,34 @@ function AccountPopup() {
   return (
     <>
       {s_id == null && (
-        <GlButton color="primary" action={() => navigate("/login")}>
-          <svg
-            className="nav-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path
-              d="M15 4H18C19.1046 4 20 4.89543 20 6V18C20 19.1046 19.1046 20 18 20H15M11 16L15 12M15 12L11 8M15 12H3"
-              stroke-width="1.5"
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => navigate("/login")}
+          startIcon={
+            <svg
+              className="nav-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-            />
-          </svg>
+            >
+              <path
+                d="M15 4H18C19.1046 4 20 4.89543 20 6V18C20 19.1046 19.1046 20 18 20H15M11 16L15 12M15 12L11 8M15 12H3"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          }
+        >
           Login
-        </GlButton>
+        </Button>
       )}
       {s_id != null && (
         <GlRecord dataSetIdent="glAccountPopup" nameSpace="standard">
