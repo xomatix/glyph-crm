@@ -2,10 +2,10 @@ import "./App.css";
 import { lazy, Suspense, useEffect } from "react";
 import { Link, Route, Routes, BrowserRouter } from "react-router-dom";
 import AiContextsEdit from "./pages/AiContextsEdit";
-import GlButton from "../components/GlButton/GlButton";
 import RecordLogs from "./pages/RecordLogs/RecordsLogs";
 import service from "../glService/glService";
 import { useState } from "react";
+const AccountPopup = lazy(() => import("./pages/AccountPopup/AccountPopup"));
 const BadgesList = lazy(() => import("./pages/Badge/BadgesList"));
 const BadgeEdit = lazy(() => import("./pages/Badge/BadgeEdit"));
 const AiContextsList = lazy(() => import("./pages/AiContextsList"));
@@ -21,7 +21,7 @@ const CustomersList = lazy(() => import("./pages/Customer/CustomersList"));
 const CustomerEdit = lazy(() => import("./pages/Customer/CustomerEdit"));
 const SelectorEdit = lazy(() => import("./pages/SelectorsEdit"));
 const SelectorsList = lazy(() => import("./pages/SelectorsList"));
-const Login = lazy(() => import("./pages/Login"));
+const Login = lazy(() => import("./pages/Login/Login"));
 const Calendar = lazy(() => import("./pages/calendar"));
 const PermissionsPage = lazy(() =>
   import("./pages/Permissions/PermissionsPage")
@@ -63,24 +63,26 @@ function App() {
               Home
             </Link>
 
-            <Link className="nav-item" to="/users">
-              <svg
-                className="nav-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-              Users
-            </Link>
+            {userRoles.includes("admin") && (
+              <Link className="nav-item" to="/users">
+                <svg
+                  className="nav-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                Users
+              </Link>
+            )}
             <Link className="nav-item" to="/events">
               <svg
                 className="nav-icon"
@@ -270,57 +272,7 @@ function App() {
                 Permissions
               </Link>
             )}
-
-            {localStorage.getItem("s_id") === "" && (
-              <Link className="login-btn nav-item" to="/login">
-                <svg
-                  className="nav-icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    d="M15 4H18C19.1046 4 20 4.89543 20 6V18C20 19.1046 19.1046 20 18 20H15M11 16L15 12M15 12L11 8M15 12H3"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                Login
-              </Link>
-            )}
-            {localStorage.getItem("s_id") !== "" && (
-              <GlButton
-                color="error"
-                action={() => {
-                  localStorage.setItem("s_id", "");
-                  window.location.href = `/`;
-                }}
-              >
-                <svg
-                  className="logout-icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                  <polyline points="16 17 21 12 16 7"></polyline>
-                  <line x1="21" y1="12" x2="9" y2="12"></line>
-                </svg>
-                Logout
-              </GlButton>
-            )}
+            <AccountPopup />
           </div>
         </nav>
         <Suspense fallback={<div>Loading...</div>}>
@@ -364,8 +316,9 @@ function App() {
             {userRoles.includes("admin") && (
               <Route path="/type/:gl_events_id" element={<TypeEdit />} />
             )}
-
-            <Route path="/users" element={<UsersList />} />
+            {userRoles.includes("admin") && (
+              <Route path="/users" element={<UsersList />} />
+            )}
 
             <Route path="/users/:id" element={<UserEdit />} />
 

@@ -1,0 +1,44 @@
+.account-popup-btn {
+  margin: auto 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatar-circle {
+  width: 16px;
+  height: 16px;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: #4285f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.popover-content {
+  padding: 16px;
+  width: 180px;
+  background-color: #1e293b;
+  color: #fff;
+
+  > button {
+    width: 100%;
+  }
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #4a5366;
+  color: #fff;
+}
