@@ -97,14 +97,12 @@ function UserEdit() {
                   label={"Password"}
                   type="text"
                 />
-                <br />
                 <GlEdit
                   Context={RecordContext}
                   field={"gl_password_2"}
                   label={"Confirm Password"}
                   type="text"
                 />
-                <br />
                 <GlRow>
                   <GlButton
                     color="error"

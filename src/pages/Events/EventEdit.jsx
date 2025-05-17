@@ -27,7 +27,7 @@ function CustomerEdit() {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container" id="event-edit">
       <GlRecord
         dataSetIdent="glEventsAll"
         nameSpace="crm"
@@ -75,14 +75,15 @@ function CustomerEdit() {
                     Close
                   </GlButton>
 
-                  {userRoles.includes("admin") || userRoles.includes("Sales Manager") && (
-                    <GlButton
-                      color="secondary"
-                      action={() => setShowOwner(true)}
-                    >
-                      Assign Sales representative
-                    </GlButton>
-                  )}
+                  {userRoles.includes("admin") ||
+                    (userRoles.includes("Sales Manager") && (
+                      <GlButton
+                        color="secondary"
+                        action={() => setShowOwner(true)}
+                      >
+                        Assign Sales representative
+                      </GlButton>
+                    ))}
                   <GlModal
                     isOpen={showOwner}
                     onClose={() => setShowOwner(false)}
@@ -98,11 +99,7 @@ function CustomerEdit() {
                       className="c-modal-lookup"
                       //where={{ type: record.type }}
                     >
-                      {(row) => (
-                        <div>
-                          {row.gl_username}
-                        </div>
-                      )}
+                      {(row) => <div>{row.gl_username}</div>}
                     </GlLookup>
                   </GlModal>
                   {userRoles.includes("admin") && (
