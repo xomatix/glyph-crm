@@ -62,26 +62,25 @@ function App() {
               </svg>
               Home
             </Link>
-            {userRoles.includes("admin") && (
-              <Link className="nav-item" to="/users">
-                <svg
-                  className="nav-icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-                Users
-              </Link>
-            )}
+
+            <Link className="nav-item" to="/users">
+              <svg
+                className="nav-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              Users
+            </Link>
             <Link className="nav-item" to="/events">
               <svg
                 className="nav-icon"
@@ -365,12 +364,10 @@ function App() {
             {userRoles.includes("admin") && (
               <Route path="/type/:gl_events_id" element={<TypeEdit />} />
             )}
-            {userRoles.includes("admin") && (
-              <Route path="/users" element={<UsersList />} />
-            )}
-            {userRoles.includes("admin") && (
-              <Route path="/users/:id" element={<UserEdit />} />
-            )}
+
+            <Route path="/users" element={<UsersList />} />
+
+            <Route path="/users/:id" element={<UserEdit />} />
 
             <Route path="/events" element={<EventsList />} />
             <Route path="/event/:gl_events_id" element={<EventsEdit />} />
