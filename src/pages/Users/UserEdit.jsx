@@ -43,27 +43,29 @@ function UserEdit() {
           <GlContainer>
             <div className="field-group">
               UserEdit {id}
-              <GlRow>
-                <GlButton
-                  nameSpace="standard"
-                  dataSetIdent="glUsersSave"
-                  color="primary"
-                  record={record}
-                  afterAction={() => {
-                    navigate(0);
-                  }}
-                >
-                  Save
-                </GlButton>
-                <GlButton
-                  className=""
-                  afterAction={() => {
-                    navigate("/users");
-                  }}
-                >
-                  Close
-                </GlButton>
-              </GlRow>
+              {menuPermissions.includes("admin") && (
+                <GlRow>
+                  <GlButton
+                    nameSpace="standard"
+                    dataSetIdent="glUsersSave"
+                    color="primary"
+                    record={record}
+                    afterAction={() => {
+                      navigate(0);
+                    }}
+                  >
+                    Save
+                  </GlButton>
+                  <GlButton
+                    className=""
+                    afterAction={() => {
+                      navigate("/users");
+                    }}
+                  >
+                    Close
+                  </GlButton>
+                </GlRow>
+              )}
               <GlEdit
                 Context={RecordContext}
                 field="gl_users_id"
