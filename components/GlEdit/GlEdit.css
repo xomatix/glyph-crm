@@ -1,41 +1,7 @@
 .edit-container {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
 
-  /* input,
-  .color-picker {
-    padding: 8px 8px;
-    border-radius: 8px;
-    border: 1px solid #d0d0d0;
-    font-size: 14px;
-    transition: border-color 0.2s ease;
-  }
-
-  input:focus,
-  .color-picker:focus {
-    outline: none;
-    border-color: #2563eb;
-    box-shadow: inset 0 0 0 3px rgba(37, 99, 235, 0.1);
-  }
-
-  .readOnly {
-    background-color: #f0f0f0;
-    pointer-events: none;
-    opacity: 0.7;
-  }
-
-  .textarea {
-    resize: vertical;
-  }
-
-  label {
-    display: block;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    padding: 4px 8px 4px 8px;
-  } */
   .gl-edit {
     &.gl-color-picker {
       :nth-child(1) {

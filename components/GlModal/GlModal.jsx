@@ -34,7 +34,7 @@ function GlModal({ isOpen = false, onClose = () => {}, title, children }) {
                   </svg>
                 </GlButton>
               </div>
-              {children}
+              <div className="modal-body">{children}</div>
             </div>
           </div>
         </Modal>
