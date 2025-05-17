@@ -6,3 +6,16 @@
   margin: auto;
   justify-content: center;
 }
+
+.modal-content {
+  height: 500px;
+}
+
+.modal-body {
+  height: 450px;
+}
+.c-modal-lookup{
+.edit-container {
+  padding-top: 15px;
+}
+}

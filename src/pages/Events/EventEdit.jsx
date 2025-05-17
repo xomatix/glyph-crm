@@ -8,11 +8,12 @@ import GlContainer from "../../../components/GlContainer/GlContainer";
 import GlRow from "../../../components/GlRow/GlRow";
 import GlLookup from "../../../components/GlLookup/GlLookup";
 import service from "../../../glService/glService";
+import GlModal from "../../../components/GlModal/GlModal";
 
 function CustomerEdit() {
   const { gl_events_id } = useParams();
   const navigate = useNavigate();
-
+  const [showOwner, setShowOwner] = useState(false);
   const [userRoles, setUserRoles] = useState([]);
 
   async function loadRoles() {
@@ -73,6 +74,37 @@ function CustomerEdit() {
                   >
                     Close
                   </GlButton>
+
+                  {userRoles.includes("admin") || userRoles.includes("Sales Manager") && (
+                    <GlButton
+                      color="secondary"
+                      action={() => setShowOwner(true)}
+                    >
+                      Assign Sales representative
+                    </GlButton>
+                  )}
+                  <GlModal
+                    isOpen={showOwner}
+                    onClose={() => setShowOwner(false)}
+                    title={"Assign a sales representative"}
+                  >
+                    <GlLookup
+                      dataSetIdent="glUsersSalesRep"
+                      nameSpace="crm"
+                      Context={RecordContext}
+                      field={"user"}
+                      fieldInLookup={"gl_username"}
+                      label="Sales rep"
+                      className="c-modal-lookup"
+                      //where={{ type: record.type }}
+                    >
+                      {(row) => (
+                        <div>
+                          {row.gl_username}
+                        </div>
+                      )}
+                    </GlLookup>
+                  </GlModal>
                   {userRoles.includes("admin") && (
                     <GlButton
                       color="info"
