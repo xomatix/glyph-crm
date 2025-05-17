@@ -65,6 +65,20 @@ function SelectorsList() {
               </div>
             )}
           </GlSlot>
+          <GlSlot slot="statusname">
+            {(row) => (
+              <div
+                style={{
+                  backgroundColor: row.statuscolor,
+                  width: "fit-content",
+                  padding: "4px 8px",
+                  borderRadius: "8px",
+                }}
+              >
+                {row.statusname}
+              </div>
+            )}
+          </GlSlot>
           <GlSlot slot="ident">
             {(row) => (
               <div

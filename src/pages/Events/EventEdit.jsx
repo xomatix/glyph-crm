@@ -120,7 +120,7 @@ function CustomerEdit() {
 
               <GlEdit
                 field="date"
-                label="Date"
+                label=""
                 type="datetime"
                 Context={RecordContext}
               />

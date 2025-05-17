@@ -28,7 +28,7 @@ function CustomerEdit() {
               <GlRow>
                 <GlButton
                   color="primary"
-                  dataSetIdent="glEventsSave"
+                  dataSetIdent="glTypesSave"
                   nameSpace="crm"
                   record={record}
                   afterAction={() => {
@@ -37,9 +37,10 @@ function CustomerEdit() {
                 >
                   Save
                 </GlButton>
+                {gl_events_id != 0 && (
                 <GlButton
                   color="error"
-                  dataSetIdent="glEventsDelete"
+                  dataSetIdent="glTypesDelete"
                   nameSpace="crm"
                   record={record}
                   afterAction={() => {
@@ -48,6 +49,7 @@ function CustomerEdit() {
                 >
                   Delete
                 </GlButton>
+                )}
                 <GlButton
                   className=""
                   action={() => {
