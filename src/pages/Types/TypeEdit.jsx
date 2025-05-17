@@ -84,7 +84,7 @@ function CustomerEdit() {
                 type="color"
               />
 
-              {gl_events_id != 0 && <h2>Statuses connected to a type</h2>}
+              {/* {gl_events_id != 0 && <h2>Statuses connected to a type</h2>}
               {gl_events_id != 0 && (
                 <GlRecord
                   dataSetIdent="glTypesAll"
@@ -170,7 +170,7 @@ function CustomerEdit() {
                     </glRow>
                   )}
                 </GlRecord>
-              )}
+              )} */}
             </div>
           </GlContainer>
         )}
