@@ -55,9 +55,17 @@ function SelectorEdit() {
               <GlContainer>
                 <h2>Selector</h2>
 
-                <GlEdit field="selector_name" Context={RecordContext} />
+                <GlEdit
+                  readOnly={record.gl_selectors_id != null}
+                  field="selector_name"
+                  Context={RecordContext}
+                />
 
-                <GlEdit field="selector_namespace" Context={RecordContext} />
+                <GlEdit
+                  readOnly={record.gl_selectors_id != null}
+                  field="selector_namespace"
+                  Context={RecordContext}
+                />
 
                 <GlEdit field="page_size" Context={RecordContext} />
 
