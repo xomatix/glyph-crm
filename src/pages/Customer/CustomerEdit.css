@@ -1,34 +1,58 @@
-.card {
-  margin: 8px;
-}
-
-.container {
-  width: 1200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: auto;
-  justify-content: center;
-
-  .client-edit-row {
-    > div:nth-child(1) {
-      width: 70%;
-    }
-    > div:nth-child(2) {
-      width: 30%;
-    }
+#customer-edit {
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
   }
-}
 
-.badge-item {
-  display: flex;
-  gap: 4px;
-  align-content: space-between;
+  .field-group {
+    width: 100%;
+  }
+
+  .badge-item {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
 
   .badge {
-    padding: 4px 8px;
+    padding: 4px 12px;
     border-radius: 4px;
     width: min-content;
-    color: aliceblue;
+    color: #fff;
+    font-size: 14px;
+    background: #64748b;
+  }
+  .timeline {
+    flex: 1;
+  }
+
+  @media (max-width: 900px) {
+    .container {
+      padding: 8px;
+    }
+    .timeline {
+      min-width: 100%;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .container {
+      padding: 4px;
+    }
+    .field-group h2 {
+      font-size: 1.1rem;
+    }
+    .badge {
+      font-size: 12px;
+      padding: 3px 8px;
+    }
   }
 }

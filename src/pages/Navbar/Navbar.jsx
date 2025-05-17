@@ -260,7 +260,12 @@ function Navbar() {
   ];
 
   return (
-    <AppBar position="static" sx={{ background: "#1e293b" }} elevation={1}>
+    <AppBar
+      id="gl-navbar"
+      position="static"
+      sx={{ background: "#1e293b" }}
+      elevation={1}
+    >
       <Toolbar>
         <Box sx={{ display: { xs: "block", md: "none" }, mr: 1 }}>
           <IconButton
@@ -323,6 +328,7 @@ function Navbar() {
       </Toolbar>
       {/* Drawer for mobile */}
       <Drawer
+        id="gl-navbar"
         anchor="left"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}

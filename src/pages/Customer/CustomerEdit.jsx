@@ -30,7 +30,7 @@ function CustomerEdit() {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container" id="customer-edit">
       <GlRecord
         dataSetIdent="glCustomersAll"
         nameSpace="crm"
@@ -38,11 +38,13 @@ function CustomerEdit() {
       >
         {(RecordContext, record) => (
           <GlContainer>
-            <GlRow className="client-edit-row">
-              <div className="field-group">
+            <GlRow
+              className="client-edit-row"
+              style={{ alignItems: "flex-start" }}
+            >
+              <div className="field-group" style={{ flex: 3, minWidth: 0 }}>
                 <h2>Customer Edit ID:{id}</h2>
                 <h2>{record.ident} </h2>
-
                 <GlRow>
                   <GlButton
                     color="primary"
@@ -87,7 +89,6 @@ function CustomerEdit() {
                     </GlButton>
                   )}
                 </GlRow>
-
                 <GlEdit
                   field="ident"
                   label="Customer CODE"
@@ -111,7 +112,6 @@ function CustomerEdit() {
                     {(RecordBadgeContext, recordBadge) => (
                       <div>
                         <h2>Badges</h2>
-                        {/* {JSON.stringify(recordBadge)} */}
                         <GlRow>
                           <GlLookup
                             Context={RecordBadgeContext}
@@ -149,7 +149,6 @@ function CustomerEdit() {
                             Add badge
                           </GlButton>
                         </GlRow>
-
                         <GlList
                           ref={badgesRef}
                           nameSpace="crm"
@@ -192,7 +191,9 @@ function CustomerEdit() {
                   </GlRecord>
                 )}
               </div>
-              <Timeline where={{ customer: id }}></Timeline>
+              {/* <div className="timeline" style={{ flex: 1 }}> */}
+              <Timeline where={{ customer: id }} />
+              {/* </div> */}
             </GlRow>
           </GlContainer>
         )}

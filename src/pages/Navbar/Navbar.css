@@ -1,16 +1,18 @@
-.MuiButton-root {
-  color: #fff !important;
-}
-.MuiButton-root svg {
-  color: #fff;
-}
-.MuiToolbar-root {
-  background: #1e293b !important;
-}
-.m-drawer-navbar-item {
-  display: flex;
-  gap: 8px;
-  > svg {
-    margin: auto 0;
+#gl-navbar {
+  .MuiButton-root {
+    color: #fff !important;
+  }
+  .MuiButton-root svg {
+    color: #fff;
+  }
+  .MuiToolbar-root {
+    background: #1e293b !important;
+  }
+  .m-drawer-navbar-item {
+    display: flex;
+    gap: 8px;
+    > svg {
+      margin: auto 0;
+    }
   }
 }
