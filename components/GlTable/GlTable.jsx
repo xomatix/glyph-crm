@@ -7,6 +7,7 @@ import React, {
 import service from "../../glService/glService";
 import "./GlTable.css";
 import GlButton from "../GlButton/GlButton";
+import GlModal from "../GlModal/GlModal";
 
 const GlTable = forwardRef(
   (
@@ -25,13 +26,11 @@ const GlTable = forwardRef(
     const [tableHeaders, setTableHeaders] = useState([]);
     const [page, setPage] = useState(1);
     const [slotMap, setSlotMap] = useState({});
+    const [error, setError] = useState("");
 
     function loadSlots() {
       let formSlotMap = {};
       React.Children.forEach(children, (child) => {
-        // console.log("children ", child);
-        // console.log(React.Children);
-
         const slotName = child.props.slot;
         if (slotName) {
           formSlotMap[slotName] = child;
@@ -47,6 +46,11 @@ const GlTable = forwardRef(
       });
       setRows(response);
       if (response.length > 0) {
+        if (response.length == 1 && response[0]["error"]) {
+          setError(response[0]["error"]);
+          return;
+        }
+
         setTableHeaders(
           Object.keys(response[0]).map((h) => {
             return { field: h, label: h };
@@ -159,6 +163,13 @@ const GlTable = forwardRef(
             </div>
           </div>
         </div>
+        <GlModal
+          isOpen={error.length > 0}
+          title={"Error message"}
+          onClose={() => setError("")}
+        >
+          {error}
+        </GlModal>
       </div>
     );
   }

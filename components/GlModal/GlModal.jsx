@@ -6,7 +6,6 @@ import GlButton from "../GlButton/GlButton";
 function GlModal({ isOpen = false, onClose = () => {}, title, children }) {
   return (
     <>
-      {isOpen ? "tak" : "nie"}
       {isOpen == true && (
         <Modal
           open={isOpen}
