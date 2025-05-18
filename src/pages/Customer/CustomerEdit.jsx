@@ -9,12 +9,13 @@ import GlRow from "../../../components/GlRow/GlRow";
 import GlList from "../../../components/GlList/GlList";
 import GlLookup from "../../../components/GlLookup/GlLookup";
 import Timeline from "../../../components/Timeline/Timeline";
+import GlModal from "../../../components/GlModal/GlModal";
 import service from "../../../glService/glService";
+import { GetDataByNipNumber } from "./Utils";
 
 function CustomerEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [counter, setCounter] = useState(0);
   const badgesRef = useRef();
 
   const [userRoles, setUserRoles] = useState([]);
@@ -88,6 +89,7 @@ function CustomerEdit() {
                       Logs
                     </GlButton>
                   )}
+                  <GetDataByNipNumber Context={RecordContext} />
                 </GlRow>
                 <GlEdit
                   field="ident"
@@ -103,11 +105,21 @@ function CustomerEdit() {
                   <GlEdit field="city" Context={RecordContext} />
                   <GlEdit field="address" Context={RecordContext} />
                 </GlRow>
+                <GlRow>
+                  <GlEdit
+                    field="nip"
+                    label="Nip"
+                    type="number"
+                    Context={RecordContext}
+                  />
+                  <GlEdit field="krs" label="Krs" Context={RecordContext} />
+                  <GlEdit field="regon" label="REGON" Context={RecordContext} />
+                </GlRow>
                 {id > 0 && (
                   <GlRecord
                     dataSetIdent="glCustomersAll"
                     nameSpace="crm"
-                    where={{ id: id, counter: counter }}
+                    where={{ id: id }}
                   >
                     {(RecordBadgeContext, recordBadge) => (
                       <div>
@@ -120,7 +132,7 @@ function CustomerEdit() {
                             field="gl_customers_badge_id"
                             fieldInLookup="customers_badge_name"
                             label="New Badge"
-                            where={{ gl_customers_id: id, counter: counter }}
+                            where={{ gl_customers_id: id }}
                           >
                             {(row) => (
                               <div
@@ -155,7 +167,6 @@ function CustomerEdit() {
                           dataSetIdent="glCustomersBadges"
                           where={{
                             gl_customers_id: record.gl_customers_id,
-                            counter: counter,
                           }}
                         >
                           {(row) => (
@@ -191,9 +202,8 @@ function CustomerEdit() {
                   </GlRecord>
                 )}
               </div>
-              {/* <div className="timeline" style={{ flex: 1 }}> */}
+
               <Timeline where={{ customer: id }} />
-              {/* </div> */}
             </GlRow>
           </GlContainer>
         )}
