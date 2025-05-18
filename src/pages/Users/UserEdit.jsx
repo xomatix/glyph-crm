@@ -66,16 +66,18 @@ function UserEdit() {
                   </GlButton>
                 </GlRow>
               )}
-              <GlEdit
-                Context={RecordContext}
-                field="gl_users_id"
-                readOnly="true"
-                label={"ID"}
-              />
+              {id != 0 && (
+                <GlEdit
+                  Context={RecordContext}
+                  field="gl_users_id"
+                  readOnly="true"
+                  label={"ID"}
+                />
+              )}
               <GlEdit
                 Context={RecordContext}
                 field="gl_username"
-                readOnly="true"
+                readOnly={id != 0}
                 label={"Username"}
               />
               <GlEdit
@@ -83,9 +85,22 @@ function UserEdit() {
                 field="gl_email"
                 label={"Email"}
               />
-              <GlButton color="secondary" action={() => setShowPassword(true)}>
-                Change password
-              </GlButton>
+              {id != 0 && (
+                <GlButton
+                  color="secondary"
+                  action={() => setShowPassword(true)}
+                >
+                  Change password
+                </GlButton>
+              )}
+              {id == 0 && (
+                <GlEdit
+                  Context={RecordContext}
+                  field={"gl_password"}
+                  label={"Password"}
+                  type="text"
+                />
+              )}
               <GlModal
                 isOpen={showPassword}
                 onClose={() => setShowPassword(false)}
@@ -136,7 +151,7 @@ function UserEdit() {
                   label={"Active"}
                 />
               )}
-              {menuPermissions.includes("admin") && (
+              {menuPermissions.includes("admin") && id != 0 && (
                 <div className="role-list">
                   <GlList
                     ref={rolesListRef}

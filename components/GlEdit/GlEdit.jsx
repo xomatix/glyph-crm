@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import "./GlEdit.css";
 import GlRow from "../GlRow/GlRow";
 import { Checkbox, FormControlLabel, Switch, TextField } from "@mui/material";
+import MonacoEditor from "@monaco-editor/react";
 
 export const GlEdit = ({
   field,
@@ -117,6 +118,33 @@ export const GlEdit = ({
             />
           }
         />
+      )}
+      {type === "sql" && (
+        <div
+          style={{
+            minHeight: 200,
+            border: "1px solid #ccc",
+            borderRadius: 4,
+            marginTop: 8,
+          }}
+        >
+          <MonacoEditor
+            defaultLanguage={"sql"}
+            theme="hc-black"
+            height="800px"
+            value={record[field] || ""}
+            options={{
+              minimap: { enabled: true },
+              fontSize: 14,
+              wordWrap: "on",
+              scrollBeyondLastLine: false,
+              automaticLayout: true,
+            }}
+            onChange={(value) =>
+              setRecord((prev) => ({ ...prev, [field]: value }))
+            }
+          />
+        </div>
       )}
     </div>
   );

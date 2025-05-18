@@ -115,7 +115,7 @@ function SelectorEdit() {
             <div className="column" style={{ flexGrow: 1 }}>
               <GlContainer>
                 <GlEdit
-                  type="textarea"
+                  type="sql"
                   field="selector_fn"
                   Context={RecordContext}
                 />
