@@ -20,7 +20,6 @@ export const GlEdit = ({
 
   const handleChange = (e) => {
     let newVal = e.target.value;
-    console.log(newVal);
     if (type == "switch") {
       newVal = record[field] ? false : true;
     }
@@ -43,9 +42,10 @@ export const GlEdit = ({
         onBlur(record);
       }}
     >
-      {showLabel && !["text", "datetime", "color", "switch"].includes(type) && (
-        <label>{label}</label>
-      )}
+      {showLabel &&
+        !["text", "datetime", "color", "switch", "number"].includes(type) && (
+          <label>{label}</label>
+        )}
       {type == "textarea" && (
         <textarea
           className={`edit-input textarea${readOnly ? " readOnly" : ""}`}
@@ -53,7 +53,7 @@ export const GlEdit = ({
           onChange={handleChange}
         />
       )}
-      {type == "text" && (
+      {["text", "number"].includes(type) && (
         <TextField
           id={field}
           disabled={readOnly}
