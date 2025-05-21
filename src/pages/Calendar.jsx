@@ -21,8 +21,23 @@ function Calendar() {
   const [reminders, setReminders] = useState([]);
   const [noUpcomingEvents, setNoUpcomingEvents] = useState(false);
 
+  async function fetchAllEvents(page = 1, pageSize = 20, accumulated = []) {
+    const data = await service.select("crm", "glEventsAll", {
+      page,
+      pageSize,
+    });
+
+    const combined = [...accumulated, ...data];
+
+    if (data.length === pageSize) {
+      return fetchAllEvents(page + 1, pageSize, combined);
+    }
+
+    return combined;
+  }
+
   async function getData() {
-    const data = await service.select("crm", "glEventsAll", {});
+    const data = await fetchAllEvents();
     const now = new Date();
 
     const parsedEvents = data.map((item) => {
@@ -91,6 +106,9 @@ function Calendar() {
     if (timeDiff <= oneHour) return "bg-yellow-400 text-black";
     if (timeDiff <= threeHours) return "bg-green-500 text-white";
     return "bg-gray-300 text-black";
+  }
+
+  function createFollowUpTask(item) {
   }
 
   return (
