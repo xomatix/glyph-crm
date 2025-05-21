@@ -7,7 +7,7 @@ import GlButton from "../../../components/GlButton/GlButton";
 import GlRow from "../../../components/GlRow/GlRow";
 import "./UserEdit.css";
 import GlList from "../../../components/GlList/GlList";
-import service from "../../../glService/glService";
+import service, { getMenuPermissions } from "../../../glService/glService";
 import GlModal from "../../../components/GlModal/GlModal";
 
 function UserEdit() {
@@ -50,12 +50,32 @@ function UserEdit() {
                     dataSetIdent="glUsersSave"
                     color="primary"
                     record={record}
-                    afterAction={() => {
-                      navigate(0);
+                    afterAction={(r) => {
+                      if (
+                        r.gl_users_id != null &&
+                        r.gl_users_id > 0 &&
+                        id != r.gl_users_id
+                      ) {
+                        navigate(`/users/${r.gl_users_id}`);
+                      } else navigate(0);
                     }}
                   >
                     Save
                   </GlButton>
+                  {menuPermissions.includes("admin") && (
+                    <GlButton
+                      color="error"
+                      confirmMessage="Do you want to delete user? This action is irreversible!"
+                      dataSetIdent="glUsersDelete"
+                      nameSpace="standard"
+                      record={record}
+                      afterAction={() => {
+                        navigate("/users");
+                      }}
+                    >
+                      Delete
+                    </GlButton>
+                  )}
                   <GlButton
                     className=""
                     afterAction={() => {
@@ -199,12 +219,6 @@ function UserEdit() {
       </GlRecord>
     </div>
   );
-}
-
-async function getMenuPermissions() {
-  const result = await service.select("crm", "glMenuPermissions", {});
-
-  return result.map((o) => o.name);
 }
 
 export default UserEdit;

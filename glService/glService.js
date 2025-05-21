@@ -109,4 +109,10 @@ class GlService {
 const service = new GlService("http://localhost:8080");
 Object.freeze(service);
 
+export async function getMenuPermissions() {
+  const result = await service.select("crm", "glMenuPermissions", {});
+
+  return result.map((o) => o.name);
+}
+
 export default service;
