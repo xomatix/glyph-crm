@@ -1,0 +1,7 @@
+.confirm-btn-row {
+  width: 100%;
+  .gl-button {
+    display: flex;
+    flex-grow: 1;
+  }
+}
