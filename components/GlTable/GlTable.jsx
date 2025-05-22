@@ -8,6 +8,14 @@ import service from "../../glService/glService";
 import "./GlTable.css";
 import GlButton from "../GlButton/GlButton";
 import GlModal from "../GlModal/GlModal";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+} from "@mui/material";
 
 const GlTable = forwardRef(
   (
@@ -27,6 +35,24 @@ const GlTable = forwardRef(
     const [page, setPage] = useState(1);
     const [slotMap, setSlotMap] = useState({});
     const [error, setError] = useState("");
+    const [sortConfig, setSortConfig] = useState({});
+
+    const handleSort = async (field) => {
+      let direction = "asc";
+
+      if (sortConfig.field === field) {
+        if (sortConfig.direction === "asc") {
+          direction = "desc";
+        } else if (sortConfig.direction === "desc") {
+          direction = null;
+        }
+      }
+
+      setSortConfig({
+        field: field,
+        direction: direction,
+      });
+    };
 
     function loadSlots() {
       let formSlotMap = {};
@@ -39,17 +65,40 @@ const GlTable = forwardRef(
       setSlotMap(formSlotMap);
     }
 
+    function sortByField(arr) {
+      return [...arr].sort((a, b) => {
+        const valA = a._ord;
+        const valB = b._ord;
+
+        if (valA == null && valB == null) return 0;
+        if (valA == null) return 1;
+        if (valB == null) return -1;
+
+        return valA < valB ? -1 : valA > valB ? 1 : 0;
+      });
+    }
+
     async function refresh() {
       let response = await service.select(nameSpace, dataSetIdent, {
         page: page,
         where: where,
+        order: { field: sortConfig.field, direction: sortConfig.direction },
       });
+      console.log(JSON.stringify(response));
+      response = sortByField(response);
+      console.log(JSON.stringify(response));
       setRows(response);
       if (response.length > 0) {
         if (response.length == 1 && response[0]["error"]) {
           setError(response[0]["error"]);
           return;
         }
+
+        console.log(
+          Object.keys(response[0]).map((h) => {
+            return { field: h, label: h };
+          })
+        );
 
         setTableHeaders(
           Object.keys(response[0]).map((h) => {
@@ -80,7 +129,7 @@ const GlTable = forwardRef(
     useEffect(() => {
       loadSlots();
       refresh();
-    }, [page]);
+    }, [page, sortConfig.field, sortConfig.direction]);
 
     useImperativeHandle(ref, () => ({
       refresh: async () => {
@@ -119,35 +168,54 @@ const GlTable = forwardRef(
             </div>
           </div>
 
-          <table>
-            <colgroup>
-              {tableHeadersLabels.map((_, index) => (
-                <col key={index}></col>
-              ))}
-            </colgroup>
-            <thead>
-              <tr>
-                {tableHeadersLabels.map((header, idx) => (
-                  <th key={`${idx}`}>{header}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
+          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow>
+                {tableHeadersLabels.map((label, idx) => {
+                  const header = tableHeaders[idx];
+                  const isCurrentSort =
+                    sortConfig.field === header.field &&
+                    sortConfig.direction != null;
+
+                  return (
+                    <TableCell key={`${idx}`}>
+                      <TableSortLabel
+                        active={isCurrentSort}
+                        direction={
+                          isCurrentSort ? sortConfig.direction || "asc" : "asc"
+                        }
+                        onClick={() => handleSort(header.field)}
+                        sx={{
+                          "& .MuiTableSortLabel-icon": {
+                            opacity: isCurrentSort ? 1 : 0,
+                          },
+                        }}
+                      >
+                        {label}
+                      </TableSortLabel>
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
               {rows != undefined &&
                 rows.length > 0 &&
                 rows.map((row, index) => (
-                  <tr key={index} onClick={() => onRowClick(row)}>
+                  <TableRow key={index} onClick={() => onRowClick(row)}>
                     {tableHeaders.map((header, idx) => (
-                      <td key={`${index}_${idx}`}>
+                      <TableCell key={`${index}_${idx}`}>
                         {slotMap[header.field]
                           ? slotMap[header.field].props.children(row)
                           : row[header.field]}
-                      </td>
+                      </TableCell>
                     ))}
-                  </tr>
+                  </TableRow>
                 ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
+
           <div className="table-footer">
             <div className="table-info">
               {/* Wyświetlanie 1-5 z 25 zadań */}
