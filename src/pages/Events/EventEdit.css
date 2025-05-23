@@ -1,3 +1,4 @@
+
 #event-edit {
   .container {
     width: 100%;
@@ -9,6 +10,18 @@
     justify-content: center;
     padding: 16px;
     box-sizing: border-box;
+
+  .modal-content {
+    height: 500px;
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .modal-body {
+    height: 450px;
+    overflow-y: auto;
+  }
+  
   }
 
   .field-group {
@@ -30,7 +43,7 @@
     }
   }
 
-  .modal-content {
+  .modal-box {
     height: 500px;
     max-width: 600px;
     width: 100%;

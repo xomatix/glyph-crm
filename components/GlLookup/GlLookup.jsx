@@ -58,8 +58,10 @@ export const GlLookup = ({
       ref={wrapperRef}
       className={`lookup-container ${className}`}
       style={style}
-      onFocus={() => {
-        setShowList(true);
+      onFocus={(e) => {
+        if (!e.target.closest('button[aria-label="Clear"]')) {
+          setShowList(true);
+        }
       }}
     >
       <GlEdit

@@ -55,17 +55,47 @@ export const GlEdit = ({
         />
       )}
       {["text", "number"].includes(type) && (
-        <TextField
-          id={field}
-          disabled={readOnly}
-          type={type}
-          value={record[field] || ""}
-          onChange={handleChange}
-          onKeyUp={handleEnter}
-          label={label}
-          size="small"
-          variant="outlined"
-        />
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <TextField
+            id={field}
+            disabled={readOnly}
+            type={type}
+            value={record[field] || ""}
+            onChange={handleChange}
+            onKeyUp={handleEnter}
+            label={label}
+            size="small"
+            variant="outlined"
+            style={{ flex: 1 }}
+          />
+          {record[field] && !readOnly && (
+            <button
+              type="button"
+              onClick={() => setRecord((prev) => ({ ...prev, [field]: "" }))}
+              style={{
+                position: "absolute",
+                right: 8,
+                background: "transparent",
+                border: "none",
+                cursor: "pointer",
+                fontSize: 18,
+                color: "#aaa",
+                padding: 0,
+                lineHeight: 1,
+              }}
+              aria-label="Clear"
+              tabIndex={-1}
+            >
+              ×
+            </button>
+          )}
+        </div>
       )}
       {type == "color" && (
         <GlRow className="gl-edit gl-color-picker">

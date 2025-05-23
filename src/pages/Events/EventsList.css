@@ -1,0 +1,35 @@
+.selectors-list .table-container {
+    margin: 0 !important;
+    max-width: none;
+}
+
+.role-set-checkbox {
+    appearance: none;
+    position: relative;
+    width: 28px;
+    height: 18px;
+    background-color: #e4e4e4;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .role-set-checkbox::before {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    background-color: white;
+    transition: transform 0.3s;
+  }
+
+  .role-set-checkbox:checked {
+    background-color: #1976d2;
+  }
+
+  .role-set-checkbox:checked::before {
+    transform: translateX(10px);
+  }

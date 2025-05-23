@@ -74,16 +74,15 @@ function CustomerEdit() {
                   >
                     Close
                   </GlButton>
-
-                  {userRoles.includes("admin") ||
-                    (userRoles.includes("Sales Manager") && (
-                      <GlButton
-                        color="secondary"
-                        action={() => setShowOwner(true)}
-                      >
-                        Assign Sales representative
-                      </GlButton>
-                    ))}
+                  {(userRoles.includes("admin") ||
+                    userRoles.includes("Sales Manager")) && (
+                    <GlButton
+                      color="secondary"
+                      action={() => setShowOwner(true)}
+                    >
+                      Assign Sales representative
+                    </GlButton>
+                  )}
                   <GlModal
                     isOpen={showOwner}
                     onClose={() => setShowOwner(false)}
