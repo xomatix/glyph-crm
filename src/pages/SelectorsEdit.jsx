@@ -95,6 +95,15 @@ function SelectorEdit() {
                 >
                   Save
                 </GlButton>
+                <GlButton
+                  color="info"
+                  record={record}
+                  action={() => {
+                    navigate(`/logs/gl_selectors/${id}`);
+                  }}
+                >
+                  Logs
+                </GlButton>
               </GlContainer>
               <GlContainer>
                 <div className="ai-container">

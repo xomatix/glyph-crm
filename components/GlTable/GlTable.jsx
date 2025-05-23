@@ -84,21 +84,13 @@ const GlTable = forwardRef(
         where: where,
         order: { field: sortConfig.field, direction: sortConfig.direction },
       });
-      console.log(JSON.stringify(response));
       response = sortByField(response);
-      console.log(JSON.stringify(response));
       setRows(response);
       if (response.length > 0) {
         if (response.length == 1 && response[0]["error"]) {
           setError(response[0]["error"]);
           return;
         }
-
-        console.log(
-          Object.keys(response[0]).map((h) => {
-            return { field: h, label: h };
-          })
-        );
 
         setTableHeaders(
           Object.keys(response[0]).map((h) => {
