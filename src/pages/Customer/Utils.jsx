@@ -56,4 +56,81 @@ export const GetDataByNipNumber = ({ Context }) => {
   );
 };
 
+export class PhoneNumberValidator {
+  constructor() {
+    this.basicPattern = /^\+?\d{7,15}$/;
+
+    this.usPattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+
+    this.internationalPattern =
+      /^\+[1-9]{1}[0-9]{0,2}-[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
+  }
+
+  validateFormat(phoneNumber) {
+    const cleaned = phoneNumber.replace(/[^+\d]/g, "");
+    return this.basicPattern.test(cleaned);
+  }
+
+  validateAdvanced(phoneNumber) {
+    if (this.usPattern.test(phoneNumber)) {
+      return {
+        valid: true,
+        format: "US",
+        normalized: phoneNumber.replace(this.usPattern, "$1$2$3"),
+      };
+    }
+
+    if (this.internationalPattern.test(phoneNumber)) {
+      return {
+        valid: true,
+        format: "International",
+        normalized: phoneNumber.replace(/[^+\d]/g, ""),
+      };
+    }
+
+    return {
+      valid: false,
+      message: "Invalid phone number format",
+    };
+  }
+
+  normalize(phoneNumber) {
+    return phoneNumber.replace(/[^+\d]/g, "");
+  }
+}
+
+export function ValidateNIP(nip) {
+  const cleanNIP = nip.replace(/-/g, "");
+  if (!/^\d{10}$/.test(cleanNIP)) {
+    return false;
+  }
+
+  if (!["3", "5", "7", "9"].includes(cleanNIP[0])) {
+    return false;
+  }
+
+  const weights = [6, 5, 7, 2, 3, 9, 8, 4, 1];
+  const sumOfProducts = weights.reduce((acc, weight, index) => {
+    return acc + parseInt(cleanNIP[index]) * weight;
+  }, 0);
+
+  const checkDigit = (11 - (sumOfProducts % 11)) % 10;
+
+  return cleanNIP.slice(-1) === checkDigit.toString();
+}
+
+export function ValidateEmail(email) {
+  const emailRegex = new RegExp(
+    "^" +
+      "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~]+" +
+      "(\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~]+)*" +
+      "@" +
+      "([a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+" +
+      "[a-zA-Z]{2,}" +
+      "$"
+  );
+
+  return emailRegex.test(email);
+}
+
 export default GetDataByNipNumber;

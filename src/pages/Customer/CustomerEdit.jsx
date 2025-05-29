@@ -11,7 +11,12 @@ import GlLookup from "../../../components/GlLookup/GlLookup";
 import Timeline from "../../../components/Timeline/Timeline";
 import GlModal from "../../../components/GlModal/GlModal";
 import service from "../../../glService/glService";
-import { GetDataByNipNumber } from "./Utils";
+import {
+  GetDataByNipNumber,
+  PhoneNumberValidator,
+  ValidateEmail,
+  ValidateNIP,
+} from "./Utils";
 
 function CustomerEdit() {
   const { id } = useParams();
@@ -19,6 +24,36 @@ function CustomerEdit() {
   const badgesRef = useRef();
 
   const [userRoles, setUserRoles] = useState([]);
+  const [error, setError] = useState("initial");
+
+  function validateFields(record) {
+    if (
+      record.nip != null &&
+      record.nip != undefined &&
+      record.nip != "" &&
+      !ValidateNIP(record.nip)
+    ) {
+      return "Invalid NIP number!";
+    }
+    if (
+      record.email != null &&
+      record.email != undefined &&
+      record.email != "" &&
+      !ValidateEmail(record.email)
+    ) {
+      return "Invalid email!";
+    }
+    let pnv = new PhoneNumberValidator();
+    if (
+      record.phone != null &&
+      record.phone != undefined &&
+      record.phone != "" &&
+      !pnv.validateAdvanced(record.phone).valid
+    ) {
+      return "Invalid phone number!";
+    }
+    return "";
+  }
 
   async function loadRoles() {
     let result = await service.select("crm", "glMenuPermissions", {});
@@ -49,17 +84,30 @@ function CustomerEdit() {
                 <GlRow>
                   <GlButton
                     color="primary"
-                    dataSetIdent="glCustomersSave"
-                    nameSpace="crm"
                     record={record}
-                    afterAction={async (record) => {
-                      if (
-                        record["gl_customers_id"] !== null &&
-                        record["gl_customers_id"] !== Number(id)
-                      ) {
-                        navigate(`/customers/${record["gl_customers_id"]}`);
-                      } else {
-                        navigate(0);
+                    action={async (record) => {
+                      let error = validateFields(record);
+                      console.log("rec err : ", record, error);
+                      setError(error);
+                      if (error.length == 0) {
+                        let savedRecord = await service.select(
+                          "crm",
+                          "glCustomersSave",
+                          {
+                            rows: [record],
+                          }
+                        );
+                        savedRecord = savedRecord[0];
+                        if (
+                          savedRecord["gl_customers_id"] !== null &&
+                          savedRecord["gl_customers_id"] !== Number(id)
+                        ) {
+                          navigate(
+                            `/customers/${savedRecord["gl_customers_id"]}`
+                          );
+                        } else {
+                          navigate(0);
+                        }
                       }
                     }}
                   >
@@ -89,6 +137,7 @@ function CustomerEdit() {
                       Logs
                     </GlButton>
                   )}
+
                   <GetDataByNipNumber Context={RecordContext} />
                 </GlRow>
                 <GlEdit
@@ -204,6 +253,14 @@ function CustomerEdit() {
               </div>
 
               <Timeline where={{ customer: id }} />
+
+              <GlModal
+                onClose={() => setError("")}
+                title="Cannot save customer!"
+                isOpen={error.length > 0}
+              >
+                {error}
+              </GlModal>
             </GlRow>
           </GlContainer>
         )}
