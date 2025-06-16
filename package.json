@@ -16,7 +16,7 @@
     "@fullcalendar/interaction": "^6.1.17",
     "@fullcalendar/react": "^6.1.17",
     "@monaco-editor/react": "^4.7.0",
-    "@mui/material": "^7.1.0",
+    "@mui/material": "^7.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0",

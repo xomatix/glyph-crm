@@ -23,6 +23,7 @@
   const SelectorsList = lazy(() => import("./pages/SelectorsList"));
   const Login = lazy(() => import("./pages/Login/Login"));
   const Calendar = lazy(() => import("./pages/Calendar"));
+  const Pipeline = lazy(() => import("./pages/Pipeline/Pipeline"));
   const PermissionsPage = lazy(() =>
     import("./pages/Permissions/PermissionsPage")
   );
@@ -86,6 +87,9 @@
               {userRoles.includes("admin") && (
                 <Route path="/users" element={<UsersList />} />
               )}
+              {userRoles.includes("admin") && (
+                <Route path="/pipeline" element={<Pipeline />} />
+              )}
 
               <Route path="/users/:id" element={<UserEdit />} />
 
@@ -96,6 +100,7 @@
 
               <Route path="/login" element={<Login />} />
               <Route path="/calendar" element={<Calendar />} />
+              <Route path="/pipeline" element={<Pipeline />} />
             </Routes>
           </Suspense>
         </BrowserRouter>
