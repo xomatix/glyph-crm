@@ -24,7 +24,7 @@ function CustomerEdit() {
   const badgesRef = useRef();
 
   const [userRoles, setUserRoles] = useState([]);
-  const [error, setError] = useState("initial");
+  const [error, setError] = useState("");
 
   function validateFields(record) {
     if (
