@@ -42,6 +42,14 @@ const GlPipeline = ({ rows, filters, setFilters, loading, canEdit, refresh }) =>
           >
             Refresh
           </GlButton>
+          <GlButton
+            color="error"
+            style={{ marginLeft: 10 }}
+            nameSpace="crm"
+            dataSetIdent="gl_sales_pipeline"
+          >
+            gl_sales_pipeline
+          </GlButton>
         </GlRow>
       </div>
 
