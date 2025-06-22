@@ -7,7 +7,7 @@ import GlRecord from "../../../components/GlRecord/GlRecord";
 import GlEdit from "../../../components/GlEdit/GlEdit";
 import GlLookup from "../../../components/GlLookup/GlLookup";
 import service from "../../../glService/glService";
-import "./EventsList.css"
+import "./EventsList.css";
 
 function SelectorsList() {
   const navigate = useNavigate();
@@ -70,26 +70,44 @@ function SelectorsList() {
                   )}
                 </GlLookup>
               </div>
-              {userRoles.length > 0 && (
               <div>
-                <label
-                  style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                <GlLookup
+                  dataSetIdent="glTypesAll"
+                  nameSpace="crm"
+                  Context={RecordContext}
+                  field={"typename"}
+                  fieldInLookup={"typename"}
+                  label="Type"
+                  where={{ companies_id: 1 }}
                 >
-                  <input
-                  className="role-set-checkbox"
-                    type="checkbox"
-                    checked={!!record.isMine}
-                    onChange={(e) => {
-                      setRecord((prev) => ({
-                        ...prev,
-                        isMine: e.target.checked ? 1 : 0,
-                      }));
-                    }}
-                  />
-                  Only show my events
-                </label>
+                  {(row) => <div>{row.typename}</div>}
+                </GlLookup>
               </div>
+              {userRoles.length > 0 && (
+                <div>
+                  <label
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                    }}
+                  >
+                    <input
+                      className="role-set-checkbox"
+                      type="checkbox"
+                      checked={!!record.isMine}
+                      onChange={(e) => {
+                        setRecord((prev) => ({
+                          ...prev,
+                          isMine: e.target.checked ? 1 : 0,
+                        }));
+                      }}
+                    />
+                    Only show my events
+                  </label>
+                </div>
               )}
+
               <GlButton
                 color="primary"
                 afterAction={() => {
@@ -119,6 +137,7 @@ function SelectorsList() {
                 event_title_desc: record.event_title_desc,
                 status_name: record.status_name,
                 isMine: record.isMine,
+                typename: record.typename,
               }}
             >
               <GlSlot slot="title">
