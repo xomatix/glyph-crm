@@ -47,6 +47,9 @@ function Timeline({ where }) {
               <div className="timeline-title">
                 {row.title || "Untitled Event"}
               </div>
+              <div className="timeline-type">
+                {row.typename}
+              </div>
             </GlContainer>
           </div>
         )}
