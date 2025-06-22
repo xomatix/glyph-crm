@@ -83,6 +83,18 @@ function SelectorsList() {
                   {(row) => <div>{row.typename}</div>}
                 </GlLookup>
               </div>
+              <div>
+                <GlLookup
+                  dataSetIdent="glCustomersAll"
+                  nameSpace="crm"
+                  Context={RecordContext}
+                  field={"ident"}
+                  fieldInLookup={"ident"}
+                  label="Customer"
+                >
+                  {(row) => <div>{row.ident}</div>}
+                </GlLookup>
+              </div>
               {userRoles.length > 0 && (
                 <div>
                   <label
@@ -139,6 +151,7 @@ function SelectorsList() {
                 status_name: record.status_name,
                 isMine: record.isMine,
                 typename: record.typename,
+                customerIdent: record.ident,
               }}
             >
               <GlSlot slot="title">
