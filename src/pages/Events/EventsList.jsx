@@ -123,6 +123,7 @@ function SelectorsList() {
               nameSpace={"crm"}
               dataSetIdent={"glEventsAll"}
               ref={tableRef}
+              defaultSortConfig={{ field: "date_list", direction: "desc" }}
               headers={[
                 { label: "Title", field: "title" },
                 { label: "Date", field: "date_list" },

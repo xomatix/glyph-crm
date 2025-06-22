@@ -26,6 +26,7 @@ const GlTable = forwardRef(
       where = {},
       headers = [], // [{label: "ID", field: "table_name_id"}]
       children,
+      defaultSortConfig = {}, //{ field: field,direction: direction}
     },
     ref
   ) => {
@@ -35,7 +36,7 @@ const GlTable = forwardRef(
     const [page, setPage] = useState(1);
     const [slotMap, setSlotMap] = useState({});
     const [error, setError] = useState("");
-    const [sortConfig, setSortConfig] = useState({});
+    const [sortConfig, setSortConfig] = useState(defaultSortConfig);
 
     const handleSort = async (field) => {
       let direction = "asc";
