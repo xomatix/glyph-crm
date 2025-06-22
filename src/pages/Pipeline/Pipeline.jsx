@@ -35,6 +35,10 @@ const Pipeline = () => {
         // canEdit={canEdit}
         // refresh={loadData} */}
       {/* /> */}
+      <GlButton color="primary" action={() => navigate("/pipeline/0")}>
+        + New Pipeline
+      </GlButton>
+
       <GlTable
         nameSpace={"crm"}
         dataSetIdent={"GlSalesPipelineAll"}
