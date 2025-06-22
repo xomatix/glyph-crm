@@ -24,6 +24,7 @@
   const Login = lazy(() => import("./pages/Login/Login"));
   const Calendar = lazy(() => import("./pages/Calendar"));
   const Pipeline = lazy(() => import("./pages/Pipeline/Pipeline"));
+  const PipelineEdit = lazy(() => import("./pages/Pipeline/PipelineEdit"));
   const PermissionsPage = lazy(() =>
     import("./pages/Permissions/PermissionsPage")
   );
@@ -101,6 +102,8 @@
               <Route path="/login" element={<Login />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/pipeline" element={<Pipeline />} />
+              <Route path="/pipeline/:id" element={<PipelineEdit />} />
+
             </Routes>
           </Suspense>
         </BrowserRouter>
