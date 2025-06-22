@@ -16,6 +16,7 @@ import {
   TableRow,
   TableSortLabel,
 } from "@mui/material";
+import GlContainer from "../GlContainer/GlContainer";
 
 const GlTable = forwardRef(
   (
@@ -85,6 +86,9 @@ const GlTable = forwardRef(
         where: where,
         order: { field: sortConfig.field, direction: sortConfig.direction },
       });
+      if (response == null) {
+        setRows([]);
+      }
       response = sortByField(response);
       setRows(response);
       if (response.length > 0) {
@@ -208,6 +212,11 @@ const GlTable = forwardRef(
                 ))}
             </TableBody>
           </Table>
+          {rows.length == 0 && (
+            <h3 style={{ margin: "16px 24px ", width: "100%" }}>
+              No Data Found
+            </h3>
+          )}
 
           <div className="table-footer">
             <div className="table-info">
