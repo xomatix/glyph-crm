@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import GlRecord from "../../../components/GlRecord/GlRecord";
@@ -6,8 +5,8 @@ import GlEdit from "../../../components/GlEdit/GlEdit";
 import GlButton from "../../../components/GlButton/GlButton";
 import GlContainer from "../../../components/GlContainer/GlContainer";
 import GlRow from "../../../components/GlRow/GlRow";
-import GlLookup from "../../../components/GlLookup/GlLookup";
 import GlModal from "../../../components/GlModal/GlModal";
+import GlLookup from "../../../components/GlLookup/GlLookup";
 import service from "../../../glService/glService";
 
 const PipelineEdit = () => {
@@ -31,7 +30,7 @@ const PipelineEdit = () => {
       <GlRecord
         dataSetIdent="GlSalesPipelineAll"
         nameSpace="crm"
-        where={{ gl_sales_pipeline_id }}
+        where={{ sales_id: Number(gl_sales_pipeline_id) }}
       >
         {(Context, record) => (
           <GlContainer>
@@ -45,12 +44,13 @@ const PipelineEdit = () => {
                         dataSetIdent="glSalesPipelineSave"
                         nameSpace="crm"
                         record={record}
+                        Context={Context}
                         afterAction={(r) => {
                           if (
-                            r.gl_sales_pipeline_id &&
-                            r.gl_sales_pipeline_id !== Number(gl_sales_pipeline_id)
+                            r.sales_id &&
+                            r.sales_id !== Number(gl_sales_pipeline_id)
                           ) {
-                            navigate(`/pipeline/${r.gl_sales_pipeline_id}`);
+                            navigate(`/pipeline/${r.sales_id}`);
                           } else {
                             navigate(0);
                           }
@@ -64,6 +64,7 @@ const PipelineEdit = () => {
                         dataSetIdent="glSalesPipelineDelete"
                         nameSpace="crm"
                         record={record}
+                        Context={Context}
                         afterAction={() => {
                           navigate(`/pipeline`);
                         }}
@@ -104,8 +105,9 @@ const PipelineEdit = () => {
                     dataSetIdent="glSalesPipelineSave"
                     nameSpace="crm"
                     record={record}
+                    Context={Context}
                     afterAction={(r) => {
-                      navigate(`/pipeline/${r.gl_sales_pipeline_id}`);
+                      navigate(`/pipeline/${r.sales_id}`);
                     }}
                   >
                     Save
@@ -117,62 +119,7 @@ const PipelineEdit = () => {
 
             {/* Fields */}
             <GlEdit field="title" label="Title" Context={Context} />
-            <GlEdit field="description" label="Description" Context={Context} />
-
-            <GlLookup
-              dataSetIdent="gl_customers"
-              nameSpace="crm"
-              Context={Context}
-              field={"customer"}
-              fieldInLookup={"ident"}
-              label="Customer"
-            >
-              {(row) => <div>{row.ident}</div>}
-            </GlLookup>
-
-            <GlLookup
-              dataSetIdent="gl_users"
-              nameSpace="crm"
-              Context={Context}
-              field={"user"}
-              fieldInLookup={"gl_username"}
-              label="Assigned User"
-            >
-              {(row) => <div>{row.gl_username}</div>}
-            </GlLookup>
-
-            <GlLookup
-              dataSetIdent="gl_sales_pipeline_stage"
-              nameSpace="crm"
-              Context={Context}
-              field={"stage"}
-              fieldInLookup={"stagename"}
-              label="Stage"
-            >
-              {(row) => <div>{row.stagename}</div>}
-            </GlLookup>
-
-            <GlLookup
-              dataSetIdent="gl_sales_pipeline_status"
-              nameSpace="crm"
-              Context={Context}
-              field={"status"}
-              fieldInLookup={"statusname"}
-              label="Status"
-            >
-              {(row) => <div>{row.statusname}</div>}
-            </GlLookup>
-
-            <GlLookup
-              dataSetIdent="gl_sales_pipeline_type"
-              nameSpace="crm"
-              Context={Context}
-              field={"type"}
-              fieldInLookup={"typename"}
-              label="Type"
-            >
-              {(row) => <div>{row.typename}</div>}
-            </GlLookup>
+            <GlEdit field="description" label="Description" type="text" Context={Context} />
 
             {/* Modal for assigning owner */}
             <GlModal

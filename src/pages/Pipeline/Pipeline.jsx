@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import GlPipeline from "../../../components/GlPipeline/GlPipeline";
 import service, { getMenuPermissions } from "../../../glService/glService";
 import GlTable from "../../../components/GlTable/GlTable";
 import GlButton from "../../../components/GlButton/GlButton";
@@ -7,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import GlSlot from "../../../components/GlSlot/GlSlot";
 
 const Pipeline = () => {
-  //const [filters, setFilters] = useState({});
   const [canEdit, setCanEdit] = useState(false);
   const navigate = useNavigate();
 
@@ -15,7 +13,7 @@ const Pipeline = () => {
     const loadPermissions = async () => {
       try {
         const perms = await getMenuPermissions();
-        setCanEdit(perms.includes("Sales Manager"));
+        setCanEdit(perms.includes("Sales Manager") || perms.includes("admin"));
       } catch (error) {
         console.error("Permission load error:", error);
         setCanEdit(false);
@@ -24,17 +22,15 @@ const Pipeline = () => {
     loadPermissions();
   }, []);
 
+  // Open detail view on row click
+  const openDetail = (row) => {
+    navigate(`/pipeline/${row.gl_sales_pipeline_id}`);
+  };
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-semibold mb-4">Sales Pipeline</h1>
-      {/* <GlPipeline
-        // rows={rows}
-        // filters={filters}
-        // setFilters={setFilters}
-        // loading={loading}
-        // canEdit={canEdit}
-        // refresh={loadData} */}
-      {/* /> */}
+
       <GlButton color="primary" action={() => navigate("/pipeline/0")}>
         + New Pipeline
       </GlButton>
@@ -42,35 +38,33 @@ const Pipeline = () => {
       <GlTable
         nameSpace={"crm"}
         dataSetIdent={"GlSalesPipelineAll"}
-        where={{ }}
-         headers={[
-           { label: "ID", field: "gl_sales_pipeline_id" },
-           { label: "title", field: "title" },
-           { label: "description", field: "description" },
-           { label: "", field: "actions" },
-         ]}
-        onRowClick={(row) => {
-        }}
+        where={{}}
+        headers={[
+          { label: "ID", field: "gl_sales_pipeline_id" },
+          { label: "Title", field: "title" },
+          { label: "Description", field: "description" },
+          { label: "Stage", field: "stage_name" },  
+          { label: "Type", field: "type_name" },     
+          { label: "", field: "actions" },
+        ]}
+        onRowClick={openDetail}
       >
-        <GlSlot
-        slot={"actions"}
-        >{(row)=>(
-           <GlButton
-          color="primary"
-          afterAction={() => {
-            navigate(`/pipeline/${row.gl_sales_pipeline_id}`);
-          }}
-        >
-          Open
-        </GlButton>
-        )}
-          </GlSlot>
-      </GlTable >
+        <GlSlot slot={"actions"}>
+          {(row) => (
+            canEdit ? (
+              <GlButton color="primary" action={() => openDetail(row)}>
+                Open / Edit
+              </GlButton>
+            ) : (
+              <GlButton color="primary" action={() => openDetail(row)}>
+                Open
+              </GlButton>
+            )
+          )}
+        </GlSlot>
+      </GlTable>
 
-      <GlTable
-      nameSpace={"crm"}
-      dataSetIdent={"gl_sales_pipeline_stage"}
-      />
+      <GlTable nameSpace={"crm"} dataSetIdent={"gl_sales_pipeline_stage"} />
     </div>
   );
 };
