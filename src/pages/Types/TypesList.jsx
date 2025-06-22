@@ -49,7 +49,7 @@ function SelectorsList() {
                   backgroundColor: row.color,
                   width: "fit-content",
                   padding: "4px 8px",
-                  borderRadius: "8px",
+                  borderRadius: "32px",
                 }}
               >
                 {row.typename}

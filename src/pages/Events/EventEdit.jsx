@@ -223,7 +223,16 @@ function CustomerEdit() {
                 where={{ type: record.type }}
               >
                 {(row) => (
-                  <div style={{ backgroundColor: row.color }}>{row.name}</div>
+                  <div
+                    style={{
+                      backgroundColor: row.color,
+                      borderRadius: "32px",
+                      padding: "4px 8px",
+                      width: "fit-content",
+                    }}
+                  >
+                    {row.name}
+                  </div>
                 )}
               </GlLookup>
             </div>

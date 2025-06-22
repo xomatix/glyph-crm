@@ -66,7 +66,16 @@ function SelectorsList() {
                   label="Status"
                 >
                   {(row) => (
-                    <div style={{ backgroundColor: row.color }}>{row.name}</div>
+                    <div
+                      style={{
+                        backgroundColor: row.color,
+                        borderRadius: "32px",
+                        padding: "4px 8px",
+                        width: "fit-content",
+                      }}
+                    >
+                      {row.name}
+                    </div>
                   )}
                 </GlLookup>
               </div>
@@ -180,7 +189,7 @@ function SelectorsList() {
                       backgroundColor: row.statuscolor,
                       width: "fit-content",
                       padding: "4px 8px",
-                      borderRadius: "8px",
+                      borderRadius: "32px",
                     }}
                   >
                     {row.statusname}
