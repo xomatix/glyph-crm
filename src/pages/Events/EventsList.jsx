@@ -125,7 +125,7 @@ function SelectorsList() {
               ref={tableRef}
               headers={[
                 { label: "Title", field: "title" },
-                { label: "Date", field: "date" },
+                { label: "Date", field: "date_list" },
                 { label: "Owner", field: "gl_username" },
                 { label: "Customer", field: "ident" },
                 { label: "Status", field: "statusname" },
