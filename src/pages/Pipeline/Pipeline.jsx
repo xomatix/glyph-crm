@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import GlPipeline from "../../../components/GlPipeline/GlPipeline";
 import service from "../../../glService/glService";
@@ -12,42 +13,63 @@ const Pipeline = () => {
     const loadPermissions = async () => {
       try {
         const perms = await service.select("crm", "glMenuPermissions", {});
-        setCanEdit(Array.isArray(perms) && perms.includes("SalesPipeline:Edit"));
-      } catch (e) {
-        console.error("Error loading permissions", e);
+        setCanEdit(perms.includes("SalesPipeline:Edit"));
+      } catch (error) {
+        console.error("Permission load error:", error);
+        setCanEdit(false);
       }
     };
     loadPermissions();
   }, []);
 
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      const data = await service.select("crm", "glSalesPipelineAll", {
+        p_where: filters,
+      });
+      setRows(data);
+    } catch (error) {
+      console.error("Pipeline load failed:", error);
+      setRows([]);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      try {
-        const data = await service.select("crm", "glSalesPipelineAll", {
-          p_where: JSON.stringify(filters),
-        });
-        console.log("Sales pipeline data:", data);
-        setRows(Array.isArray(data) ? data : []);
-      } catch (e) {
-        console.error("Error loading sales pipeline data", e);
-        setRows([]);
-      }
-      setLoading(false);
-    };
     loadData();
   }, [filters]);
 
+  useEffect(() => {
+    const handlePipelineAutoEvents = async () => {
+      try {
+        for (const row of rows) {
+          if (row.status_name === "Closed Won" || row.status_name === "Closed Lost") {
+            await service.select("crm", "glEventAutoGenerateFromPipeline", {
+              gl_sales_pipeline_id: row.gl_sales_pipeline_id,
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Auto event generation failed:", error);
+      }
+    };
+
+    if (rows.length > 0) {
+      handlePipelineAutoEvents();
+    }
+  }, [rows]);
+
   return (
-    <div style={{ padding: 20 }}>
-      <h1 style={{ fontSize: 24, marginBottom: 16 }}>Sales Pipeline</h1>
+    <div className="p-4">
+      <h1 className="text-2xl font-semibold mb-4">Sales Pipeline</h1>
       <GlPipeline
         rows={rows}
         filters={filters}
         setFilters={setFilters}
         loading={loading}
         canEdit={canEdit}
-        refresh={() => setFilters({ ...filters })}
+        refresh={loadData}
       />
     </div>
   );
