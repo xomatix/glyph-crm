@@ -38,6 +38,7 @@ function Timeline({ where }) {
         onClick={(row) => {
           navigate(`/event/${row["gl_events_id"]}`);
         }}
+        defaultSortConfig={{ field: "date_list", direction: "desc" }}
       >
         {(row) => (
           <div className="timeline-item">
@@ -47,9 +48,7 @@ function Timeline({ where }) {
               <div className="timeline-title">
                 {row.title || "Untitled Event"}
               </div>
-              <div className="timeline-type">
-                {row.typename}
-              </div>
+              <div className="timeline-type">{row.typename}</div>
             </GlContainer>
           </div>
         )}

@@ -4,7 +4,14 @@ import "./GlList.css";
 
 const GlList = forwardRef(
   (
-    { nameSpace, dataSetIdent, children, onClick = () => {}, where = {} },
+    {
+      nameSpace,
+      dataSetIdent,
+      children,
+      onClick = () => {},
+      where = {},
+      defaultSortConfig = {},
+    },
     ref
   ) => {
     const [rows, setRows] = useState([]);
@@ -14,6 +21,7 @@ const GlList = forwardRef(
       let response = await service.select(nameSpace, dataSetIdent, {
         page: page,
         where: where,
+        order: defaultSortConfig,
       });
       setRows(response);
     };
