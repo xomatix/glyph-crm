@@ -19,21 +19,10 @@ function UsersList() {
 
   return (
     <div className="users-list" style={{ padding: "16px" }}>
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-        {/* Header aligned with table */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "16px",
-            marginBottom: "16px",
-          }}
-        >
-          <h2 style={{ fontSize: "20px", fontWeight: "600", margin: 0 }}>
-            Users Table
-          </h2>
-          {/* Optional: Add a button here later */}
-        </div>
+      <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+        <h2 style={{ fontSize: "20px", fontWeight: "600", margin: "16px 0 " }}>
+          Users Table
+        </h2>
 
         <GlRecord
           nameSpace={"bookstore"}
@@ -42,7 +31,7 @@ function UsersList() {
         >
           {(RecordContext, record) => (
             <div>
-              <div className="filters">
+              <div className="filters" style={{ margin: "0 0 16px 0" }}>
                 {menuPermissions.includes("admin") && (
                   <GlButton
                     color="primary"

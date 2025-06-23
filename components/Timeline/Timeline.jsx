@@ -8,17 +8,11 @@ function Timeline({ where }) {
   const navigate = useNavigate();
 
   const getTypeIcon = (type) => {
-    // return type;
-    switch (type) {
-      case "meeting":
-        return "🤝";
-      case "call":
-        return "📞";
-      case "email":
-        return "✉️";
-      default:
-        return "📌";
+    if (type != null && type.length > 0) {
+      return Array.from(type)[0];
     }
+
+    return "📌";
   };
 
   const formatDate = (dateString) => {
@@ -42,7 +36,7 @@ function Timeline({ where }) {
       >
         {(row) => (
           <div className="timeline-item">
-            <div className="timeline-icon">{getTypeIcon(row.type)}</div>
+            <div className="timeline-icon">{getTypeIcon(row.typename)}</div>
             <GlContainer>
               <div className="timeline-date">{formatDate(row.date)}</div>
               <div className="timeline-title">

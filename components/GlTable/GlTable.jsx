@@ -139,7 +139,7 @@ const GlTable = forwardRef(
       <div>
         <div class="table-container">
           <div class="table-header">
-            <div class="table-title">Title</div>
+            <div class="table-title"></div>
             <div class="table-actions">
               <GlButton
                 action={() => {

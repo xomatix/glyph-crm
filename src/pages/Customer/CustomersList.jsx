@@ -8,8 +8,7 @@ function CustomersList() {
   const navigate = useNavigate();
   return (
     <div style={{ padding: "16px" }}>
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-        {/* Header */}
+      <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
         <div
           style={{
             display: "flex",

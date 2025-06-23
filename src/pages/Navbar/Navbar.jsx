@@ -50,7 +50,7 @@ function Navbar() {
           <polyline points="9 22 9 12 15 12 15 22" />
         </svg>
       ),
-      show: true,
+      show: userRoles.length > 0,
     },
     {
       label: "Users",
@@ -90,7 +90,7 @@ function Navbar() {
           <path d="M16 2v4M8 2v4M3 10h18" />
         </svg>
       ),
-      show: true,
+      show: userRoles.length > 0,
     },
     {
       label: "Pipeline",
@@ -110,7 +110,7 @@ function Navbar() {
           <path d="M16 2v4M8 2v4M3 10h18" />
         </svg>
       ),
-      show: true,
+      show: userRoles.length > 0,
     },
     {
       label: "Statuses",
@@ -152,7 +152,7 @@ function Navbar() {
           <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
         </svg>
       ),
-      show: true,
+      show: userRoles.length > 0,
     },
     {
       label: "Badges",
@@ -213,7 +213,7 @@ function Navbar() {
           <path d="M16 2v4M8 2v4M3 10h18" />
         </svg>
       ),
-      show: true,
+      show: userRoles.length > 0,
     },
     {
       label: "AI Context",

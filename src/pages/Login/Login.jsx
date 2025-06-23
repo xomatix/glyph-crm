@@ -22,6 +22,7 @@ function Login() {
                 </div>
                 <div className={styles.inputGroup}>
                   <GlEdit
+                    type="password"
                     field="gl_password"
                     label="Password"
                     Context={RecordContext}
