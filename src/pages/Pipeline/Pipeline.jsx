@@ -22,18 +22,24 @@ const Pipeline = () => {
     loadPermissions();
   }, []);
 
-  // Open detail view on row click
   const openDetail = (row) => {
     navigate(`/pipeline/${row.gl_sales_pipeline_id}`);
+  };
+
+  // Teraz tworzymy pipeline dopiero w PipelineEdit pod id=0
+  const createNewPipeline = () => {
+    navigate("/pipeline/0");
   };
 
   return (
     <div className="p-4">
       <h1 className="text-2xl font-semibold mb-4">Sales Pipeline</h1>
 
-      <GlButton color="primary" action={() => navigate("/pipeline/0")}>
-        + New Pipeline
-      </GlButton>
+      {canEdit && (
+        <GlButton color="primary" action={createNewPipeline}>
+          + New Pipeline
+        </GlButton>
+      )}
 
       <GlTable
         nameSpace={"crm"}
@@ -43,14 +49,14 @@ const Pipeline = () => {
           { label: "ID", field: "gl_sales_pipeline_id" },
           { label: "Title", field: "title" },
           { label: "Description", field: "description" },
-          { label: "Stage", field: "stage_name" },  
-          { label: "Type", field: "type_name" },     
+          { label: "Stage", field: "stage_name" },
+          { label: "Type", field: "type_name" },
           { label: "", field: "actions" },
         ]}
         onRowClick={openDetail}
       >
         <GlSlot slot={"actions"}>
-          {(row) => (
+          {(row) =>
             canEdit ? (
               <GlButton color="primary" action={() => openDetail(row)}>
                 Open / Edit
@@ -60,7 +66,7 @@ const Pipeline = () => {
                 Open
               </GlButton>
             )
-          )}
+          }
         </GlSlot>
       </GlTable>
 
