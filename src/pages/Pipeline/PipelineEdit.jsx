@@ -13,7 +13,6 @@ const PipelineEdit = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  // Używamy params.id zamiast params.gl_sales_pipeline_id
   const [pipelineId, setPipelineId] = useState(Number(params.id));
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const PipelineEdit = () => {
   return (
     <div className="container p-4">
       <GlRecord
-        key={pipelineId} // wymusza przeładowanie po zmianie ID
+        key={pipelineId} 
         dataSetIdent="GlSalesPipelineAll"
         nameSpace="crm"
         where={{ gl_sales_pipeline_id: pipelineId }}
